@@ -1,0 +1,7 @@
+bin/yoaup /usr/bin
+src/yoaup/*.py /usr/share/yoaup/yoaup
+debian/changelog /usr/share/yoaup
+data/yoaup.desktop /usr/share/applications
+data/icons/*.svg /usr/share/yoaup/icons
+data/icons/*.gif /usr/share/yoaup/icons
+data/icons/yoaup.svg /usr/share/icons
