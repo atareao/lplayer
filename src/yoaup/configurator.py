@@ -75,3 +75,10 @@ class Configuration(object):
         f = codecs.open(comun.CONFIG_FILE, 'w', 'utf-8')
         f.write(json.dumps(self.params, indent=4, sort_keys=True))
         f.close()
+
+    def __str__(self):
+        ans = ''
+        for key in sorted(self.params.keys()):
+            ans += '{0}: {1}\n'.format(key, self.params[key])
+        return ans
+

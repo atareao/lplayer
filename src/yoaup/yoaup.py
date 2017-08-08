@@ -41,9 +41,9 @@ from gi.repository import GdkPixbuf
 from gi.repository import Notify
 import webbrowser
 from .mainwindow import MainWindow
+from .preferencesdialog import PreferencesDialog
 from . import comun
 from .comun import _
-from .configurator import Configuration
 
 
 class MainApplication(Gtk.Application):
@@ -197,13 +197,12 @@ class MainApplication(Gtk.Application):
         self.win.on_toolbar_clicked(action, action.get_name())
 
     def on_preferences_clicked(self, widget, optional):
-        pass
-        '''
         cm = PreferencesDialog(self.win)
         if cm.run() == Gtk.ResponseType.ACCEPT:
-            cm.close_ok()
+            cm.hide()
+            print(1)
+            cm.save_preferences()
         cm.destroy()
-        '''
 
     def on_support_clicked(self, widget, optional):
         pass

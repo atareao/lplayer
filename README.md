@@ -8,9 +8,7 @@ For more information, please visit our website:
 
 https://www.atareao.es
 
-============
-Requirements
-============
+# Requirements
 
 Required dependencies:
 
@@ -32,9 +30,7 @@ Required dependencies:
     gstreamer1.0-libav,
     youtube-dl
 
-=======
-Install
-=======
+# Install
 
 To install yoaup in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
 

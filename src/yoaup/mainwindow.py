@@ -223,12 +223,9 @@ class MainWindow(Gtk.ApplicationWindow):
                                            self.on_row_download_failed)
 
     def on_row_listened(self, widget, row):
-        listened = not (row.data['listened'] == 1)
+        listened = not row.audio['listened']
         row.set_listened(listened)
-        if listened:
-            self.db.set_track_listened(row.data['id'])
-        else:
-            self.db.set_track_no_listened(row.data['id'])
+        self.set_audio(row.audio)
 
     def on_row_info(self, widget, row):
         sid = ShowInfoDialog(self,
@@ -440,6 +437,8 @@ class MainWindow(Gtk.ApplicationWindow):
                 if position >= 0.99:
                     self.active_row.set_listened(True)
                     self.active_row.set_position(0)
+                    if self.configuration.get('remove_on_listened') is True:
+                        self.active_row.set_downloaded(False)
                     self.set_audio(self.active_row.audio)
                     if self.active_row.is_playing is True:
                         self.active_row.set_playing(False)
@@ -645,6 +644,11 @@ class MainWindow(Gtk.ApplicationWindow):
 
         help_model = Gio.Menu()
 
+        help_section0_model = Gio.Menu()
+        help_section0_model.append(_('Preferences'), 'app.set_preferences')
+        help_section0 = Gio.MenuItem.new_section(None, help_section0_model)
+        help_model.append_item(help_section0)
+
         help_section1_model = Gio.Menu()
         help_section1_model.append(_('Homepage'), 'app.goto_homepage')
         help_section1 = Gio.MenuItem.new_section(None, help_section1_model)
@@ -782,6 +786,9 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.trackview.show_all()
 
                 self.configuration.set('audios', audios)
+                self.configuration.save()
+                if self.configuration.get('download_on_added') is True:
+                    self.on_row_download(None, row)
 
             self.get_root_window().set_cursor(DEFAULT_CURSOR)
 

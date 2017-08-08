@@ -39,6 +39,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import GdkPixbuf
 import time
+import os
 from .utils import get_pixbuf_from_base64string
 from . import comun
 
@@ -202,6 +203,21 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
                 self.play_pause.set_from_pixbuf(PLAY)
 
     def set_downloaded(self, downloaded):
+        '''
+        if downloaded is False:
+            extension = self.audio['ext']
+            audio_id = self.audio['display_id']
+            filein = os.path.join(
+                comun.AUDIO_DIR,
+                '{0}.{1}'.format(audio_id, extension))
+            fileout = os.path.join(
+                comun.AUDIO_DIR,
+                '{0}.{1}'.format(audio_id, 'ogg'))
+            if os.path.exists(filein):
+                os.remove(filein)
+            if os.path.exists(fileout):
+                os.remove(fileout)
+        '''
         self.audio['downloaded'] = downloaded
         self.button_play_pause.set_sensitive(downloaded)
         if downloaded is True:

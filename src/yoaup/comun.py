@@ -43,6 +43,8 @@ PARAMS = {'speed': 1.0,
                         'band4': 0, 'band5': 0, 'band6': 0, 'band7': 0,
                         'band8': 0, 'band9': 0},
           'play_continuously': False,
+          'download_on_added': False,
+          'remove_on_listened': False,
           'audios': []
           }
 

@@ -1,3 +1,9 @@
+yoaup (0.1.2-0extras17.04.0) zesty; urgency=medium
+
+  * Added preferences
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 08 Aug 2017 19:18:58 +0200
+
 yoaup (0.1.1-0extras17.04.0) zesty; urgency=medium
 
   * Improved README
