@@ -112,11 +112,11 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'goto_code',
             callback=lambda x, y: webbrowser.open(
-                'https://github.com/atareao/yoaup')))
+                'https://code.launchpad.net/yoaup')))
         self.add_action(create_action(
             'goto_bug',
             callback=lambda x, y: webbrowser.open(
-                'https://github.com/atareao/yoaup/issues')))
+                'https://bugs.launchpad.net/yoaup')))
         self.add_action(create_action(
             'goto_sugestion',
             callback=lambda x, y: webbrowser.open(
@@ -218,7 +218,7 @@ class MainApplication(Gtk.Application):
         ad.set_name(comun.APPNAME)
         ad.set_version(comun.VERSION)
         ad.set_copyright('Copyrignt (c) 2017\nLorenzo Carbonell')
-        ad.set_comments(_('A manager for podcasts'))
+        ad.set_comments(_('An audio player for YouTube'))
         ad.set_license('''
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

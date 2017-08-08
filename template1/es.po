@@ -1,0 +1,124 @@
+# Spanish translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# lorenzo <lorenzo.carbonell.cerezo@gmail.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: yoaup 0.1.0\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2017-08-08 11:55+0200\n"
+"PO-Revision-Date: 2017-08-08 11:51+0200\n"
+"Last-Translator: lorenzo <lorenzo.carbonell.cerezo@gmail.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/yoaup.py:221
+msgid "An audio player for YouTube"
+msgstr "Un reproductor de audio paraYouTube"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/showinfodialog.py:52
+msgid "Show info about YouTube Audio"
+msgstr "Muestra información sobre el audio de YouTube"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:251
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:315
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:630
+msgid "Play"
+msgstr "Reproducir"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:268
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:437
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:545
+msgid "Position"
+msgstr "Posición"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:274
+msgid "Pause"
+msgstr "Pausa"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:506
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:558
+msgid "Speed"
+msgstr "Velocidad"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:514
+#, python-brace-format
+msgid "Position: {0}%"
+msgstr "Posición: {0}%"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:550
+msgid "Relative position"
+msgstr "Posición relativa"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:570
+msgid "Remove silence"
+msgstr "Eliminar silencios"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:583
+msgid "Play continuously"
+msgstr "Reproducir continuamente"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:596
+msgid "Equalizer"
+msgstr "Ecualizador"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:612
+msgid "Configuration"
+msgstr "Configuración"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:621
+msgid "Previous"
+msgstr "Anterior"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:639
+msgid "Next"
+msgstr "Siguiente"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:649
+msgid "Homepage"
+msgstr "Página web"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:654
+msgid "Code"
+msgstr "Código"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:655
+msgid "Issues"
+msgstr "Incidencias"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:660
+msgid "Twitter"
+msgstr "Twitter"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:661
+msgid "Facebook"
+msgstr "Facebook"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:662
+msgid "Google+"
+msgstr "Google+"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:667
+msgid "Donations"
+msgstr "Donaciones"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:672
+msgid "About"
+msgstr "Acerca de..."
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:691
+msgid "YouTube url"
+msgstr "Enlace de YouTube"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:722
+msgid "Are you sure to delete the tracks"
+msgstr "Estás seguro de borrar las pistas"
+
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:724
+msgid "Are you sure to delete the track"
+msgstr "Estás seguro de borrar la pista"

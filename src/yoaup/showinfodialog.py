@@ -49,7 +49,7 @@ class ShowInfoDialog(Gtk.Dialog):
     def __init__(self, window, podcast_text, title_text, link_text, text):
         #
         Gtk.Dialog.__init__(self, '{0} | {1}'.format(
-            comun.APPNAME, _('Show info about podcast')),
+            comun.APPNAME, _('Show info about YouTube Audio')),
             window,
             Gtk.DialogFlags.MODAL |
             Gtk.DialogFlags.DESTROY_WITH_PARENT,

@@ -547,7 +547,7 @@ class MainWindow(Gtk.ApplicationWindow):
         popover_grid.attach(self.control['label-position'], 0, 0, 5, 1)
         self.control['position'] = Gtk.Scale()
         self.control['position'].set_tooltip_text(
-            _('Podcast relative position'))
+            _('Relative position'))
         self.control['position'].set_adjustment(
             Gtk.Adjustment(0, 0, 100, 1, 1, 5))
         self.control['position'].connect('value-changed',
