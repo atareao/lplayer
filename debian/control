@@ -13,8 +13,7 @@ Depends: ${misc:Depends}, ${python:Depends},
 	python3-gi,
 	python3-dbus,
 	python3-requests,
-	python3-feedparser,
-	python3-dateutil,
+	python3-dbus,
 	python3-pil,
 	gir1.2-gtk-3.0,
 	gir1.2-gdkpixbuf-2.0,
@@ -25,6 +24,7 @@ Depends: ${misc:Depends}, ${python:Depends},
 	gstreamer1.0-plugins-good,
 	gstreamer1.0-plugins-ugly,
 	gstreamer1.0-plugins-bad,
-	gstreamer1.0-libav
+	gstreamer1.0-libav,
+	youtube-dl
 Description: A Youtube Audio Player.
  yoaup is an application to listen audio from YouTube.

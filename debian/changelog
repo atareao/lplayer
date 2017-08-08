@@ -1,5 +1,12 @@
+yoaup (0.1.1-0extras17.04.0) zesty; urgency=medium
+
+  * Improved README
+  * Added dependencies
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 08 Aug 2017 12:26:44 +0200
+
 yoaup (0.1.0-0extras17.04.5) zesty; urgency=medium
 
   * First release
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 28 May 2017 07:04:07 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 08 Aug 2017 11:59:03 +0200
