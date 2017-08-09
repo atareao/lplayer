@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: yoaup 0.1.1\n"
+"Project-Id-Version: yoaup 0.1.2\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2017-08-08 19:17+0200\n"
+"POT-Creation-Date: 2017-08-09 12:55+0200\n"
 "PO-Revision-Date: 2017-08-08 11:51+0200\n"
 "Last-Translator: lorenzo <lorenzo.carbonell.cerezo@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/yoaup.py:220
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/yoaup.py:214
 msgid "An audio player for YouTube"
 msgstr "Un reproductor de audio para YouTube"
 
 #: /datos/Sync/Programacion/Python/yoaup/src/yoaup/preferencesdialog.py:42
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:648
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:661
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -30,100 +30,100 @@ msgstr "Preferencias"
 msgid "Show info about YouTube Audio"
 msgstr "Muestra información sobre el audio de YouTube"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:248
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:312
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:629
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:261
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:325
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:642
 msgid "Play"
 msgstr "Reproducir"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:265
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:434
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:544
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:278
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:447
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:557
 msgid "Position"
 msgstr "Posición"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:271
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:284
 msgid "Pause"
 msgstr "Pausa"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:505
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:557
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:518
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:570
 msgid "Speed"
 msgstr "Velocidad"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:513
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:526
 #, python-brace-format
 msgid "Position: {0}%"
 msgstr "Posición: {0}%"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:549
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:562
 msgid "Relative position"
 msgstr "Posición relativa"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:569
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:582
 msgid "Remove silence"
 msgstr "Eliminar silencios"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:582
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:595
 msgid "Play continuously"
 msgstr "Reproducir de forma continua"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:595
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:608
 msgid "Equalizer"
 msgstr "Ecualizador"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:611
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:624
 msgid "Configuration"
 msgstr "Configuración"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:620
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:633
 msgid "Previous"
 msgstr "Anterior"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:638
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:651
 msgid "Next"
 msgstr "Siguiente"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:653
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:666
 msgid "Homepage"
 msgstr "Página web"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:658
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:671
 msgid "Code"
 msgstr "Código"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:659
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:672
 msgid "Issues"
 msgstr "Incidencias"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:664
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:677
 msgid "Twitter"
 msgstr "Twitter"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:665
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:678
 msgid "Facebook"
 msgstr "Facebook"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:666
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:679
 msgid "Google+"
 msgstr "Google+"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:671
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:684
 msgid "Donations"
 msgstr "Donaciones"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:676
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:689
 msgid "About"
 msgstr "Acerca de..."
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:695
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:708
 msgid "YouTube url"
 msgstr "Enlace de YouTube"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:726
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:739
 msgid "Are you sure to delete the tracks"
 msgstr "Estás seguro de borrar las pistas"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:728
+#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:741
 msgid "Are you sure to delete the track"
 msgstr "Estás seguro de borrar la pista"

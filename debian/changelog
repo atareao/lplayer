@@ -1,3 +1,9 @@
+yoaup (0.1.3-0extras17.04.0) zesty; urgency=medium
+
+  * Added support for download youtube lists
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 09 Aug 2017 12:55:39 +0200
+
 yoaup (0.1.2-0extras17.04.0) zesty; urgency=medium
 
   * Added preferences

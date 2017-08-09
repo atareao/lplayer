@@ -23,13 +23,79 @@
 
 
 import sys
-
+import re
+import urllib.request
+import urllib.error
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 try:
     import youtube_dl
 except Exception as e:
     sys.path.insert(1, '/usr/lib/python2.7/dist-packages/')
     import youtube_dl
 from .audio import Audio
+
+
+def parse_youtube_url(value):
+    """
+    Examples:
+    - http://youtu.be/SA2iWivDJiE
+    - http://www.youtube.com/watch?v=_oPAwA_Udwc&feature=feedu
+    - http://www.youtube.com/embed/SA2iWivDJiE
+    - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
+    """
+    ans = None
+    query = urlparse(value)
+    if query.hostname == 'youtu.be':
+        ans = query.path[1:]
+    elif query.hostname in ('www.youtube.com', 'youtube.com'):
+        if query.path == '/watch':
+            p = parse_qs(query.query)
+            ans =  p['v'][0]
+        if query.path[:7] == '/embed/' or query.path[:3] == '/v/':
+            ans = query.path.split('/')[2]
+    if ans is not None:
+        ans = 'https://www.youtube.com/watch?v=' + ans
+    return ans
+
+def is_youtube_list(url):
+    try:
+        if 'list=' in url:
+            eq_idx = url.index('=') + 1
+            url[eq_idx:]
+            if '&' in url:
+                amp = url.index('&')
+                url[eq_idx:amp]
+            return True
+    except Exception as e:
+        print(e)
+    return False
+
+
+def getPlaylistVideoUrls(url):
+    try:
+        if 'list=' in url:
+            eq_idx = url.index('=') + 1
+            pl_id = url[eq_idx:]
+            if '&' in url:
+                amp = url.index('&')
+                pl_id = url[eq_idx:amp]
+            playlist_id = pl_id
+            vid_url_pat = re.compile(r'watch\?v=\S+?list=' + playlist_id)
+            page_content = str(urllib.request.urlopen(url).read())
+            vid_url_matches = list(set(re.findall(vid_url_pat, page_content)))
+            if vid_url_matches:
+                final_urls = []
+                for vid_url in vid_url_matches:
+                    url_amp = len(vid_url)
+                    if '&' in vid_url:
+                        url_amp = vid_url.index('&')
+                    final_urls.append('http://www.youtube.com/' +
+                                      vid_url[:url_amp])
+                return final_urls
+    except Exception as e:
+        print(e)
+    return []
 
 
 def resolve_youtube_url(url):
@@ -72,4 +138,5 @@ def resolve_youtube_url(url):
 if __name__ == '__main__':
     print(1)
     url = 'https://www.youtube.com/watch?v=bHZ8KUrbbcc'
-    print(resolve_youtube_url(url))
+    #print(resolve_youtube_url(url))
+    print(parse_youtube_url('https://www.youtube.com/watch?v=IdneKLhsWOQ&index=4&list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj'))

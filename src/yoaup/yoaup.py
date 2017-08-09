@@ -41,7 +41,6 @@ from gi.repository import GdkPixbuf
 from gi.repository import Notify
 import webbrowser
 from .mainwindow import MainWindow
-from .preferencesdialog import PreferencesDialog
 from . import comun
 from .comun import _
 
@@ -62,6 +61,7 @@ class MainApplication(Gtk.Application):
         self.quit()
 
     def do_startup(self):
+        print('do_startup')
         Gtk.Application.do_startup(self)
 
         def create_action(name,
@@ -101,7 +101,6 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'save_as',
             callback=self.on_headbar_clicked))
-
         self.add_action(create_action(
             'set_preferences',
             callback=self.on_preferences_clicked))
@@ -184,6 +183,7 @@ class MainApplication(Gtk.Application):
         print(action, state)
 
     def do_activate(self):
+        print('do_activate')
         self.win = MainWindow(self)
         self.add_window(self.win)
         self.win.show()
@@ -196,14 +196,6 @@ class MainApplication(Gtk.Application):
     def on_headbar_clicked(self, action, optional):
         self.win.on_toolbar_clicked(action, action.get_name())
 
-    def on_preferences_clicked(self, widget, optional):
-        cm = PreferencesDialog(self.win)
-        if cm.run() == Gtk.ResponseType.ACCEPT:
-            cm.hide()
-            print(1)
-            cm.save_preferences()
-        cm.destroy()
-
     def on_support_clicked(self, widget, optional):
         pass
         '''
@@ -211,6 +203,8 @@ class MainApplication(Gtk.Application):
         dialog.run()
         dialog.destroy()
         '''
+    def on_preferences_clicked(self, action, optional):
+        self.win.on_preferences_clicked(None)
 
     def on_about_activate(self, widget, optional):
         ad = Gtk.AboutDialog(comun.APPNAME, self.win)

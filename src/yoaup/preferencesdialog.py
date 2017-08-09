@@ -48,7 +48,6 @@ class PreferencesDialog(Gtk.Dialog):
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
         self.set_icon_from_file(comun.ICON)
 
-
         frame = Gtk.Frame.new('Track options')
         frame.set_margin_top(5)
         frame.set_margin_bottom(5)

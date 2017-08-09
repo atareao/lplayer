@@ -53,8 +53,12 @@ from .async import async_function
 from .utils import from_remote_image_to_base64
 from .utils import get_thumbnail_filename_for_audio
 from .youtube_utils import resolve_youtube_url
+from .youtube_utils import parse_youtube_url
+from .youtube_utils import is_youtube_list
+from .youtube_utils import getPlaylistVideoUrls
 from .downloadermanager import DownloaderManager
 from .showinfodialog import ShowInfoDialog
+from .preferencesdialog import PreferencesDialog
 
 DEFAULT_CURSOR = Gdk.Cursor(Gdk.CursorType.ARROW)
 WAIT_CURSOR = Gdk.Cursor(Gdk.CursorType.WATCH)
@@ -186,6 +190,15 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def on_close(self, widget):
         self.configuration.save()
+
+    def on_preferences_clicked(self, widget):
+        self.configuration.save()
+        cm = PreferencesDialog(self)
+        if cm.run() == Gtk.ResponseType.ACCEPT:
+            cm.hide()
+            cm.save_preferences()
+            self.configuration.read()
+        cm.destroy()
 
     def on_maximize_toggle(self, action, value):
             action.set_state(value)
@@ -793,8 +806,8 @@ class MainWindow(Gtk.ApplicationWindow):
             self.get_root_window().set_cursor(DEFAULT_CURSOR)
 
         @async_function(on_done=on_add_track_in_thread_done)
-        def do_add_track_in_thread(text):
-            result = resolve_youtube_url(text)
+        def do_add_track_in_thread(url):
+            result = resolve_youtube_url(url)
             if result is not None:
                 for audio in self.configuration.get('audios'):
                     if result == audio:
@@ -806,8 +819,14 @@ class MainWindow(Gtk.ApplicationWindow):
                         result['thumbnail_base64'] = thumbnail_base64
             return result
 
-        self.get_root_window().set_cursor(WAIT_CURSOR)
-        do_add_track_in_thread(text)
+        url = parse_youtube_url(text)
+        if url is not None:
+            self.get_root_window().set_cursor(WAIT_CURSOR)
+            do_add_track_in_thread(url)
+        elif is_youtube_list(text) is True:
+            for url in getPlaylistVideoUrls(text):
+                self.get_root_window().set_cursor(WAIT_CURSOR)
+                do_add_track_in_thread(url)
 
     def on_toggled(self, widget, arg):
         if widget.get_active() is True:
