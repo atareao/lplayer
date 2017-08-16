@@ -42,6 +42,7 @@ from gi.repository import GObject
 from gi.repository import Notify
 import os
 from dbus.mainloop.glib import DBusGMainLoop
+from mutagen.oggvorbis import OggVorbis
 from . import comun
 from .comun import _
 from .sound_menu import SoundMenuControls
@@ -214,7 +215,14 @@ class MainWindow(Gtk.ApplicationWindow):
         row.set_downloading(False)
         filename = os.path.join(comun.AUDIO_DIR,
                                 '{0}.ogg'.format(row.audio['display_id']))
-        row.set_downloaded(os.path.exists(filename))
+        if os.path.exists(filename):
+            row.set_downloaded(True)
+            duration = OggVorbis(filename).info.length
+            row.set_duration(duration)
+        else:
+            row.set_downloaded(False)
+        self.set_audio(row.audio)
+        self.configuration.save()
 
     def on_row_download_failed(self, widget, row):
         row.set_downloading(False)
@@ -420,24 +428,10 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def update_position(self):
         if self.active_row is not None:
-            if self.active_row.audio['duration'] == 0:
-                try:
-                    duration = self.player.get_duration()
-                    if duration > 0:
-                        self.active_row.set_duration(duration)
-                        self.set_audio(self.active_row.audio)
-                except Exception as e:
-                    print(e)
             position = self.player.get_position() / float(
                 self.active_row.audio['duration'])
             if position >= 0:
                 self.active_row.set_position(position)
-                try:
-                    duration = self.player.get_duration()
-                    if duration > 0:
-                        self.active_row.set_duration(duration)
-                except Exception as e:
-                    print(e)
                 self.set_audio(self.active_row.audio)
 
                 self.control['position'].handler_block_by_func(
@@ -795,7 +789,7 @@ class MainWindow(Gtk.ApplicationWindow):
                             self.on_row_download,
                             row)
                 row.show()
-                self.trackview.prepend(row)
+                self.trackview.append(row)
                 self.trackview.show_all()
 
                 self.configuration.set('audios', audios)
