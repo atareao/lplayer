@@ -187,10 +187,14 @@ class MainWindow(Gtk.ApplicationWindow):
         self.show_all()
         self.play_controls.set_visible(True)
         if len(self.trackview.get_children()) > 0:
-            self.active_row = self.trackview.get_row_at_index(0)
+            self.set_active_row(self.trackview.get_row_at_index(0))
 
     def on_close(self, widget):
         self.configuration.save()
+
+    def on_download_all_clicked(self, widget):
+        for row in self.trackview.get_children():
+            self.on_row_download(None, row)
 
     def on_preferences_clicked(self, widget):
         self.configuration.save()
@@ -267,7 +271,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 Gio.ThemedIcon(name='media-playback-start-symbolic'),
                 Gtk.IconSize.BUTTON)
             self.control['play-pause'].set_tooltip_text(_('Play'))
-        self.active_row = row
+        self.set_active_row(row)
         if self.active_row.is_playing is False:
             filename = os.path.join(comun.AUDIO_DIR,
                                     '{0}.ogg'.format(row.audio['display_id']))
@@ -347,8 +351,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # self.is_playing = True  # Need to overwrite
         row = self.active_row
         if row is None:
-            row = self.trackview.get_row_at_index(0)
-            self.active_row = row
+            self.set_active_row(self.trackview.get_row_at_index(0))
         self.active_row.click_button_play()
 
     def _sound_menu_stop(self):
@@ -467,8 +470,7 @@ class MainWindow(Gtk.ApplicationWindow):
         pass
 
     def on_row_activated(self, widget, row):
-        self.active_row = row
-        self.trackview.select_row(row)
+        self.set_active_row(row)
 
     def on_downloader_failed(self, widget, row, filename):
         if os.path.exists(filename):
@@ -652,6 +654,7 @@ class MainWindow(Gtk.ApplicationWindow):
         help_model = Gio.Menu()
 
         help_section0_model = Gio.Menu()
+        help_section0_model.append(_('Download all'), 'app.download_all')
         help_section0_model.append(_('Preferences'), 'app.set_preferences')
         help_section0 = Gio.MenuItem.new_section(None, help_section0_model)
         help_model.append_item(help_section0)
@@ -761,11 +764,17 @@ class MainWindow(Gtk.ApplicationWindow):
                     self.trackview.show_all()
                     if self.active_row.audio == row.audio and\
                             len(self.trackview.get_children()) > 0:
-                        self.active_row = self.trackview.get_row_at_index(0)
+                        self.set_active_row(self.trackview.get_row_at_index(0))
                     else:
-                        self.active_row = None
+                        self.set_active_row()
             else:
                 dialog.destroy()
+
+    def set_active_row(self, row=None):
+        self.trackview.unselect_all()
+        self.active_row = row
+        if row is not None:
+            self.trackview.select_row(row)
 
     def add_track(self, text):
 
@@ -789,7 +798,7 @@ class MainWindow(Gtk.ApplicationWindow):
                             self.on_row_download,
                             row)
                 row.show()
-                self.trackview.append(row)
+                self.trackview.add(row)
                 self.trackview.show_all()
 
                 self.configuration.set('audios', audios)
@@ -813,12 +822,13 @@ class MainWindow(Gtk.ApplicationWindow):
                         result['thumbnail_base64'] = thumbnail_base64
             return result
 
-        url = parse_youtube_url(text)
-        if url is not None:
-            self.get_root_window().set_cursor(WAIT_CURSOR)
-            do_add_track_in_thread(url)
-        elif is_youtube_list(text) is True:
+        if is_youtube_list(text) is True:
             for url in getPlaylistVideoUrls(text):
+                self.get_root_window().set_cursor(WAIT_CURSOR)
+                do_add_track_in_thread(url)
+        else:
+            url = parse_youtube_url(text)
+            if url is not None:
                 self.get_root_window().set_cursor(WAIT_CURSOR)
                 do_add_track_in_thread(url)
 

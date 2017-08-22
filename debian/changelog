@@ -1,3 +1,9 @@
+yoaup (0.1.5-0extras17.04.0) zesty; urgency=medium
+
+  * Added download all option
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 22 Aug 2017 14:53:33 +0200
+
 yoaup (0.1.4-0extras17.04.0ubuntu1) zesty; urgency=medium
 
   * Added mutagen

@@ -102,6 +102,9 @@ class MainApplication(Gtk.Application):
             'save_as',
             callback=self.on_headbar_clicked))
         self.add_action(create_action(
+            'download_all',
+            callback=self.on_download_all_clicked))
+        self.add_action(create_action(
             'set_preferences',
             callback=self.on_preferences_clicked))
         self.add_action(create_action(
@@ -205,6 +208,9 @@ class MainApplication(Gtk.Application):
         '''
     def on_preferences_clicked(self, action, optional):
         self.win.on_preferences_clicked(None)
+
+    def on_download_all_clicked(self, action, optional):
+        self.win.on_download_all_clicked(None)
 
     def on_about_activate(self, widget, optional):
         ad = Gtk.AboutDialog(comun.APPNAME, self.win)
