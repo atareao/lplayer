@@ -2,11 +2,13 @@
 
 yoaup is a simple application to listen youtube audios. This app download the audio for the selected video in YouTube and convert to OGG format to play it.
 
+![](/screenshots/YOAUP_043.png)
+
 You can listen the audios a more speed than the video original, avoid the silences and modify the equalizer. Besides you can listen audios continuosly.
 
 For more information, please visit our website:
 
-https://www.atareao.es
+https://www.atareao.es/apps/youtube-como-reproductor-de-musica-con-yoaup/
 
 # Requirements
 
@@ -34,6 +36,6 @@ Required dependencies:
 
 To install yoaup in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
 
-    sudo add-apt-repository ppa:atareao/atareao
+    sudo add-apt-repository ppa:atareao/yoaup
     sudo apt update
     sudo apt install yoaup
