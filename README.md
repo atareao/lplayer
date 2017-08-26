@@ -49,3 +49,10 @@ To install yoaup in Ubuntu, Linux Mint and derivatives, run these commands in a 
     sudo apt update
     sudo apt install yoaup
 ```
+
+It's very important: the last version of youtube-dl must be installed. In order to do that, add the repository of [WebUpd8](http://www.webupd8.org/2014/02/video-downloader-youtube-dl-gets.html):
+
+```
+    sudo add-apt-repository ppa:nilarimogard/webupd8
+    sudo apt update
+```
