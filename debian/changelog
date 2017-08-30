@@ -1,8 +1,9 @@
-yoaup (0.1.5-0extras17.04.0) zesty; urgency=medium
+yoaup (0.1.5-0extras17.04.2) zesty; urgency=medium
 
   * Added download all option
+  * Added WebUpd8 repository to preinst
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 22 Aug 2017 14:53:33 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 30 Aug 2017 08:53:39 +0200
 
 yoaup (0.1.4-0extras17.04.0ubuntu1) zesty; urgency=medium
 
