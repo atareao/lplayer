@@ -2,20 +2,22 @@
 
 Lplayer is a simple audio pyer for simply listening.
 
-![](/screenshots/YOAUP_043.png)
+![](/screenshots/lplayer_01.png)
 
 You can listen the audios a more speed than the video original, avoid the silences and modify the equalizer. Besides you can listen audios continuosly. lplayer has a complete control over the track you are listening.
 
-![](/screenshots/YOAUP_070.png)
+![](/screenshots/lplayer_02.png)
 
 Lplayer uses the audio menu to display information about the track you are listening. From the menu, you can go to the next or the previous track, play or pause the track.
 
-![](/screenshots/Selección_075.png)
+![](/screenshots/lplayer_03.png)
 
 
 For more information, please visit our website:
 
 https://www.atareao.es/apps/youtube-como-reproductor-de-musica-con-yoaup/
+
+![](/screenshots/lplayer_04.png)
 
 # Requirements
 
