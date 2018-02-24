@@ -89,7 +89,7 @@ def update_translations():
 
 def edit_language_file(file):
     fr = open(file, 'r')
-    file_out = file+'.new'
+    file_out = file + '.new'
     fs = open(file_out, 'w')
     for line in fr.readlines():
         if line.find('Project-Id-Version:') != -1:
@@ -309,7 +309,7 @@ if __name__ == '__main__':
         pos = line.find('(')
         posf = line.find('-', pos)
         APP = line[:pos].strip()
-        VERSION = line[pos+1:posf].strip()
+        VERSION = line[pos + 1: posf].strip()
         APPNAME = APP.title()
         AUTHOR = 'Lorenzo Carbonell'
         AUTHOR_EMAIL = 'lorenzo.carbonell.cerezo@gmail.com'

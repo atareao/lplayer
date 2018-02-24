@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=LPlayer Player
+GenericName=Music Player
+Comment=A Simple Audio Player
+Keywords=Audio;Podcast;MP3;Song;
+Exec=/usr/bin/lplayer
+TryExec=lplayer
+Icon=lplayer
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=utf-8
+Categories=GNOME;GTK;AudioVideo;Audio;Player;
+MimeType=application/x-ogg;application/ogg;audio/x-vorbis+ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl

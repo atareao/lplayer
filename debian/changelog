@@ -1,36 +1,36 @@
-yoaup (0.1.5-0extras17.04.2) zesty; urgency=medium
+lplayer (0.1.5-0extras17.04.3) zesty; urgency=medium
 
   * Added download all option
   * Added WebUpd8 repository to preinst
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 30 Aug 2017 08:53:39 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 03 Jan 2018 11:36:24 +0100
 
-yoaup (0.1.4-0extras17.04.0ubuntu1) zesty; urgency=medium
+lplayer (0.1.4-0extras17.04.0ubuntu1) zesty; urgency=medium
 
   * Added mutagen
 
  -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 16 Aug 2017 15:30:56 +0200
 
-yoaup (0.1.3-0extras17.04.0) zesty; urgency=medium
+lplayer (0.1.3-0extras17.04.0) zesty; urgency=medium
 
   * Added support for download youtube lists
 
  -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 09 Aug 2017 12:55:39 +0200
 
-yoaup (0.1.2-0extras17.04.0) zesty; urgency=medium
+lplayer (0.1.2-0extras17.04.0) zesty; urgency=medium
 
   * Added preferences
 
  -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 08 Aug 2017 19:18:58 +0200
 
-yoaup (0.1.1-0extras17.04.0) zesty; urgency=medium
+lplayer (0.1.1-0extras17.04.0) zesty; urgency=medium
 
   * Improved README
   * Added dependencies
 
  -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 08 Aug 2017 12:26:44 +0200
 
-yoaup (0.1.0-0extras17.04.5) zesty; urgency=medium
+lplayer (0.1.0-0extras17.04.5) zesty; urgency=medium
 
   * First release
 

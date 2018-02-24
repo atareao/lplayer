@@ -1,9 +1,9 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: yoaup
+Upstream-Name: lplayer
 Source: http://www.atareao.es
 
 Files: *
-Copyright: 2017 Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>
+Copyright: 2018 Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+

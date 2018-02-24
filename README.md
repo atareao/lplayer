@@ -1,14 +1,14 @@
-# YOAUP - YouTube Audio Player
+# LPLAYER - A simple audio player
 
-Yoaup is a simple application to listen youtube audios, without the need to have the browser open. This app downloads the audio for the selected video in YouTube and converts to OGG format to play it. Also can downlad a complete list of YouTube videos, adm convert to OGG.
+Lplayer is a simple audio pyer for simply listening.
 
 ![](/screenshots/YOAUP_043.png)
 
-You can listen the audios a more speed than the video original, avoid the silences and modify the equalizer. Besides you can listen audios continuosly. Yoaup has a complete control over the track you are listening.
+You can listen the audios a more speed than the video original, avoid the silences and modify the equalizer. Besides you can listen audios continuosly. lplayer has a complete control over the track you are listening.
 
 ![](/screenshots/YOAUP_070.png)
 
-Yoaup uses the audio menu to display information about the track you are listening. From the menu, you can go to the next or the previous track, play or pause the track.
+Lplayer uses the audio menu to display information about the track you are listening. From the menu, you can go to the next or the previous track, play or pause the track.
 
 ![](/screenshots/Selección_075.png)
 
@@ -45,14 +45,7 @@ Required dependencies:
 To install yoaup in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
 
 ```
-    sudo add-apt-repository ppa:atareao/yoaup
+    sudo add-apt-repository ppa:atareao/lplayer
     sudo apt update
-    sudo apt install yoaup
-```
-
-It's very important: the last version of youtube-dl must be installed. In order to do that, add the repository of [WebUpd8](http://www.webupd8.org/2014/02/video-downloader-youtube-dl-gets.html):
-
-```
-    sudo add-apt-repository ppa:nilarimogard/webupd8
-    sudo apt update
+    sudo apt install lplayer
 ```
