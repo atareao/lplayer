@@ -34,10 +34,10 @@ install: build
 	dh_installdirs
 	dh_install
 	# Create languages directories
-	mkdir -p ${CURDIR}/debian/yoaup/usr/share/locale-langpack/es/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/lplayer/usr/share/locale-langpack/es/LC_MESSAGES
 	# End create languages directories
 	# Compile languages
-	msgfmt template1/es.po -o ${CURDIR}/debian/yoaup/usr/share/locale-langpack/es/LC_MESSAGES/yoaup.mo
+	msgfmt template1/es.po -o ${CURDIR}/debian/lplayer/usr/share/locale-langpack/es/LC_MESSAGES/lplayer.mo
 	# End comile languages
 
 	# Add here commands to install the package into debian/<packagename>.

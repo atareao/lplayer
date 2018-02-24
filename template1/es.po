@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: yoaup 0.1.2\n"
+"Project-Id-Version: lplayer 0.1.5\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2017-08-09 12:55+0200\n"
+"POT-Creation-Date: 2018-02-24 09:06+0100\n"
 "PO-Revision-Date: 2017-08-08 11:51+0200\n"
 "Last-Translator: lorenzo <lorenzo.carbonell.cerezo@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -17,113 +17,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/yoaup.py:214
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/lplayer.py:226
 msgid "An audio player for YouTube"
 msgstr "Un reproductor de audio para YouTube"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/preferencesdialog.py:42
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:661
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/preferencesdialog.py:42
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:722
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/showinfodialog.py:52
-msgid "Show info about YouTube Audio"
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/showinfodialog.py:52
+#, fuzzy
+msgid "Show info about audio"
 msgstr "Muestra información sobre el audio de YouTube"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:261
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:325
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:642
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:317
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:373
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:702
 msgid "Play"
 msgstr "Reproducir"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:278
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:447
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:557
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:332
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:390
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:527
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:604
 msgid "Position"
 msgstr "Posición"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:284
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:338
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:396
 msgid "Pause"
 msgstr "Pausa"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:518
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:570
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:565
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:617
 msgid "Speed"
 msgstr "Velocidad"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:526
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:573
 #, python-brace-format
 msgid "Position: {0}%"
 msgstr "Posición: {0}%"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:562
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:609
 msgid "Relative position"
 msgstr "Posición relativa"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:582
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:629
 msgid "Remove silence"
 msgstr "Eliminar silencios"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:595
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:642
 msgid "Play continuously"
 msgstr "Reproducir de forma continua"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:608
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:655
 msgid "Equalizer"
 msgstr "Ecualizador"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:624
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:684
 msgid "Configuration"
 msgstr "Configuración"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:633
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:693
 msgid "Previous"
 msgstr "Anterior"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:651
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:711
 msgid "Next"
 msgstr "Siguiente"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:666
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:721
+msgid "Download all"
+msgstr "Descargar todo"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:727
 msgid "Homepage"
 msgstr "Página web"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:671
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:732
 msgid "Code"
 msgstr "Código"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:672
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:733
 msgid "Issues"
 msgstr "Incidencias"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:677
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:738
 msgid "Twitter"
 msgstr "Twitter"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:678
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:739
 msgid "Facebook"
 msgstr "Facebook"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:679
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:740
 msgid "Google+"
 msgstr "Google+"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:684
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:745
 msgid "Donations"
 msgstr "Donaciones"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:689
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:750
 msgid "About"
 msgstr "Acerca de..."
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:708
-msgid "YouTube url"
-msgstr "Enlace de YouTube"
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:755
+msgid "Quit"
+msgstr "Salir"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:739
-msgid "Are you sure to delete the tracks"
-msgstr "Estás seguro de borrar las pistas"
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:785
+msgid "Please choose music files"
+msgstr "Elige los archivos"
 
-#: /datos/Sync/Programacion/Python/yoaup/src/yoaup/mainwindow.py:741
-msgid "Are you sure to delete the track"
-msgstr "Estás seguro de borrar la pista"
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:795
+msgid "audio files"
+msgstr "Archivos de audio"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:805
+msgid "mp3 files"
+msgstr "Archivos mp3"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:814
+msgid "ogg files"
+msgstr "Archivos ogg"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:827
+msgid "Are you sure to delete the tracks?"
+msgstr "Estás seguro de borrar los audios?"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:829
+msgid "Are you sure to delete the track?"
+msgstr "Estás seguro de borrar el audio?"
