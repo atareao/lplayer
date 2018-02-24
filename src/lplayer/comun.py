@@ -45,6 +45,7 @@ PARAMS = {'speed': 1.0,
           'play_continuously': False,
           'download_on_added': False,
           'remove_on_listened': False,
+          'row': 0,
           'audios': []
           }
 

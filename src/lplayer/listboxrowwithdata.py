@@ -149,9 +149,6 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
     def on_clicked(self, widget, event):
         print(widget, event)
 
-    def can_play(self):
-        return True
-
     def on_button_clicked(self, widget, button_name):
         if button_name == 'info':
             self.emit('button_info_clicked')

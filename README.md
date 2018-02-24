@@ -1,6 +1,6 @@
 # LPLAYER - A simple audio player
 
-Lplayer is a simple audio pyer for simply listening.
+**Lplayer** is a simple audio player for simply listening music or whatever you want. The first time, I think in **lplayer** was for listening podcasts, becouse you can set the speed. I normally listen podcast a 1.8x.
 
 ![](/screenshots/lplayer_01.png)
 
@@ -40,11 +40,10 @@ Required dependencies:
     gstreamer1.0-plugins-ugly,
     gstreamer1.0-plugins-bad,
     gstreamer1.0-libav,
-    youtube-dl
 ```
 # Install
 
-To install yoaup in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
+To install lplayer in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
 
 ```
     sudo add-apt-repository ppa:atareao/lplayer

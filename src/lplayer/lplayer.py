@@ -216,7 +216,7 @@ class MainApplication(Gtk.Application):
         self.win.on_download_all_clicked(None)
 
     def on_quit_activate(self, widget, optional):
-        exit(0)
+        self.win._sound_menu_quit()
 
     def on_about_activate(self, widget, optional):
         ad = Gtk.AboutDialog(comun.APPNAME, self.win)

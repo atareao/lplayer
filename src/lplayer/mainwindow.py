@@ -124,6 +124,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.is_playing = False
         self.updater = None
         self.configuration = Configuration()
+        self.row = self.configuration.get('row')
 
         max_action = Gio.SimpleAction.new_stateful(
             "maximize", None, GLib.Variant.new_boolean(False))
@@ -216,7 +217,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.show_all()
         self.play_controls.set_visible(True)
         if len(self.trackview.get_children()) > 0:
-            self.set_active_row(self.trackview.get_row_at_index(0))
+            print(1)
+            if self.row > -1 and self.row < len(self.trackview.get_children()):
+                print(2)
+                self.set_active_row(self.trackview.get_row_at_index(self.row))
+                print(self.row)
 
     def drag_begin(self, widget, context):
         rows = self.trackview.get_selected_rows()
@@ -286,7 +291,7 @@ class MainWindow(Gtk.ApplicationWindow):
     def on_row_listened(self, widget, row):
         listened = not row.audio['listened']
         row.set_listened(listened)
-        self.set_audio(row.audio)
+        self.update_audio_in_configuration(row.audio)
 
     def on_row_info(self, widget, row):
         sid = ShowInfoDialog(self,
@@ -414,11 +419,33 @@ class MainWindow(Gtk.ApplicationWindow):
                     self.active_row.audio['position'] *
                     float(self.active_row.audio['length']))
             self.player.play()
+            if self.updater is not None and self.updater > 0:
+                try:
+                    GLib.source_remove(self.updater)
+                except Exception as e:
+                    print(e)
             self.updater = GLib.timeout_add_seconds(1, self.update_position)
             self.is_playing = True
 
+    def update_audios(self):
+        audios = self.configuration.get('audios')
+        for row in self.trackview.get_children():
+            for index, audio in enumerate(audios):
+                if row.audio == audio:
+                    audios[index] = audio
+                    self.configuration.set('audios', audios)
+                    break
+
     def _sound_menu_quit(self):
         """Quit"""
+        if self.updater is not None and self.updater > 0:
+            try:
+                GLib.source_remove(self.updater)
+            except Exception as e:
+                print(e)
+        self.update_audios()
+        self.configuration.set('row', self.row)
+        self.configuration.save()
         exit(0)
 
     def _sound_menu_raise(self):
@@ -447,62 +474,41 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def _sound_menu_next(self, *args):
         """Next"""
-        index = self.get_next_playable_track()
-        if index is not None:
-            row = self.trackview.get_row_at_index(index)
-            self.play_row(row)
+        self.play_row(self.trackview.get_row_at_index(
+            self.get_next_playable_track()))
 
     def _sound_menu_previous(self, *args):
         """Previous"""
-        index = self.get_previous_playable_track()
-        if index is not None:
-            row = self.trackview.get_row_at_index(index)
-            self.play_row(row)
+        self.play_row(self.trackview.get_row_at_index(
+            self.get_previous_playable_track()))
 
     def on_row_selected(self, widget, row):
         if row is not None:
             print('row selected', row.audio['title'])
         self.selected_row = row
 
-    def get_playable_tracks(self):
-        playables = []
-        for index in range(0, len(self.trackview.get_children())):
-            if self.trackview.get_row_at_index(index).can_play():
-                playables.append(index)
-        return sorted(playables)
-
     def get_next_playable_track(self):
-        playables = self.get_playable_tracks()
-        if len(playables) > 0:
-            if self.active_row is not None and\
-                    self.active_row.index in playables:
-                selected = playables.index(self.active_row.index)
-                next = selected + 1
-                if next >= len(playables):
-                    next = 0
-                return playables[next]
-            else:
-                return playables[0]
-        return None
+        if self.active_row is not None:
+            next = self.active_row.index + 1
+            if next >= len(self.trackview.get_children()):
+                next = 0
+        else:
+            next = 0
+        return next
 
     def get_previous_playable_track(self):
-        playables = self.get_playable_tracks()
-        if len(playables) > 0:
-            if self.active_row is not None and\
-                    self.active_row.index in playables:
-                selected = playables.index(self.active_row.index)
-                previous = selected - 1
-                if previous < 0:
-                    previous = len(playables) - 1
-                return playables[previous]
-            else:
-                return playables[0]
-        return None
+        if self.active_row is not None:
+            previous = self.active_row.index - 1
+            if previous < 0:
+                previous = len(self.trackview.get_children()) - 1
+        else:
+            previous = len(self.trackview.get_children()) - 1
+        return previous
 
-    def set_audio(self, audio):
+    def update_audio_in_configuration(self, audio):
         audios = self.configuration.get('audios')
-        for index, audio in enumerate(audios):
-            if audio['hash'] == audio['hash']:
+        for index, anaudio in enumerate(audios):
+            if audio == anaudio:
                 audios[index] = audio
                 self.configuration.set('audios', audios)
                 break
@@ -513,7 +519,6 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.active_row.audio['length'])
             if position >= 0:
                 self.active_row.set_position(position)
-                self.set_audio(self.active_row.audio)
 
                 self.control['position'].handler_block_by_func(
                     self.on_position_button_changed)
@@ -525,11 +530,11 @@ class MainWindow(Gtk.ApplicationWindow):
                 if position >= 0.99:
                     self.active_row.set_listened(True)
                     self.active_row.set_position(0)
-                    self.set_audio(self.active_row.audio)
                     if self.is_playing is True:
                         self.is_playing = False
                         self.player.pause()
                     self._sound_menu_next()
+                self.update_audio_in_configuration(self.active_row.audio)
             return self.player.status == Status.PLAYING
 
     def on_player_started(self, player, position):
@@ -570,7 +575,7 @@ class MainWindow(Gtk.ApplicationWindow):
             value = float(value) / 100.0
             if value >= 0.0 and value <= 1.0:
                 self.active_row.set_position(value)
-                self.set_audio(self.active_row.audio)
+                self.update_audio_in_configuration(self.active_row.audio)
                 self.player.set_position(
                     value * float(self.active_row.audio['length']))
 
@@ -861,6 +866,7 @@ class MainWindow(Gtk.ApplicationWindow):
             self.active_row.set_active(False)
         self.active_row = row
         self.active_row.set_active(True)
+        self.row = self.active_row.index
         if row is not None:
             self.trackview.select_row(row)
 
