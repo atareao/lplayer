@@ -262,7 +262,7 @@ Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n')
 def main():
     Notify.init('lplayer')
     app = MainApplication()
-    app.run('casa')
+    app.run()
 
 
 if __name__ == "__main__":
