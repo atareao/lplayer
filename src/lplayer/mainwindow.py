@@ -216,12 +216,16 @@ class MainWindow(Gtk.ApplicationWindow):
         self.load_css()
         self.show_all()
         self.play_controls.set_visible(True)
+        self.trackview.unselect_all()
+        self.trackview.unselect_row(self.trackview.get_row_at_index(0))
         if len(self.trackview.get_children()) > 0:
-            print(1)
             if self.row > -1 and self.row < len(self.trackview.get_children()):
-                print(2)
+                self.trackview.select_row(
+                    self.trackview.get_row_at_index(self.row))
                 self.set_active_row(self.trackview.get_row_at_index(self.row))
-                print(self.row)
+            else:
+                self.trackview.select_row(self.trackview.get_row_at_index(0))
+                self.set_active_row(self.trackview.get_row_at_index(0))
 
     def drag_begin(self, widget, context):
         rows = self.trackview.get_selected_rows()
