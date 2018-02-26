@@ -57,6 +57,7 @@ from .audio import Audio
 from .async import async_function
 from .utils import get_thumbnail_filename_for_audio
 from .utils import get_pixbuf_from_base64string
+from .utils import get_desktop_environment
 from .showinfodialog import ShowInfoDialog
 from .preferencesdialog import PreferencesDialog
 
@@ -67,6 +68,10 @@ ALLOWED_MIMETYPES = ['application/x-ogg', 'application/ogg',
 DEFAULT_CURSOR = Gdk.Cursor(Gdk.CursorType.ARROW)
 WAIT_CURSOR = Gdk.Cursor(Gdk.CursorType.WATCH)
 
+if get_desktop_environment() == 'cinnamon':
+    additional_components = ''
+else:
+    additional_components = '#progressbar,\n'
 CSS = '''
 #label:hover,
 #label{
@@ -75,7 +80,7 @@ CSS = '''
 #label:selected{
     color: rgba(0, 1, 0, 1);
 }
-#progressbar,
+%s
 #button:hover,
 #button {
     border-image: none;
@@ -91,8 +96,7 @@ CSS = '''
 }
 #button:hover{
     background-color: rgba(0, 0, 0, 0.1);
-}
-'''
+}''' % (additional_components)
 
 
 def get_index_audio(audios, hash):

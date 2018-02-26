@@ -1,8 +1,8 @@
-lplayer (0.1.11-0extras16.04.0) xenial; urgency=medium
+lplayer (0.1.11-0extras16.04.1) xenial; urgency=medium
 
   * Updated for Ubuntu themes
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 26 Feb 2018 20:49:31 +0100
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 26 Feb 2018 22:12:03 +0100
 
 lplayer (0.1.10-0extras16.04.0) xenial; urgency=medium
 
