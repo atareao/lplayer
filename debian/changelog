@@ -1,3 +1,10 @@
+lplayer (0.1.10-0extras16.04.0) xenial; urgency=medium
+
+  * Updated info dialog
+  * Updated translations
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 26 Feb 2018 19:11:56 +0100
+
 lplayer (0.1.9-0extras16.04.0ubuntu1) xenial; urgency=medium
 
   * reorder

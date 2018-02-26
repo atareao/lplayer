@@ -364,11 +364,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.update_audio_in_configuration(row.audio)
 
     def on_row_info(self, widget, row):
-        sid = ShowInfoDialog(self,
-                             row.audio['artist'],
-                             row.audio['title'],
-                             row.audio['url'],
-                             row.audio['description'])
+        sid = ShowInfoDialog(self, row.audio)
         sid.run()
         sid.hide()
         sid.destroy()

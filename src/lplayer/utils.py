@@ -34,7 +34,16 @@ import base64
 import os
 import io
 from PIL import Image
-from . import comun
+try:
+    from . import comun
+except Exception as e:
+    import sys
+    PACKAGE_PARENT = '..'
+    SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(),
+                                 os.path.expanduser(__file__))))
+    sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+    import comun
+
 
 NOIMAGE = GdkPixbuf.Pixbuf.new_from_file_at_size(comun.NOIMAGE_ICON, 128, 128)
 
