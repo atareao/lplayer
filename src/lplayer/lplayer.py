@@ -112,9 +112,11 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'save_as',
             callback=self.on_headbar_clicked))
+        '''
         self.add_action(create_action(
             'download_all',
             callback=self.on_download_all_clicked))
+        '''
         self.add_action(create_action(
             'set_preferences',
             callback=self.on_preferences_clicked))

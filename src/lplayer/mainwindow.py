@@ -195,8 +195,10 @@ class MainWindow(Gtk.ApplicationWindow):
         self.trackview.select_row(row)
         self.trackview.handler_unblock_by_func(self.on_row_selected)
 
+        '''
         self.trackview.connect('drag-begin', self.drag_begin)
         self.trackview.connect('drag-data-get', self.drag_data_get_data)
+        '''
         self.trackview.connect('drag-data-received', self.drag_data_received)
         #
         dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, 100),
@@ -216,6 +218,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.load_css()
         self.show_all()
         self.play_controls.set_visible(True)
+        self.play_controls.grab_focus()
         self.trackview.unselect_all()
         self.trackview.unselect_row(self.trackview.get_row_at_index(0))
         if len(self.trackview.get_children()) > 0:
@@ -226,6 +229,7 @@ class MainWindow(Gtk.ApplicationWindow):
             else:
                 self.trackview.select_row(self.trackview.get_row_at_index(0))
                 self.set_active_row(self.trackview.get_row_at_index(0))
+        self.control['play-pause'].grab_focus()
         if len(files) > 0:
             self.add_tracks(files)
 
@@ -331,6 +335,7 @@ class MainWindow(Gtk.ApplicationWindow):
     def play_row(self, row):
         self.trackview.get_adjustment().set_value(
             row.get_index() * row.get_allocated_height())
+        row.grab_focus()
         if self.active_row is not None and self.active_row == row:
             if self.is_playing:
                 self.player.pause()
@@ -740,11 +745,11 @@ class MainWindow(Gtk.ApplicationWindow):
 
         help_model = Gio.Menu()
 
-        help_section0_model = Gio.Menu()
-        help_section0_model.append(_('Download all'), 'app.download_all')
-        help_section0_model.append(_('Preferences'), 'app.set_preferences')
-        help_section0 = Gio.MenuItem.new_section(None, help_section0_model)
-        help_model.append_item(help_section0)
+        # help_section0_model = Gio.Menu()
+        # help_section0_model.append(_('Download all'), 'app.download_all')
+        # help_section0_model.append(_('Preferences'), 'app.set_preferences')
+        # help_section0 = Gio.MenuItem.new_section(None, help_section0_model)
+        # help_model.append_item(help_section0)
 
         help_section1_model = Gio.Menu()
         help_section1_model.append(_('Homepage'), 'app.goto_homepage')
