@@ -42,7 +42,6 @@ from gi.repository import Notify
 import sys
 import webbrowser
 from .mainwindow import MainWindow
-from .audio import Audio
 from . import comun
 from .comun import _
 

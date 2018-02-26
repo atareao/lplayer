@@ -326,14 +326,11 @@ class MainWindow(Gtk.ApplicationWindow):
                 found_row = row
                 break
         if found_row is not None:
-            print('==== Found Audio ====')
             self.play_row(found_row)
 
     def play_row(self, row):
-        if self.active_row is not None:
-            print('Active row: ' + self.active_row.audio['title'])
-        print('Row: ' + self.active_row.audio['title'])
-        print(self.is_playing)
+        self.trackview.get_adjustment().set_value(
+            row.get_index() * row.get_allocated_height())
         if self.active_row is not None and self.active_row == row:
             if self.is_playing:
                 self.player.pause()
@@ -901,11 +898,11 @@ class MainWindow(Gtk.ApplicationWindow):
         def on_add_track_in_thread_done(result, error):
             self.get_root_window().set_cursor(DEFAULT_CURSOR)
             if error is None and play is True and result is not None:
-                self.play_row(result)
+                self.play_row_by_audio(result)
 
         @async_function(on_done=on_add_track_in_thread_done)
         def do_add_tracks_in_thread(filenames):
-            first_row_added = None
+            play_audio = None
             audios = self.configuration.get('audios')
             for index, filename in enumerate(filenames):
                 print('File: %s (%s/%s)' % (filename, index, len(filenames)))
@@ -913,6 +910,8 @@ class MainWindow(Gtk.ApplicationWindow):
                 exists = False
                 for audio in audios:
                     if audio == anaudio:
+                        if play_audio is None:
+                            play_audio = audio
                         exists = True
                         break
                 if exists is False:
@@ -924,13 +923,13 @@ class MainWindow(Gtk.ApplicationWindow):
                                 self.on_row_listened,
                                 row)
                     row.show()
-                    if first_row_added is None:
-                        first_row_added = row
+                    if play_audio is None:
+                        play_audio = row.audio
                     self.trackview.add(row)
             self.trackview.show_all()
             self.configuration.set('audios', audios)
             self.configuration.save()
-            return first_row_added
+            return play_audio
 
         self.get_root_window().set_cursor(WAIT_CURSOR)
         do_add_tracks_in_thread(filenames)
