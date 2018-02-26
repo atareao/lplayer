@@ -34,5 +34,5 @@ if __name__ == '__main__':
 
     from lplayer.lplayer import main
 
-    main()
+    main(sys.argv)
 exit(0)

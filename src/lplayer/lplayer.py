@@ -39,8 +39,10 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GdkPixbuf
 from gi.repository import Notify
+import sys
 import webbrowser
 from .mainwindow import MainWindow
+from .audio import Audio
 from . import comun
 from .comun import _
 
@@ -50,15 +52,25 @@ class MainApplication(Gtk.Application):
         Gtk.Application.__init__(
             self,
             application_id='es.atareao.lplayer',
-            flags=Gio.ApplicationFlags.FLAGS_NONE
+            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
         )
         self.license_type = Gtk.License.GPL_3_0
+        self.win = None
+        self.new_tracks = []
 
     def do_shutdown(self):
         Gtk.Application.do_shutdown(self)
 
     def on_quit(self, widget, data):
         self.quit()
+
+    def do_command_line(self, command_line):
+        if command_line is not None:
+            print(command_line.get_arguments(), self.win)
+            if len(command_line.get_arguments()) > 1:
+                self.new_tracks.extend(command_line.get_arguments()[1:])
+        self.do_activate()
+        return 0
 
     def do_startup(self):
         print('do_startup')
@@ -190,9 +202,14 @@ class MainApplication(Gtk.Application):
 
     def do_activate(self):
         print('do_activate')
-        self.win = MainWindow(self)
+        if self.win is None:
+            self.win = MainWindow(self)
+            self.win.show_all()
         self.add_window(self.win)
-        self.win.show()
+        self.win.present()
+        if len(self.new_tracks) > 0:
+            self.win.add_tracks(self.new_tracks)
+            self.new_tracks = []
 
     def action_clicked(self, action, variant):
         print(action, variant)
@@ -204,11 +221,7 @@ class MainApplication(Gtk.Application):
 
     def on_support_clicked(self, widget, optional):
         pass
-        '''
-        dialog = SupportDialog(self.win)
-        dialog.run()
-        dialog.destroy()
-        '''
+
     def on_preferences_clicked(self, action, optional):
         self.win.on_preferences_clicked(None)
 
@@ -259,11 +272,11 @@ Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n')
                 "gtk-application-prefer-dark-theme", state)
 
 
-def main():
+def main(args):
     Notify.init('lplayer')
     app = MainApplication()
-    app.run()
+    app.run(args)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)

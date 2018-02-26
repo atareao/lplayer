@@ -107,7 +107,7 @@ class MainWindow(Gtk.ApplicationWindow):
         'save-me': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE,
                     (object,)), }
 
-    def __init__(self, app, afile=None):
+    def __init__(self, app, files=[]):
         Gtk.ApplicationWindow.__init__(self, application=app)
 
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
@@ -226,6 +226,8 @@ class MainWindow(Gtk.ApplicationWindow):
             else:
                 self.trackview.select_row(self.trackview.get_row_at_index(0))
                 self.set_active_row(self.trackview.get_row_at_index(0))
+        if len(files) > 0:
+            self.add_tracks(files)
 
     def drag_begin(self, widget, context):
         rows = self.trackview.get_selected_rows()
@@ -306,6 +308,26 @@ class MainWindow(Gtk.ApplicationWindow):
         sid.run()
         sid.hide()
         sid.destroy()
+
+    def get_number_of_tracks(self):
+        return len(self.trackview.get_children())
+
+    def play_row_by_index(self, index):
+        print('====', index, '====')
+        if index >= 0 and index < len(self.trackview.get_children()):
+            self.play_row(self.trackview.get_row_at_index(index))
+
+    def play_row_by_audio(self, audio):
+        print(audio)
+        found_row = None
+        for index, row in enumerate(self.trackview.get_children()):
+            print(index, row.audio['title'])
+            if row.audio == audio:
+                found_row = row
+                break
+        if found_row is not None:
+            print('==== Found Audio ====')
+            self.play_row(found_row)
 
     def play_row(self, row):
         if self.active_row is not None:
@@ -874,45 +896,41 @@ class MainWindow(Gtk.ApplicationWindow):
         if row is not None:
             self.trackview.select_row(row)
 
-    def add_tracks(self, filenames):
+    def add_tracks(self, filenames, play=True):
 
-        def on_add_track_in_thread_done(results, error):
-            if error is None and results is not None and len(results) > 0:
-                print(3)
-                audios = self.configuration.get('audios')
-                for result in results:
-                    exists = False
-                    for audio in audios:
-                        if audio == result:
-                            exists = True
-                            break
-                    if exists is False:
-                        audios.append(result)
-                        self.configuration.set('audios', audios)
-                        row = ListBoxRowWithData(result, len(audios) - 1)
-                        row.connect('button_info_clicked',
-                                    self.on_row_info, row)
-                        row.connect('button_listened_clicked',
-                                    self.on_row_listened,
-                                    row)
-                        row.show()
-                        self.trackview.add(row)
-                        self.trackview.show_all()
-
-                        self.configuration.set('audios', audios)
-                        self.configuration.save()
-
+        def on_add_track_in_thread_done(result, error):
             self.get_root_window().set_cursor(DEFAULT_CURSOR)
+            if error is None and play is True and result is not None:
+                self.play_row(result)
 
         @async_function(on_done=on_add_track_in_thread_done)
         def do_add_tracks_in_thread(filenames):
-            results = []
+            first_row_added = None
+            audios = self.configuration.get('audios')
             for index, filename in enumerate(filenames):
                 print('File: %s (%s/%s)' % (filename, index, len(filenames)))
                 anaudio = Audio(filename)
-                results.append(anaudio)
-                print(2)
-            return results
+                exists = False
+                for audio in audios:
+                    if audio == anaudio:
+                        exists = True
+                        break
+                if exists is False:
+                    audios.append(anaudio)
+                    row = ListBoxRowWithData(anaudio, len(audios) - 1)
+                    row.connect('button_info_clicked',
+                                self.on_row_info, row)
+                    row.connect('button_listened_clicked',
+                                self.on_row_listened,
+                                row)
+                    row.show()
+                    if first_row_added is None:
+                        first_row_added = row
+                    self.trackview.add(row)
+            self.trackview.show_all()
+            self.configuration.set('audios', audios)
+            self.configuration.save()
+            return first_row_added
 
         self.get_root_window().set_cursor(WAIT_CURSOR)
         do_add_tracks_in_thread(filenames)

@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=LPlayer Player
+Name=Lplayer
 GenericName=Music Player
 Comment=A Simple Audio Player
 Keywords=Audio;Podcast;MP3;Song;
-Exec=/usr/bin/lplayer
+Exec=/usr/bin/lplayer %u
 TryExec=lplayer
 Icon=lplayer
 Type=Application
