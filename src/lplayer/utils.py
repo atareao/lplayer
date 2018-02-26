@@ -103,7 +103,6 @@ def get_pixbuf_from_base64string(base64string):
 
 def from_remote_image_to_base64(image_url):
     base64string = None
-    print(image_url)
     try:
         r = requests.get(image_url, timeout=5, verify=False)
         if r.status_code == 200:

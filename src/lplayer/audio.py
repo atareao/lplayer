@@ -70,15 +70,12 @@ class Audio(dict):
                     self['year'] = str(audio.tags['TDRC'].text[0])
                 else:
                     self['year'] = ''
-                print(5)
                 if 'APIC:' in audio.tags.keys():
                     self['thumbnail_base64'] = base64.b64encode(
                         audio.tags['APIC:'].data).decode()
                 else:
                     self['thumbnail_base64'] = None
-                print(11)
             else:
-                print(2)
                 self['title'] = os.path.splitext(os.path.basename(filepath))[0]
                 self['artist'] = ''
                 self['album'] = ''
@@ -108,7 +105,6 @@ class Audio(dict):
         self['genre'] = Audio.GENRE_UNKNOWN
         self['listened'] = False
         self['position'] = 0
-        self['norder'] = -1
 
     def __eq__(self, other):
         return self['hash'] == other['hash']
@@ -136,7 +132,6 @@ class Audio(dict):
         else:
             string += 'Listened: False\n'
         string += 'Position: %s\n' % self['position']
-        string += 'Order: %s\n' % self['norder']
         return string
 
 

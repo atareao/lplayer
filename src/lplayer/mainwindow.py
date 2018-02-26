@@ -42,6 +42,7 @@ from gi.repository import GObject
 from gi.repository import GdkPixbuf
 from gi.repository import Notify
 import os
+import json
 import mimetypes
 import urllib
 from dbus.mainloop.glib import DBusGMainLoop
@@ -195,32 +196,36 @@ class MainWindow(Gtk.ApplicationWindow):
         self.trackview.select_row(row)
         self.trackview.handler_unblock_by_func(self.on_row_selected)
 
-        '''
         self.trackview.connect('drag-begin', self.drag_begin)
         self.trackview.connect('drag-data-get', self.drag_data_get_data)
-        '''
+        self.trackview.connect('drag-drop', self.drag_drop)
+        self.trackview.connect('drag-data-delete', self.drag_data_delete)
+        self.trackview.connect('drag-end', self.drag_end)
         self.trackview.connect('drag-data-received', self.drag_data_received)
         #
-        dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, 100),
-                    Gtk.TargetEntry.new('text/plain', 0, 80)]
+        dnd_list = [Gtk.TargetEntry.new('text/plain',
+                                        Gtk.TargetFlags.SAME_WIDGET,
+                                        1001)]
         self.trackview.drag_source_set(Gdk.ModifierType.BUTTON1_MASK,
                                        dnd_list,
-                                       Gdk.DragAction.COPY)
-        self.trackview.drag_source_add_uri_targets()
-        dnd_list = Gtk.TargetEntry.new("text/uri-list", 0, 0)
+                                       Gdk.DragAction.MOVE)
+        dnd_list = [Gtk.TargetEntry.new('text/plain',
+                                        Gtk.TargetFlags.SAME_WIDGET,
+                                        1001),
+                    Gtk.TargetEntry.new('text/uri-list',
+                                        Gtk.TargetFlags.OTHER_APP,
+                                        0)]
         self.trackview.drag_dest_set(Gtk.DestDefaults.MOTION |
                                      Gtk.DestDefaults.HIGHLIGHT |
                                      Gtk.DestDefaults.DROP,
-                                     [dnd_list],
+                                     dnd_list,
                                      Gdk.DragAction.MOVE)
-        self.trackview.drag_dest_add_uri_targets()
 
         self.load_css()
         self.show_all()
         self.play_controls.set_visible(True)
         self.play_controls.grab_focus()
         self.trackview.unselect_all()
-        self.trackview.unselect_row(self.trackview.get_row_at_index(0))
         if len(self.trackview.get_children()) > 0:
             if self.row > -1 and self.row < len(self.trackview.get_children()):
                 self.trackview.select_row(
@@ -233,7 +238,20 @@ class MainWindow(Gtk.ApplicationWindow):
         if len(files) > 0:
             self.add_tracks(files)
 
+    def drag_drop(self, widget, context, selection, info, time):
+        print('==== Drag drop ====')
+
+    def drag_end(self, widget, context):
+        print('==== Drag end ====')
+
+    def drag_data_delete(self, widget, context):
+        print('==== Drag data delete ====')
+
     def drag_begin(self, widget, context):
+        if self.is_playing:
+            self.player.pause()
+            self.is_playing = False
+        print('==== Drag begin ====')
         rows = self.trackview.get_selected_rows()
         if len(rows) > 0:
             selected = rows[0]
@@ -244,36 +262,78 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def drag_data_get_data(self, treeview, context, selection, target_id,
                            etime):
-        if target_id == 0:
-            if self.album is not None:
-                items = self.trackview.get_selected_items()
-                if len(items) > 0:
-                    for item in items:
-                        print(item)
+        print('==== Drag get data ====')
+        print(target_id)
+        if target_id == 1001:
+            items = self.trackview.get_selected_rows()
+            if len(items) > 0:
+                rows = []
+                for item in items:
+                    rows.append(item.index)
+                data = json.dumps(rows)
+                selection.set_text(data, len(data))
+        else:
+            print(context)
 
     def drag_data_received(self, widget, drag_context, x, y, selection_data,
                            info, timestamp):
-        filenames = selection_data.get_uris()
-        tracks_to_add = []
-        for filename in filenames:
-            if len(filename) > 8:
-                filename = urllib.request.url2pathname(filename)
-                filename = filename[7:]
-                if os.path.exists(filename):
-                    mime = mimetypes.guess_type(filename)[0]
-                    if mime in ALLOWED_MIMETYPES:
-                        tracks_to_add.append(filename)
-                        print(filename, mime)
-        if len(tracks_to_add) > 0:
-            self.add_tracks(tracks_to_add)
-            return True
+        print('==== Drag received data ====')
+        if info == 1001:
+            row_after = self.trackview.get_row_at_y(y)
+            print(row_after.audio['title'])
+            rows = json.loads(selection_data.get_text())
+            rows_to_move = []
+            for row in rows:
+                rows_to_move.append(self.trackview.get_row_at_index(row))
+            for row_to_move in rows_to_move:
+                print(row_to_move.audio['title'])
+                self.trackview.remove(row_to_move)
+            index_row_after = self.get_index_for_audio(row_after.audio)
+            for index, row_to_move in enumerate(rows_to_move):
+                print(index_row_after, index)
+                new_row = ListBoxRowWithData(row_to_move.audio,
+                                             index_row_after + index)
+                new_row.connect('button_info_clicked',
+                                self.on_row_info, new_row)
+                new_row.connect('button_listened_clicked',
+                                self.on_row_listened,
+                                new_row)
+                self.trackview.insert(new_row,
+                                      index_row_after + index)
+            self.trackview.show_all()
+            self.update_audios()
+        else:
+            print('aqui')
+            filenames = selection_data.get_uris()
+            print(filenames)
+            tracks_to_add = []
+            for filename in filenames:
+                if len(filename) > 8:
+                    filename = urllib.request.url2pathname(filename)
+                    filename = filename[7:]
+                    if os.path.exists(filename):
+                        mime = mimetypes.guess_type(filename)[0]
+                        if mime in ALLOWED_MIMETYPES:
+                            tracks_to_add.append(filename)
+            if len(tracks_to_add) > 0:
+                print(tracks_to_add)
+                # self.add_tracks(tracks_to_add)
+                self.add_tracks_sync(tracks_to_add)
+                return True
         return False
 
     def on_clicked(self, widget, event):
+        print('clicked')
         if event.button == 1 and\
                 event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
             if self.selected_row is not None:
                 self.play_row(self.selected_row)
+        if event.get_state() & Gdk.ModifierType.SHIFT_MASK or\
+                event.get_state() & Gdk.ModifierType.CONTROL_MASK:
+            pass
+        else:
+            self.trackview.unselect_all()
+        self.trackview.select_row(self.trackview.get_row_at_y(event.y))
 
     def delete_event(self, widget, arg):
         self.hide()
@@ -322,30 +382,96 @@ class MainWindow(Gtk.ApplicationWindow):
             self.play_row(self.trackview.get_row_at_index(index))
 
     def play_row_by_audio(self, audio):
-        print(audio)
         found_row = None
         for index, row in enumerate(self.trackview.get_children()):
-            print(index, row.audio['title'])
             if row.audio == audio:
                 found_row = row
                 break
         if found_row is not None:
             self.play_row(found_row)
 
+    def get_index_for_audio(self, audio):
+        for row in self.trackview.get_children():
+            if row.audio == audio:
+                return row.index
+        return -1
+
     def play_row(self, row):
-        self.trackview.get_adjustment().set_value(
-            row.get_index() * row.get_allocated_height())
-        row.grab_focus()
-        if self.active_row is not None and self.active_row == row:
-            if self.is_playing:
-                self.player.pause()
-                self.control['play-pause'].get_child().set_from_gicon(
-                    Gio.ThemedIcon(name='media-playback-start-symbolic'),
-                    Gtk.IconSize.BUTTON)
-                self.control['play-pause'].set_tooltip_text(_('Play'))
-                self.is_playing = False
+        if len(self.trackview.get_children()) > 0:
+            self.trackview.get_adjustment().set_value(
+                row.get_index() * row.get_allocated_height())
+            row.grab_focus()
+            if self.active_row is not None and self.active_row == row:
+                if self.is_playing:
+                    self.player.pause()
+                    self.control['play-pause'].get_child().set_from_gicon(
+                        Gio.ThemedIcon(name='media-playback-start-symbolic'),
+                        Gtk.IconSize.BUTTON)
+                    self.control['play-pause'].set_tooltip_text(_('Play'))
+                    self.is_playing = False
+                else:
+                    filename = row.audio['filepath']
+                    self.player.set_filename(filename)
+                    self.player.set_speed(self.configuration.get('speed'))
+                    self.player.set_remove_silence(
+                        self.configuration.get('remove_silence'))
+                    self.player.set_equalizaer(
+                        self.configuration.get('equalizer'))
+
+                    fraction = float(self.active_row.get_position())
+                    self.control['position'].handler_block_by_func(
+                        self.on_position_button_changed)
+                    self.control['position'].set_value(fraction)
+                    self.control['label-position'].set_text(
+                        _('Position') + ': {0}%'.format(int(fraction * 100)))
+                    self.control['position'].handler_unblock_by_func(
+                        self.on_position_button_changed)
+                    self.control['play-pause'].get_child().set_from_gicon(
+                        Gio.ThemedIcon(name='media-playback-pause-symbolic'),
+                        Gtk.IconSize.BUTTON)
+                    self.control['play-pause'].set_tooltip_text(_('Pause'))
+                    if self.active_row.get_position() > 0:
+                        self.player.set_position(
+                            self.active_row.audio['position'] *
+                            float(self.active_row.audio['length']))
+                    artists = [self.active_row.audio['artist']]
+                    album = self.active_row.audio['album']
+                    title = self.active_row.audio['title']
+                    album_art = 'file://' + get_thumbnail_filename_for_audio(
+                        self.active_row.audio)
+                    self.sound_menu.song_changed(artists, album,
+                                                 title,
+                                                 album_art)
+                    self.sound_menu.signal_playing()
+
+                    self.notification.update('{0} - {1}'.format(
+                        'lplayer',
+                        album),
+                        title,
+                        album_art)
+                    self.notification.show()
+
+                    if self.active_row.audio['position'] > 0 and\
+                            self.active_row.audio['position'] <= 1:
+                        self.player.set_position(
+                            self.active_row.audio['position'] *
+                            float(self.active_row.audio['length']))
+                    self.player.play()
+                    self.updater = GLib.timeout_add_seconds(
+                        1, self.update_position)
+                    self.is_playing = True
             else:
+                if self.is_playing is True:
+                    self.player.pause()
+                    self.control['play-pause'].get_child().set_from_gicon(
+                        Gio.ThemedIcon(name='media-playback-start-symbolic'),
+                        Gtk.IconSize.BUTTON)
+                    self.control['play-pause'].set_tooltip_text(_('Play'))
+                    self.is_playing = False
+
+                self.set_active_row(row)
                 filename = row.audio['filepath']
+
                 self.player.set_filename(filename)
                 self.player.set_speed(self.configuration.get('speed'))
                 self.player.set_remove_silence(
@@ -389,71 +515,14 @@ class MainWindow(Gtk.ApplicationWindow):
                         self.active_row.audio['position'] *
                         float(self.active_row.audio['length']))
                 self.player.play()
-                self.updater = GLib.timeout_add_seconds(1,
-                                                        self.update_position)
+                if self.updater is not None and self.updater > 0:
+                    try:
+                        GLib.source_remove(self.updater)
+                    except Exception as e:
+                        print(e)
+                self.updater = GLib.timeout_add_seconds(
+                    1, self.update_position)
                 self.is_playing = True
-        else:
-            if self.is_playing is True:
-                self.player.pause()
-                self.control['play-pause'].get_child().set_from_gicon(
-                    Gio.ThemedIcon(name='media-playback-start-symbolic'),
-                    Gtk.IconSize.BUTTON)
-                self.control['play-pause'].set_tooltip_text(_('Play'))
-                self.is_playing = False
-
-            self.set_active_row(row)
-            filename = row.audio['filepath']
-
-            self.player.set_filename(filename)
-            self.player.set_speed(self.configuration.get('speed'))
-            self.player.set_remove_silence(
-                self.configuration.get('remove_silence'))
-            self.player.set_equalizaer(self.configuration.get('equalizer'))
-
-            fraction = float(self.active_row.get_position())
-            self.control['position'].handler_block_by_func(
-                self.on_position_button_changed)
-            self.control['position'].set_value(fraction)
-            self.control['label-position'].set_text(
-                _('Position') + ': {0}%'.format(int(fraction * 100)))
-            self.control['position'].handler_unblock_by_func(
-                self.on_position_button_changed)
-            self.control['play-pause'].get_child().set_from_gicon(
-                Gio.ThemedIcon(name='media-playback-pause-symbolic'),
-                Gtk.IconSize.BUTTON)
-            self.control['play-pause'].set_tooltip_text(_('Pause'))
-            if self.active_row.get_position() > 0:
-                self.player.set_position(
-                    self.active_row.audio['position'] *
-                    float(self.active_row.audio['length']))
-            artists = [self.active_row.audio['artist']]
-            album = self.active_row.audio['album']
-            title = self.active_row.audio['title']
-            album_art = 'file://' + get_thumbnail_filename_for_audio(
-                self.active_row.audio)
-            self.sound_menu.song_changed(artists, album, title, album_art)
-            self.sound_menu.signal_playing()
-
-            self.notification.update('{0} - {1}'.format(
-                'lplayer',
-                album),
-                title,
-                album_art)
-            self.notification.show()
-
-            if self.active_row.audio['position'] > 0 and\
-                    self.active_row.audio['position'] <= 1:
-                self.player.set_position(
-                    self.active_row.audio['position'] *
-                    float(self.active_row.audio['length']))
-            self.player.play()
-            if self.updater is not None and self.updater > 0:
-                try:
-                    GLib.source_remove(self.updater)
-                except Exception as e:
-                    print(e)
-            self.updater = GLib.timeout_add_seconds(1, self.update_position)
-            self.is_playing = True
 
     def update_audios(self):
         audios = self.configuration.get('audios')
@@ -807,7 +876,6 @@ class MainWindow(Gtk.ApplicationWindow):
         equalizer[band] = widget.get_value()
         self.configuration.set('equalizer', equalizer)
         self.player.set_equalizer_by_band(int(band[4:]), widget.get_value())
-        print(widget, band, int(band[4:]))
 
     def on_add_track(self, widget):
         dialog = Gtk.FileChooserDialog(_('Please choose music files'),
@@ -888,15 +956,48 @@ class MainWindow(Gtk.ApplicationWindow):
                 dialog.destroy()
 
     def set_active_row(self, row=None):
-        print('SAR')
-        self.trackview.unselect_all()
-        if self.active_row is not None:
-            self.active_row.set_active(False)
-        self.active_row = row
-        self.active_row.set_active(True)
-        self.row = self.active_row.index
-        if row is not None:
-            self.trackview.select_row(row)
+        if len(self.trackview.get_children()) > 0:
+            self.trackview.unselect_all()
+            if self.active_row is not None:
+                self.active_row.set_active(False)
+            self.active_row = row
+            self.active_row.set_active(True)
+            self.row = self.active_row.index
+            if row is not None:
+                self.trackview.select_row(row)
+
+    def add_tracks_sync(self, filenames, play=True):
+        self.get_root_window().set_cursor(WAIT_CURSOR)
+        play_audio = None
+        audios = self.configuration.get('audios')
+        for index, filename in enumerate(filenames):
+            anaudio = Audio(filename)
+            exists = False
+            for audio in audios:
+                if audio == anaudio:
+                    if play_audio is None:
+                        play_audio = audio
+                    exists = True
+                    break
+            if exists is False:
+                audios.append(anaudio)
+                row = ListBoxRowWithData(anaudio, len(audios) - 1)
+                row.connect('button_info_clicked',
+                            self.on_row_info, row)
+                row.connect('button_listened_clicked',
+                            self.on_row_listened,
+                            row)
+                row.show()
+                if play_audio is None:
+                    play_audio = row.audio
+                self.trackview.add(row)
+        self.trackview.show_all()
+        self.configuration.set('audios', audios)
+        self.configuration.save()
+
+        self.get_root_window().set_cursor(DEFAULT_CURSOR)
+        if play is True and play_audio is not None:
+            self.play_row_by_audio(play_audio)
 
     def add_tracks(self, filenames, play=True):
 
@@ -910,7 +1011,6 @@ class MainWindow(Gtk.ApplicationWindow):
             play_audio = None
             audios = self.configuration.get('audios')
             for index, filename in enumerate(filenames):
-                print('File: %s (%s/%s)' % (filename, index, len(filenames)))
                 anaudio = Audio(filename)
                 exists = False
                 for audio in audios:
