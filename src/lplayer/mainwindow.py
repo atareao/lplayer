@@ -75,6 +75,7 @@ CSS = '''
 #label:selected{
     color: rgba(0, 1, 0, 1);
 }
+#progressbar,
 #button:hover,
 #button {
     border-image: none;
@@ -236,7 +237,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.set_active_row(self.trackview.get_row_at_index(0))
         self.control['play-pause'].grab_focus()
         if len(files) > 0:
-            self.add_tracks(files)
+            self.add_tracks_sync(files)
 
     def drag_drop(self, widget, context, selection, info, time):
         print('==== Drag drop ====')
@@ -751,10 +752,10 @@ class MainWindow(Gtk.ApplicationWindow):
 
         equalizer_grid.set_margin_top(10)
         equalizer_grid.set_margin_bottom(10)
-        equalizer_grid.set_margin_left(10)
-        equalizer_grid.set_margin_right(10)
+        equalizer_grid.set_margin_left(5)
+        equalizer_grid.set_margin_right(5)
 
-        equalizer_grid.set_column_spacing(25)
+        equalizer_grid.set_column_spacing(10)
         equalizer_grid.set_row_spacing(5)
 
         popover_grid.attach(equalizer_grid, 0, 5, 10, 1)
@@ -911,7 +912,7 @@ class MainWindow(Gtk.ApplicationWindow):
         if response == Gtk.ResponseType.OK:
             filenames = dialog.get_filenames()
             GLib.idle_add(dialog.destroy)
-            self.add_tracks(filenames)
+            self.add_tracks_sync(filenames)
 
     def on_remove_track(self, widget):
         if self.active_row is not None:

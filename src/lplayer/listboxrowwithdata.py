@@ -131,6 +131,7 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
         self.progressbar.set_valign(Gtk.Align.CENTER)
         self.progressbar.set_hexpand(True)
         self.progressbar.set_margin_right(5)
+        self.progressbar.set_name('progressbar')
         grid.attach(self.progressbar, 4, 3, 2, 1)
 
         self.index = index
