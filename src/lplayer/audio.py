@@ -36,16 +36,24 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-def get_data_from_ogg(tags, info):
+def get_data_from_metadata(tags, info):
     for tag in tags:
         if tag[0].lower() == info.lower():
             return tag[1]
     return ''
 
 
+def get_image_from_flac(audio):
+    for picture in audio.pictures:
+        if picture.type == mutagen.id3.PictureType.COVER_FRONT:
+            return base64.b64encode(picture.data).decode()
+    return None
+
+
 class Audio(dict):
     FORMAT_MP3 = 0
     FORMAT_OGG = 1
+    FORMAT_FLAC = 2
 
     GENRE_UNKNOWN = 0
 
@@ -89,19 +97,44 @@ class Audio(dict):
             self['ext'] = 'mp3'
         elif type(audio.info) == mutagen.oggvorbis.OggVorbisInfo:
             self['type'] = Audio.FORMAT_OGG
-            self['title'] = get_data_from_ogg(audio.tags, 'title')
+            self['title'] = get_data_from_metadata(audio.tags, 'title')
             if len(self['title']) < 1:
                 self['title'] = os.path.splitext(os.path.basename(filepath))[0]
-            self['artist'] = get_data_from_ogg(audio.tags, 'artist')
-            self['album'] = get_data_from_ogg(audio.tags, 'album')
-            self['year'] = get_data_from_ogg(audio.tags, 'year')
-            self['thumbnail_base64'] = get_data_from_ogg(
+            self['artist'] = get_data_from_metadata(audio.tags, 'artist')
+            self['album'] = get_data_from_metadata(audio.tags, 'album')
+            self['year'] = get_data_from_metadata(audio.tags, 'year')
+            self['thumbnail_base64'] = get_data_from_metadata(
                 audio.tags, 'metada_block_picture')
             self['length'] = audio.info.length
             self['channels'] = audio.info.channels
             self['sample rate'] = audio.info.sample_rate
             self['bitrate'] = int(audio.info.bitrate / 1000.0)
             self['ext'] = 'ogg'
+        elif type(audio.info) == mutagen.flac.StreamInfo:
+            print(audio.tags)
+            print(audio.pictures)
+            for picture in audio.pictures:
+                print(picture.type)
+                print(picture.mime)
+                print(picture.desc)
+            self['type'] = Audio.FORMAT_FLAC
+            self['title'] = get_data_from_metadata(audio.tags, 'title')
+            if len(self['title']) < 1:
+                self['title'] = os.path.splitext(os.path.basename(filepath))[0]
+            self['artist'] = get_data_from_metadata(audio.tags, 'artist')
+            self['album'] = get_data_from_metadata(audio.tags, 'album')
+            if len(self['album']) == 0:
+                self['album'] = get_data_from_metadata(audio.tags,
+                                                       'albumtitle')
+            self['year'] = get_data_from_metadata(audio.tags, 'year')
+            print(audio.info)
+            self['thumbnail_base64'] = get_image_from_flac(audio)
+            self['length'] = audio.info.length
+            self['channels'] = audio.info.channels
+            self['sample rate'] = audio.info.sample_rate
+            self['bitrate'] = 0  # int(audio.info.bitrate / 1000.0)
+            self['ext'] = 'flac'
+
         self['genre'] = Audio.GENRE_UNKNOWN
         self['listened'] = False
         self['position'] = 0
@@ -137,7 +170,7 @@ class Audio(dict):
 
 if __name__ == '__main__':
     import glob
-    for afile in glob.glob('/home/lorenzo/Descargas/Telegram Desktop/*.mp3'):
+    for afile in glob.glob('/home/lorenzo/Descargas/Telegram Desktop/*.flac'):
         print('====', afile, '====')
         print(Audio(afile))
         print(type(Audio(afile)['thumbnail_base64']))

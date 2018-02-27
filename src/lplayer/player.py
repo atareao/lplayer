@@ -57,6 +57,7 @@ class Player(GObject.GObject):
         self.player = None
         self.speed = 1.0
         self.volume = 1.0
+        self.amplification = 1.0
         self.removesilence = False
         self.equalizer = {'band0': 0, 'band1': 0, 'band2': 0, 'band3': 0,
                           'band4': 0, 'band5': 0, 'band6': 0, 'band7': 0,
@@ -81,7 +82,8 @@ class Player(GObject.GObject):
  audioconvert ! audioresample ! queue ! removesilence name=removesilence !\
  audioconvert ! audioresample ! queue ! scaletempo !\
  audioconvert ! audioresample ! volume name=volume !\
- equalizer-10bands name=equalizer ! autoaudiosink')
+ audioamplify name=amplification !equalizer-10bands name=equalizer !\
+ autoaudiosink')
         bus = player.get_bus()
         bus.add_signal_watch()
         bus.connect('message::state-changed', self.on_state_changed)
@@ -123,6 +125,8 @@ class Player(GObject.GObject):
                 'remove', self.removesilence)
             self.player.get_by_name('volume').set_property('volume',
                                                            self.volume)
+            self.player.get_by_name('amplification').set_property(
+                'amplification', self.amplification)
             self.player.get_by_name('equalizer').set_property(
                 'band0', self.equalizer['band0'])
             self.player.get_by_name('equalizer').set_property(

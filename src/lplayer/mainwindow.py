@@ -63,7 +63,8 @@ from .preferencesdialog import PreferencesDialog
 
 ALLOWED_MIMETYPES = ['application/x-ogg', 'application/ogg',
                      'audio/x-vorbis+ogg', 'audio/x-scpls', 'audio/x-mp3',
-                     'audio/x-mpeg', 'audio/mpeg', 'audio/x-mpegurl']
+                     'audio/x-mpeg', 'audio/mpeg', 'audio/x-mpegurl',
+                     'audio/flac']
 
 DEFAULT_CURSOR = Gdk.Cursor(Gdk.CursorType.ARROW)
 WAIT_CURSOR = Gdk.Cursor(Gdk.CursorType.WATCH)
@@ -646,9 +647,15 @@ class MainWindow(Gtk.ApplicationWindow):
                     self.active_row.set_listened(True)
                     self.active_row.set_position(0)
                     if self.is_playing is True:
-                        self.is_playing = False
                         self.player.pause()
-                    self._sound_menu_next()
+                        self.control['play-pause'].get_child().set_from_gicon(
+                            Gio.ThemedIcon(
+                                name='media-playback-start-symbolic'),
+                            Gtk.IconSize.BUTTON)
+                        self.control['play-pause'].set_tooltip_text(_('Play'))
+                        self.is_playing = False
+                    if self.configuration.get('play_continuously') is True:
+                        self._sound_menu_next()
                 self.update_audio_in_configuration(self.active_row.audio)
             if self.player.status != Status.PLAYING:
                 self.updater = 0
@@ -1017,6 +1024,7 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_audio.add_mime_type('video/mpeg')
         filter_audio.add_mime_type('video/x-mpeg')
         filter_audio.add_mime_type('audio/ogg')
+        filter_audio.add_mime_type('audio/flac')
         dialog.add_filter(filter_audio)
 
         filter_mp3 = Gtk.FileFilter()
@@ -1032,6 +1040,11 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_ogg.set_name(_('ogg files'))
         filter_ogg.add_mime_type('audio/ogg')
         dialog.add_filter(filter_ogg)
+
+        filter_flac = Gtk.FileFilter()
+        filter_flac.set_name(_('flac files'))
+        filter_flac.add_mime_type('audio/flac')
+        dialog.add_filter(filter_flac)
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
