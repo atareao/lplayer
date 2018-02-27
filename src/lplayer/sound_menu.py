@@ -419,6 +419,21 @@ class SoundMenuControls(dbus.service.Object):
                             variant_level=1)
         self.PropertiesChanged("org.mpris.MediaPlayer2.Player", d, [])
 
+    def signal_stoped(self):
+        """signal_playing - Tell the Sound Menu that the player has
+        started playing. Implementations many need to call this function in
+        order to keep the Sound Menu in synch.
+
+        arguments:
+            none
+
+        """
+        self.__playback_status = "Stopped"
+        d = dbus.Dictionary({"PlaybackStatus": self.__playback_status,
+                            "Metadata": self.__meta_data}, "sv",
+                            variant_level=1)
+        self.PropertiesChanged("org.mpris.MediaPlayer2.Player", d, [])
+
     def signal_paused(self):
         """signal_paused - Tell the Sound Menu that the player has
         been paused. Implementations many need to call this function in order

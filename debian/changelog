@@ -1,3 +1,9 @@
+lplayer (0.2.3-0extras16.04.0) xenial; urgency=medium
+
+  * Stop feature added
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 27 Feb 2018 21:27:59 +0100
+
 lplayer (0.2.2-0extras16.04.0) xenial; urgency=medium
 
   * Support for mp4 media file

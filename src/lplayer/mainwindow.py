@@ -579,9 +579,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.play_row(self.active_row)
 
     def _sound_menu_stop(self):
-        """Pause"""  # TODO
-        if self.active_row is not None and self.active_row.is_playing is True:
-            self.play_row(self.active_row)
+        """Stop"""
+        if self.player.status == Status.PLAYING:
+            self._sound_menu_pause()
+        self.sound_menu.song_changed('', '', '', '')
+        self.sound_menu.signal_stoped()
 
     def _sound_menu_pause(self, *args):
         """Pause"""
