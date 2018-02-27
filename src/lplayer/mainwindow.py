@@ -398,6 +398,9 @@ class MainWindow(Gtk.ApplicationWindow):
         return -1
 
     def play_row(self, row):
+        if not os.path.exists(row.audio['filepath']):
+            self.remove_rows([row])
+            return
         if len(self.trackview.get_children()) > 0:
             self.trackview.get_adjustment().set_value(
                 row.get_index() * row.get_allocated_height())
@@ -633,7 +636,11 @@ class MainWindow(Gtk.ApplicationWindow):
                         self.player.pause()
                     self._sound_menu_next()
                 self.update_audio_in_configuration(self.active_row.audio)
+            if self.player.status != Status.PLAYING:
+                self.updater = 0
             return self.player.status == Status.PLAYING
+        self.updater = 0
+        return False
 
     def on_player_started(self, player, position):
         pass
@@ -932,29 +939,26 @@ class MainWindow(Gtk.ApplicationWindow):
                 msg)
             if dialog.run() == Gtk.ResponseType.OK:
                 dialog.destroy()
-                audios = self.configuration.get('audios')
-                for row in self.trackview.get_selected_rows():
-                    audios.remove(row.audio)
-                    self.configuration.set('audios', audios)
-                    self.trackview.remove(row)
-                    extension = row.audio['ext']
-                    audio_id = row.audio['hash']
-                    filein = os.path.join(
-                        comun.AUDIO_DIR,
-                        '{0}.{1}'.format(audio_id, extension))
-                    fileout = os.path.join(
-                        comun.AUDIO_DIR,
-                        '{0}.{1}'.format(audio_id, 'ogg'))
-                    if os.path.exists(filein):
-                        os.remove(filein)
-                    if os.path.exists(fileout):
-                        os.remove(fileout)
-                    self.trackview.show_all()
-                    if self.active_row.audio == row.audio and\
-                            len(self.trackview.get_children()) > 0:
-                        self.set_active_row(self.trackview.get_row_at_index(0))
+                self.remove_rows(self.trackview.get_selected_rows())
             else:
                 dialog.destroy()
+
+    def remove_rows(self, rows):
+        audios = self.configuration.get('audios')
+        for row in rows:
+            audios.remove(row.audio)
+            self.trackview.remove(row)
+            audio_id = row.audio['hash']
+            file_thumbnail = os.path.join(
+                comun.THUMBNAILS_DIR,
+                '{0}.{1}'.format(audio_id, 'png'))
+            if os.path.exists(file_thumbnail):
+                os.remove(file_thumbnail)
+        self.configuration.set('audios', audios)
+        self.trackview.show_all()
+        if self.active_row.audio == row.audio and\
+                len(self.trackview.get_children()) > 0:
+            self.set_active_row(self.trackview.get_row_at_index(0))
 
     def set_active_row(self, row=None):
         if len(self.trackview.get_children()) > 0:

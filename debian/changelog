@@ -1,3 +1,9 @@
+lplayer (0.1.12-0extras16.04.0) xenial; urgency=medium
+
+  * removing thumbnails
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 27 Feb 2018 06:55:28 +0100
+
 lplayer (0.1.11-0extras16.04.1) xenial; urgency=medium
 
   * Updated for Ubuntu themes
