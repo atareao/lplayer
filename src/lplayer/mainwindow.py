@@ -106,6 +106,20 @@ def get_index_audio(audios, hash):
     return -1
 
 
+def select_value_in_combo(combo, value):
+    model = combo.get_model()
+    for i, item in enumerate(model):
+        if value == item[1]:
+            combo.set_active(i)
+            return
+    combo.set_active(0)
+
+
+def get_selected_value_in_combo(combo):
+    model = combo.get_model()
+    return model.get_value(combo.get_active_iter(), 1)
+
+
 class MainWindow(Gtk.ApplicationWindow):
     __gsignals__ = {
         'text-changed': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE,
@@ -723,6 +737,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.control['label-speed'].set_alignment(0, 0.5)
         popover_grid.attach(self.control['label-speed'], 0, 1, 5, 1)
         self.control['speed'] = Gtk.Scale()
+        self.control['speed'].set_tooltip_text(_('Speed'))
         self.control['speed'].set_adjustment(Gtk.Adjustment(
             1, 0.5, 4, 0.1, 0.1, 1))
         self.control['speed'].set_size_request(200, 0)
@@ -736,6 +751,7 @@ class MainWindow(Gtk.ApplicationWindow):
         popover_grid.attach(label, 0, 2, 5, 1)
 
         self.control['remove-silence'] = Gtk.Switch()
+        self.control['remove-silence'].set_tooltip_text(_('Remove silence'))
         self.control['remove-silence'].set_active(
             self.configuration.get('remove_silence'))
         self.control['remove-silence'].connect(
@@ -749,6 +765,8 @@ class MainWindow(Gtk.ApplicationWindow):
         popover_grid.attach(label, 0, 3, 5, 1)
 
         self.control['play_continuously'] = Gtk.Switch()
+        self.control['play_continuously'].set_tooltip_text(
+            _('Play continuously'))
         self.control['play_continuously'].set_active(
             self.configuration.get('play_continuously'))
         self.control['play_continuously'].connect(
@@ -759,15 +777,12 @@ class MainWindow(Gtk.ApplicationWindow):
 
         popover_grid.attach(Gtk.Label(_('Equalizer')), 0, 4, 10, 1)
 
-        equalizer_grid = Gtk.Grid()
+        equalizer_grid = Gtk.HBox.new(True, 5)
 
         equalizer_grid.set_margin_top(10)
         equalizer_grid.set_margin_bottom(10)
         equalizer_grid.set_margin_left(5)
         equalizer_grid.set_margin_right(5)
-
-        equalizer_grid.set_column_spacing(10)
-        equalizer_grid.set_row_spacing(5)
 
         popover_grid.attach(equalizer_grid, 0, 5, 10, 1)
 
@@ -775,13 +790,54 @@ class MainWindow(Gtk.ApplicationWindow):
             band = 'band{0}'.format(index)
             self.control[band] = Gtk.Scale.new_with_range(
                 Gtk.Orientation.VERTICAL, -24.0, 12.0, 0.1)
-            self.control[band].set_size_request(10, 200)
+            self.control[band].set_size_request(-1, 200)
+            self.control[band].set_tooltip_text(_('Help'))
             self.control[band].set_value(
                 self.configuration.get('equalizer')[band])
             self.control[band].connect('value-changed',
                                        self.on_band_changed, band)
-            equalizer_grid.attach(self.control[band], index, 0, 1, 1)
+            equalizer_grid.pack_start(self.control[band], True, True, 0)
+        self.control['band0'].set_tooltip_text(_('0.03 kHz'))
+        self.control['band1'].set_tooltip_text(_('0.06 kHz'))
+        self.control['band2'].set_tooltip_text(_('0.12 kHz'))
+        self.control['band3'].set_tooltip_text(_('0.24 kHz'))
+        self.control['band4'].set_tooltip_text(_('0.47 kHz'))
+        self.control['band5'].set_tooltip_text(_('0.95 kHz'))
+        self.control['band6'].set_tooltip_text(_('1.89 kHz'))
+        self.control['band7'].set_tooltip_text(_('3.77 kHz'))
+        self.control['band8'].set_tooltip_text(_('7.52 kHz'))
+        self.control['band9'].set_tooltip_text(_('15.01 kHz'))
         equalizer_grid.show_all()
+
+        presets = Gtk.ListStore(str, str)
+        presets.append([_('None'), 'none'])
+        presets.append([_('Classical'), 'classical'])
+        presets.append([_('Club'), 'club'])
+        presets.append([_('Dance'), 'dance'])
+        presets.append([_('Flat'), 'flat'])
+        presets.append([_('Live'), 'live'])
+        presets.append([_('Headphone'), 'headphone'])
+        presets.append([_('Rock'), 'rock'])
+        presets.append([_('Pop'), 'pop'])
+        presets.append([_('Full Bass and Treble'), 'full-bass-and-treble'])
+        presets.append([_('Full Bass'), 'full-bass'])
+        presets.append([_('Full Treble'), 'full-treble'])
+        presets.append([_('Soft'), 'soft'])
+        presets.append([_('Party'), 'party'])
+        presets.append([_('Ska'), 'ska'])
+        presets.append([_('Soft Rock'), 'soft-rock'])
+        presets.append([_('Large Hall'), 'large-hall'])
+        presets.append([_('Reggae'), 'reggae'])
+        presets.append([_('Techno'), 'techno'])
+        self.combobox_presets = Gtk.ComboBox.new()
+        self.combobox_presets.set_tooltip_text(_('Equalizer presets'))
+        self.combobox_presets.set_model(presets)
+        cell1 = Gtk.CellRendererText()
+        self.combobox_presets.pack_start(cell1, True)
+        self.combobox_presets.add_attribute(cell1, 'text', 0)
+        self.combobox_presets.set_active(0)
+        self.combobox_presets.connect('changed', self.on_preset_changed)
+        popover_grid.attach(self.combobox_presets, 0, 6, 10, 1)
 
         popover_grid.show_all()
 
@@ -822,12 +878,6 @@ class MainWindow(Gtk.ApplicationWindow):
 
         help_model = Gio.Menu()
 
-        # help_section0_model = Gio.Menu()
-        # help_section0_model.append(_('Download all'), 'app.download_all')
-        # help_section0_model.append(_('Preferences'), 'app.set_preferences')
-        # help_section0 = Gio.MenuItem.new_section(None, help_section0_model)
-        # help_model.append_item(help_section0)
-
         help_section1_model = Gio.Menu()
         help_section1_model.append(_('Homepage'), 'app.goto_homepage')
         help_section1 = Gio.MenuItem.new_section(None, help_section1_model)
@@ -862,22 +912,86 @@ class MainWindow(Gtk.ApplicationWindow):
         help_model.append_item(help_section6)
 
         self.control['help'] = Gtk.MenuButton()
+        self.control['help'].set_tooltip_text(_('Help'))
         self.control['help'].set_menu_model(help_model)
         self.control['help'].add(Gtk.Image.new_from_gicon(Gio.ThemedIcon(
             name='open-menu-symbolic'), Gtk.IconSize.BUTTON))
         hb.pack_end(self.control['help'])
 
         self.control['remove'] = Gtk.Button()
+        self.control['remove'].set_tooltip_text(_('Remove tracks'))
         self.control['remove'].add(Gtk.Image.new_from_gicon(Gio.ThemedIcon(
             name='list-remove-symbolic'), Gtk.IconSize.BUTTON))
         self.control['remove'].connect('clicked', self.on_remove_track)
         hb.pack_end(self.control['remove'])
 
         self.control['add'] = Gtk.Button()
+        self.control['add'].set_tooltip_text(_('Add tracks'))
         self.control['add'].add(Gtk.Image.new_from_gicon(Gio.ThemedIcon(
             name='list-add-symbolic'), Gtk.IconSize.BUTTON))
         self.control['add'].connect('clicked', self.on_add_track)
         hb.pack_end(self.control['add'])
+
+    def on_preset_changed(self, widget):
+        print('changed')
+        preset = get_selected_value_in_combo(widget)
+        values = []
+        # presets https://gist.github.com/kra3/9781800
+        if preset == 'none':
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        elif preset == 'classical':
+            values = [0.375, 0.375, 0.375, 0.375, 0.375, 0.375, -4.5, -4.5,
+                      -4.5, -6.0]
+        elif preset == 'club':
+            values = [0.375, 0.375, 2.25, 3.75, 3.75, 3.75, 2.25, 0.375,
+                      0.375, 0.375]
+        elif preset == 'dance':
+            values = [6, 4.5, 1.5, 0, 0, -3.75, -4.5, -4.5,
+                      0, 0]
+        elif preset == 'flat':
+            values = [0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375,
+                      0.375, 0.375]
+        elif preset == 'live':
+            values = [-3, 0.375, 2.625, 3.375, 3.75, 3.75, 2.625, 1.875, 1.875,
+                      1.5]
+        elif preset == 'headphone':
+            values = [3, 6.75, 3.375, -2.25, -1.5, 1.125, 3, 6, 7.875, 9]
+        elif preset == 'rock':
+            values = [4.875, 3, -3.375, -4.875, -2.25, 2.625, 5.625, 6.75,
+                      6.75, 6.75]
+        elif preset == 'pop':
+            values = [-1.125, 3, 4.5, 4.875, 3.375, -0.75, -1.5, -1.5, -1.125,
+                      -1.125]
+        elif preset == 'full-bass-and-treble':
+            values = [4.5, 3.75, 0.375, -4.5, -3, 1.125, 5.25, 6.75, 7.5, 7.5]
+        elif preset == 'full-bass':
+            values = [6, 6, 6, 3.75, 1.125, -2.625, -5.25, -6.375, -6.75,
+                      -6.75]
+        elif preset == 'full-treble':
+            values = [-6, -6, -6, -2.625, 1.875, 6.75, 9.75, 9.75, 9.75, 10.5]
+        elif preset == 'soft':
+            values = [3, 1.125, -0.75, -1.5, -0.75, 2.625, 5.25, 6, 6.75, 7.5]
+        elif preset == 'party':
+            values = [4.5, 4.5, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 4.5,
+                      4.5]
+        elif preset == 'ska':
+            values = [-1.5, -3, -2.625, -0.375, 2.625, 3.75, 5.625, 6, 6.75, 6]
+        elif preset == 'soft-rock':
+            values = [2.625, 2.625, 1.5, -0.375, -2.625, -3.375, -2.25, -0.375,
+                      1.875, 5.625]
+        elif preset == 'large-hall':
+            values = [6.375, 6.375, 3.75, 3.75, 0.375, -3, -3, -3, 0.375,
+                      0.375]
+        elif preset == 'reggae':
+            values = [0.375, 0.375, -0.375, -3.75, 0.375, 4.125, 4.125, 0.375,
+                      0.375, 0.375]
+        elif preset == 'techno':
+            values = [4.875, 3.75, 0.375, -3.375, -3, 0.375, 4.875, 6, 6,
+                      5.625]
+        if len(values) > 0:
+            for index in range(0, 10):
+                band = 'band{0}'.format(index)
+                self.control[band].set_value(values[index])
 
     def on_band_changed(self, widget, band):
         equalizer = self.configuration.get('equalizer')

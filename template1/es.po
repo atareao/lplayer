@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: lplayer 0.1.9\n"
+"Project-Id-Version: lplayer 0.1.12\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2018-02-26 19:05+0100\n"
+"POT-Creation-Date: 2018-02-27 18:04+0100\n"
 "PO-Revision-Date: 2017-08-08 11:51+0200\n"
 "Last-Translator: lorenzo <lorenzo.carbonell.cerezo@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -46,119 +46,255 @@ msgstr "Título"
 msgid "Year"
 msgstr "Año"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:406
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:465
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:795
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:428
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:487
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:863
 msgid "Play"
 msgstr "Reproducir"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:422
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:482
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:620
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:697
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:444
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:504
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:642
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:723
 msgid "Position"
 msgstr "Posición"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:428
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:488
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:450
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:510
 msgid "Pause"
 msgstr "Pausa"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:658
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:710
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:684
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:736
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:740
 msgid "Speed"
 msgstr "Velocidad"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:666
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:692
 #, python-brace-format
 msgid "Position: {0}%"
 msgstr "Posición: {0}%"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:702
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:728
 msgid "Relative position"
 msgstr "Posición relativa"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:722
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:749
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:754
 msgid "Remove silence"
 msgstr "Eliminar silencios"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:735
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:763
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:769
 msgid "Play continuously"
 msgstr "Reproducir de forma continua"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:748
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:778
 msgid "Equalizer"
 msgstr "Ecualizador"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:777
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:794
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:915
+msgid "Help"
+msgstr "Ayuda"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:800
+msgid "0.03 kHz"
+msgstr "0.03 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:801
+msgid "0.06 kHz"
+msgstr "0.06 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:802
+msgid "0.12 kHz"
+msgstr "0.12 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:803
+msgid "0.24 kHz"
+msgstr "0.24 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:804
+msgid "0.47 kHz"
+msgstr "0.47 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:805
+msgid "0.95 kHz"
+msgstr "0.95 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:806
+msgid "1.89 kHz"
+msgstr "1.89 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:807
+msgid "3.77 kHz"
+msgstr ""
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:808
+msgid "7.52 kHz"
+msgstr "7.52 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:809
+msgid "15.01 kHz"
+msgstr "15.01 kHz"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:813
+msgid "None"
+msgstr "Ninguna"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:814
+msgid "Classical"
+msgstr "Clásico"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:815
+msgid "Club"
+msgstr "Club"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:816
+msgid "Dance"
+msgstr "Dance"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:817
+msgid "Flat"
+msgstr "Plano"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:818
+msgid "Live"
+msgstr "Live"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:819
+msgid "Headphone"
+msgstr "Auriculares"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:820
+msgid "Rock"
+msgstr "Rock"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:821
+msgid "Pop"
+msgstr "Pop"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:822
+msgid "Full Bass and Treble"
+msgstr "Bajos y agudos"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:823
+msgid "Full Bass"
+msgstr "Bajos"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:824
+msgid "Full Treble"
+msgstr "Agudos"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:825
+msgid "Soft"
+msgstr "Suave"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:826
+msgid "Party"
+msgstr "Fiesta"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:827
+msgid "Ska"
+msgstr "Ska"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:828
+msgid "Soft Rock"
+msgstr "Rock suave"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:829
+msgid "Large Hall"
+msgstr "Salas"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:830
+msgid "Reggae"
+msgstr "Reggae"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:831
+msgid "Techno"
+msgstr "Techno"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:833
+msgid "Equalizer presets"
+msgstr "Preconfiguraciones del ecualizador"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:845
 msgid "Configuration"
 msgstr "Configuración"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:786
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:854
 msgid "Previous"
 msgstr "Anterior"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:804
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:872
 msgid "Next"
 msgstr "Siguiente"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:820
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:882
 msgid "Homepage"
 msgstr "Página web"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:825
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:887
 msgid "Code"
 msgstr "Código"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:826
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:888
 msgid "Issues"
 msgstr "Incidencias"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:831
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:893
 msgid "Twitter"
 msgstr "Twitter"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:832
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:894
 msgid "Facebook"
 msgstr "Facebook"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:833
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:895
 msgid "Google+"
 msgstr "Google+"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:838
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:900
 msgid "Donations"
 msgstr "Donaciones"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:843
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:905
 msgid "About"
 msgstr "Acerca de..."
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:848
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:910
 msgid "Quit"
 msgstr "Salir"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:877
-msgid "Please choose music files"
-msgstr "Elige los archivos"
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:922
+msgid "Remove tracks"
+msgstr "Eliminar pistas"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:887
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:929
+msgid "Add tracks"
+msgstr "Añadir pistas"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1003
+msgid "Please choose music files"
+msgstr "Elige archivos de audio"
+
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1013
 msgid "audio files"
 msgstr "Archivos de audio"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:897
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1023
 msgid "mp3 files"
 msgstr "Archivos mp3"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:906
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1032
 msgid "ogg files"
 msgstr "Archivos ogg"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:919
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1045
 msgid "Are you sure to delete the tracks?"
 msgstr "Estás seguro de borrar los audios?"
 
-#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:921
+#: /datos/Sync/Programacion/Python/lplayer/src/lplayer/mainwindow.py:1047
 msgid "Are you sure to delete the track?"
 msgstr "Estás seguro de borrar el audio?"
 
