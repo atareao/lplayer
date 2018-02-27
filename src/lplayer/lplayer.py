@@ -112,7 +112,7 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'save_as',
             callback=self.on_headbar_clicked))
-        '''
+        '''s
         self.add_action(create_action(
             'download_all',
             callback=self.on_download_all_clicked))
@@ -123,11 +123,11 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'goto_homepage',
             callback=lambda x, y: webbrowser.open(
-                'http://www.atareao.es/')))
+                'http://www.atareao.es/aplicacion/lplayer')))
         self.add_action(create_action(
             'goto_code',
             callback=lambda x, y: webbrowser.open(
-                'https://code.launchpad.net/lplayer')))
+                'https://github.com/atareao/lplayer')))
         self.add_action(create_action(
             'goto_bug',
             callback=lambda x, y: webbrowser.open(

@@ -15,7 +15,14 @@ Lplayer uses the audio menu to display information about the track you are liste
 
 For more information, please visit our website:
 
-https://www.atareao.es/apps/youtube-como-reproductor-de-musica-con-yoaup/
+[https://www.atareao.es/aplicacion/lplayer/](lplayer)
+
+* [Code](https://github.com/atareao/lplayer)
+* [Bugs](https://bugs.launchpad.net/lplayer)
+* [Blueprints](https://blueprints.launchpad.net/lplayer)
+* [Translations](https://translations.launchpad.net/lplayer)
+* [Answers](https://answers.launchpad.net/lplayer)
+* [Page project in Launchpad](https://launchpad.net/lplayer)
 
 ![](/screenshots/lplayer_04.png)
 
