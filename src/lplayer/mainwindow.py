@@ -64,7 +64,7 @@ from .preferencesdialog import PreferencesDialog
 ALLOWED_MIMETYPES = ['application/x-ogg', 'application/ogg',
                      'audio/x-vorbis+ogg', 'audio/x-scpls', 'audio/x-mp3',
                      'audio/x-mpeg', 'audio/mpeg', 'audio/x-mpegurl',
-                     'audio/flac']
+                     'audio/flac', 'audio/m4a', 'audio/x-m4a', 'audio/mp4']
 
 DEFAULT_CURSOR = Gdk.Cursor(Gdk.CursorType.ARROW)
 WAIT_CURSOR = Gdk.Cursor(Gdk.CursorType.WATCH)
@@ -1025,6 +1025,9 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_audio.add_mime_type('video/x-mpeg')
         filter_audio.add_mime_type('audio/ogg')
         filter_audio.add_mime_type('audio/flac')
+        filter_audio.add_mime_type('audio/m4a')
+        filter_audio.add_mime_type('audio/mp4')
+        filter_audio.add_mime_type('audio/x-m4a')
         dialog.add_filter(filter_audio)
 
         filter_mp3 = Gtk.FileFilter()
@@ -1045,6 +1048,13 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_flac.set_name(_('flac files'))
         filter_flac.add_mime_type('audio/flac')
         dialog.add_filter(filter_flac)
+
+        filter_m4a = Gtk.FileFilter()
+        filter_m4a.set_name(_('mp4 files'))
+        filter_m4a.add_mime_type('audio/m4a')
+        filter_m4a.add_mime_type('audio/mp4')
+        filter_m4a.add_mime_type('audio/x-m4a')
+        dialog.add_filter(filter_m4a)
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:

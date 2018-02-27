@@ -54,6 +54,7 @@ class Audio(dict):
     FORMAT_MP3 = 0
     FORMAT_OGG = 1
     FORMAT_FLAC = 2
+    FORMAT_M4A = 3
 
     GENRE_UNKNOWN = 0
 
@@ -111,12 +112,6 @@ class Audio(dict):
             self['bitrate'] = int(audio.info.bitrate / 1000.0)
             self['ext'] = 'ogg'
         elif type(audio.info) == mutagen.flac.StreamInfo:
-            print(audio.tags)
-            print(audio.pictures)
-            for picture in audio.pictures:
-                print(picture.type)
-                print(picture.mime)
-                print(picture.desc)
             self['type'] = Audio.FORMAT_FLAC
             self['title'] = get_data_from_metadata(audio.tags, 'title')
             if len(self['title']) < 1:
@@ -127,13 +122,40 @@ class Audio(dict):
                 self['album'] = get_data_from_metadata(audio.tags,
                                                        'albumtitle')
             self['year'] = get_data_from_metadata(audio.tags, 'year')
-            print(audio.info)
             self['thumbnail_base64'] = get_image_from_flac(audio)
             self['length'] = audio.info.length
             self['channels'] = audio.info.channels
             self['sample rate'] = audio.info.sample_rate
             self['bitrate'] = 0  # int(audio.info.bitrate / 1000.0)
             self['ext'] = 'flac'
+        elif type(audio.info) == mutagen.mp4.MP4Info:
+            self['type'] = Audio.FORMAT_M4A
+            if len(audio.tags['\xa9nam']) > 0:
+                self['title'] = audio.tags['\xa9nam'][0]
+            else:
+                self['title'] = ''
+            if len(audio.tags['\xa9ART']) > 0:
+                self['artist'] = audio.tags['\xa9ART'][0]
+            else:
+                self['artist'] = ''
+            if len(audio.tags['\xa9alb']) > 0:
+                self['album'] = audio.tags['\xa9alb'][0]
+            else:
+                self['album'] = ''
+            if len(audio.tags['\xa9day']) > 0:
+                self['year'] = audio.tags['\xa9day'][0]
+            else:
+                self['year'] = ''
+            self['length'] = audio.info.length
+            self['channels'] = audio.info.channels
+            self['sample rate'] = audio.info.sample_rate
+            self['bitrate'] = int(audio.info.bitrate / 1000.0)
+            self['ext'] = 'm4a'
+            if len(audio.tags['covr']) > 0:
+                self['thumbnail_base64'] = base64.b64encode(
+                    audio.tags['covr'][0]).decode()
+            else:
+                self['thumbnail_base64'] = None
 
         self['genre'] = Audio.GENRE_UNKNOWN
         self['listened'] = False
@@ -149,6 +171,10 @@ class Audio(dict):
             string += 'Type: MP3\n'
         elif self['type'] == Audio.FORMAT_OGG:
             string += 'Type: OGG\n'
+        elif self['type'] == Audio.FORMAT_FLAC:
+            string += 'Type: FLAC\n'
+        elif self['type'] == Audio.FORMAT_M4A:
+            string += 'Type: M4A\n'
         string += 'Title: %s\n' % self['title']
         string += 'Artist: %s\n' % self['artist']
         string += 'Album: %s\n' % self['album']
@@ -170,7 +196,7 @@ class Audio(dict):
 
 if __name__ == '__main__':
     import glob
-    for afile in glob.glob('/home/lorenzo/Descargas/Telegram Desktop/*.flac'):
+    for afile in glob.glob('/home/lorenzo/Descargas/Telegram Desktop/*.m4a'):
         print('====', afile, '====')
         print(Audio(afile))
         print(type(Audio(afile)['thumbnail_base64']))
