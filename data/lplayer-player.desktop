@@ -11,4 +11,4 @@ Terminal=false
 StartupNotify=true
 Encoding=utf-8
 Categories=GNOME;GTK;AudioVideo;Audio;Player;
-MimeType=application/x-ogg;application/ogg;audio/x-vorbis+ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl
+MimeType=application/x-ogg;application/ogg;audio/x-vorbis+ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;audio/flac;audio/m4a;audio/x-m4a;audio/mp4
