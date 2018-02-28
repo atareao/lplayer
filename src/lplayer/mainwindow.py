@@ -54,12 +54,13 @@ from .player import Status
 from .configurator import Configuration
 from .listboxrowwithdata import ListBoxRowWithData
 from .audio import Audio
-from .async import async_function
 from .utils import get_thumbnail_filename_for_audio
 from .utils import get_pixbuf_from_base64string
 from .utils import get_desktop_environment
 from .showinfodialog import ShowInfoDialog
 from .preferencesdialog import PreferencesDialog
+from .doitinbackground import DoItInBackground
+from .progressdialog import ProgressDialog
 
 ALLOWED_MIMETYPES = ['application/x-ogg', 'application/ogg',
                      'audio/x-vorbis+ogg', 'audio/x-scpls', 'audio/x-mp3',
@@ -246,6 +247,9 @@ class MainWindow(Gtk.ApplicationWindow):
         self.play_controls.set_visible(True)
         self.play_controls.grab_focus()
         self.trackview.unselect_all()
+        if self.configuration.get('preset') != 'none':
+            select_value_in_combo(self.combobox_presets,
+                                  self.configuration.get('preset'))
         if len(self.trackview.get_children()) > 0:
             if self.row > -1 and self.row < len(self.trackview.get_children()):
                 self.trackview.select_row(
@@ -256,7 +260,8 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.set_active_row(self.trackview.get_row_at_index(0))
         self.control['play-pause'].grab_focus()
         if len(files) > 0:
-            self.add_tracks_sync(files)
+            # self.add_tracks_sync(files)
+            self.add_tracks_in_background(files)
 
     def drag_drop(self, widget, context, selection, info, time):
         print('==== Drag drop ====')
@@ -338,7 +343,8 @@ class MainWindow(Gtk.ApplicationWindow):
             if len(tracks_to_add) > 0:
                 print(tracks_to_add)
                 # self.add_tracks(tracks_to_add)
-                self.add_tracks_sync(tracks_to_add)
+                self.add_tracks_in_background(tracks_to_add)
+                # self.add_tracks_sync(tracks_to_add)
                 return True
         return False
 
@@ -944,6 +950,7 @@ class MainWindow(Gtk.ApplicationWindow):
     def on_preset_changed(self, widget):
         print('changed')
         preset = get_selected_value_in_combo(widget)
+        self.configuration.set('preset', preset)
         values = []
         # presets https://gist.github.com/kra3/9781800
         if preset == 'none':
@@ -1062,7 +1069,8 @@ class MainWindow(Gtk.ApplicationWindow):
         if response == Gtk.ResponseType.OK:
             filenames = dialog.get_filenames()
             GLib.idle_add(dialog.destroy)
-            self.add_tracks_sync(filenames)
+            # self.add_tracks_sync(filenames)
+            self.add_tracks_in_background(filenames)
 
     def on_remove_track(self, widget):
         if self.active_row is not None:
@@ -1110,6 +1118,43 @@ class MainWindow(Gtk.ApplicationWindow):
             if row is not None:
                 self.trackview.select_row(row)
 
+    def add_track(self, filename):
+        audios = self.configuration.get('audios')
+        anaudio = Audio(filename)
+        exists = False
+        for audio in audios:
+            if audio == anaudio:
+                exists = True
+                break
+        if exists is False:
+            audios.append(anaudio)
+            row = ListBoxRowWithData(anaudio, len(audios) - 1)
+            row.connect('button_info_clicked',
+                        self.on_row_info, row)
+            row.connect('button_listened_clicked',
+                        self.on_row_listened,
+                        row)
+            GLib.idle_add(row.show)
+            GLib.idle_add(self.trackview.add, row)
+        GLib.idle_add(self.trackview.show_all)
+        self.configuration.set('audios', audios)
+        self.configuration.save()
+
+    def add_tracks_in_background(self, filenames, play=True):
+        number_of_audios = len(self.configuration.get('audios'))
+        diib = DoItInBackground(self.add_track, filenames)
+        progreso = ProgressDialog(_('Adding new tracks'), self)
+        progreso.set_number_of_elements(len(filenames))
+        diib.connect('started_one', progreso.set_element)
+        # diib.connect('done_one', progreso.increase)
+        diib.connect('ended', progreso.close)
+        progreso.connect('i-want-stop', diib.stop)
+        diib.start()
+        progreso.run()
+        if play is True and\
+                len(self.configuration.get('audios')) > number_of_audios:
+            self.play_row_by_index(number_of_audios)
+
     def add_tracks_sync(self, filenames, play=True):
         self.get_root_window().set_cursor(WAIT_CURSOR)
         play_audio = None
@@ -1142,46 +1187,6 @@ class MainWindow(Gtk.ApplicationWindow):
         self.get_root_window().set_cursor(DEFAULT_CURSOR)
         if play is True and play_audio is not None:
             self.play_row_by_audio(play_audio)
-
-    def add_tracks(self, filenames, play=True):
-
-        def on_add_track_in_thread_done(result, error):
-            self.get_root_window().set_cursor(DEFAULT_CURSOR)
-            if error is None and play is True and result is not None:
-                self.play_row_by_audio(result)
-
-        @async_function(on_done=on_add_track_in_thread_done)
-        def do_add_tracks_in_thread(filenames):
-            play_audio = None
-            audios = self.configuration.get('audios')
-            for index, filename in enumerate(filenames):
-                anaudio = Audio(filename)
-                exists = False
-                for audio in audios:
-                    if audio == anaudio:
-                        if play_audio is None:
-                            play_audio = audio
-                        exists = True
-                        break
-                if exists is False:
-                    audios.append(anaudio)
-                    row = ListBoxRowWithData(anaudio, len(audios) - 1)
-                    row.connect('button_info_clicked',
-                                self.on_row_info, row)
-                    row.connect('button_listened_clicked',
-                                self.on_row_listened,
-                                row)
-                    row.show()
-                    if play_audio is None:
-                        play_audio = row.audio
-                    self.trackview.add(row)
-            self.trackview.show_all()
-            self.configuration.set('audios', audios)
-            self.configuration.save()
-            return play_audio
-
-        self.get_root_window().set_cursor(WAIT_CURSOR)
-        do_add_tracks_in_thread(filenames)
 
     def on_toggled(self, widget, arg):
         if widget.get_active() is True:

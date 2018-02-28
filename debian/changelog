@@ -1,3 +1,10 @@
+lplayer (0.2.4-0extras16.04.0) xenial; urgency=medium
+
+  * Load tracks in background
+  * Save equalizer preset
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 28 Feb 2018 09:21:51 +0100
+
 lplayer (0.2.3-0extras16.04.0) xenial; urgency=medium
 
   * Stop feature added

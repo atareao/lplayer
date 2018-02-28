@@ -1,14 +1,23 @@
 # LPLAYER - A simple audio player
 
-**Lplayer** is a simple audio player for simply listening music or whatever you want. The first time, I think in **lplayer** was for listening podcasts, becouse you can set the speed. I normally listen podcast a 1.8x.
+**Lplayer** is a simple audio player for simply listening music or whatever you want. The first time I thinked about **lplayer** was for listening podcasts. **lplayer** can set the speed. I normally listen podcasts a 1.8x. So this option was very important for me. But not only. This audio player must have to avoid silences to play podcasts.
+
+**lplayer** can play several audio formats,
+
+* MP3
+* OGG
+* FLAC
+* M4a
+
+After I added the option to play several audio format, I thinked that this audio player must include an equalizer, so you can configure the player as you want. Besides, **lplayer** incorporates some equalizer presets, so it's more easy to configure it.
 
 ![](/screenshots/lplayer_01.png)
 
-You can listen the audios a more speed than the video original, avoid the silences and modify the equalizer. Besides you can listen audios continuosly. lplayer has a complete control over the track you are listening.
+**lplayer** is thinked as a very simple audio player that it doesn't disturb your concentration. Only to play audio and if it is possible in background.
 
 ![](/screenshots/lplayer_02.png)
 
-Lplayer uses the audio menu to display information about the track you are listening. From the menu, you can go to the next or the previous track, play or pause the track.
+In order to not disturb, **lplayer** is integrated in the sound menu in Linux Mint Cinnamon and Ubuntu. With latest versions of Ubuntu you will need a extension for it. Lplayer uses the audio menu to display information about the track you are listening. From the menu, you can go to the next or the previous track, play, pause and stop the track.
 
 ![](/screenshots/lplayer_03.png)
 
@@ -48,6 +57,7 @@ Required dependencies:
     gstreamer1.0-plugins-bad,
     gstreamer1.0-libav,
 ```
+
 # Install
 
 To install lplayer in Ubuntu, Linux Mint and derivatives, run these commands in a terminal,
