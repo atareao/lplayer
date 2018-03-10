@@ -63,6 +63,8 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
                                 GObject.TYPE_NONE, ()),
         'button_listened_clicked': (GObject.SIGNAL_RUN_FIRST,
                                     GObject.TYPE_NONE, ()),
+        'position-changed': (GObject.SIGNAL_RUN_FIRST,
+                                    GObject.TYPE_NONE, (int,)),
     }
 
     def __init__(self, audio, index):
@@ -126,12 +128,16 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
         self.button_info.add(info)
         grid.attach(self.button_info, 6, 2, 1, 1)
 
-        self.progressbar = Gtk.ProgressBar()
+        self.progressbar = Gtk.Scale()
         self.progressbar.set_margin_bottom(5)
         self.progressbar.set_valign(Gtk.Align.CENTER)
         self.progressbar.set_hexpand(True)
         self.progressbar.set_margin_right(5)
         self.progressbar.set_name('progressbar')
+        self.progressbar.set_adjustment(
+            Gtk.Adjustment(0, 0, 100, 1, 1, 5))
+        self.progressbar.connect('value-changed', self.on_position_changed)
+        self.progressbar.set_sensitive(False)
         grid.attach(self.progressbar, 4, 3, 2, 1)
 
         self.index = index
@@ -146,6 +152,10 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
                                        Gdk.RGBA(1, 0, 0, 0.2))
         self.override_background_color(Gtk.StateFlags.NORMAL,
                                        Gdk.RGBA(1, 1, 1, 1))
+
+    def on_position_changed(self, widget):
+        print(widget, self.progressbar.get_value())
+        self.emit('position-changed', self.progressbar.get_value())
 
     def on_clicked(self, widget, event):
         print(widget, event)
@@ -164,9 +174,11 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
         if(active):
             self.override_background_color(Gtk.StateFlags.NORMAL,
                                            Gdk.RGBA(1, 0, 0, 0.2))
+            self.progressbar.set_sensitive(True)
         else:
             self.override_background_color(Gtk.StateFlags.NORMAL,
                                            Gdk.RGBA(1, 1, 1, 1))
+            self.progressbar.set_sensitive(False)
 
     def get_active(self):
         return self.active
@@ -193,10 +205,14 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
             self.listened.set_from_pixbuf(NOLISTENED)
 
     def set_position(self, position):
+        self.progressbar.handler_block_by_func(self.on_position_changed)
+
         self.audio['position'] = position
         self.label3.set_text(time.strftime('%H:%M:%S', time.gmtime(
             self.audio['length'] * position)))
-        self.progressbar.set_fraction(position)
+        # self.progressbar.set_fraction(position)
+        self.progressbar.set_value(int(position * 100))
+        self.progressbar.handler_unblock_by_func(self.on_position_changed)
 
     def set_audio(self, audio):
         self.audio = audio

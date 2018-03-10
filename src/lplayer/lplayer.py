@@ -209,7 +209,7 @@ class MainApplication(Gtk.Application):
         self.add_window(self.win)
         self.win.present()
         if len(self.new_tracks) > 0:
-            self.win.add_tracks(self.new_tracks)
+            self.win.add_tracks_in_background(self.new_tracks)
             self.new_tracks = []
 
     def action_clicked(self, action, variant):

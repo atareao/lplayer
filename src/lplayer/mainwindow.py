@@ -154,7 +154,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.add_action(max_action)
 
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-        self.notification = Notify.Notification.new('', '', None)
+        self.notification = Notify.Notification.new('', '', '')
 
         self.player = Player()
         self.player.connect('started', self.on_player_started)
@@ -207,7 +207,9 @@ class MainWindow(Gtk.ApplicationWindow):
             row = ListBoxRowWithData(track, index)
             row.connect('button_info_clicked', self.on_row_info, row)
             row.connect('button_listened_clicked', self.on_row_listened, row)
+            row.connect('position-changed',self.on_row_position_changed, row)
             row.show()
+            row.set_active(False)
             self.trackview.add(row)
 
         self.get_root_window().set_cursor(DEFAULT_CURSOR)
@@ -260,7 +262,6 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.set_active_row(self.trackview.get_row_at_index(0))
         self.control['play-pause'].grab_focus()
         if len(files) > 0:
-            # self.add_tracks_sync(files)
             self.add_tracks_in_background(files)
 
     def drag_drop(self, widget, context, selection, info, time):
@@ -337,14 +338,22 @@ class MainWindow(Gtk.ApplicationWindow):
                     filename = urllib.request.url2pathname(filename)
                     filename = filename[7:]
                     if os.path.exists(filename):
-                        mime = mimetypes.guess_type(filename)[0]
-                        if mime in ALLOWED_MIMETYPES:
-                            tracks_to_add.append(filename)
+                        if os.path.isdir(filename):
+                            print('Is directory')
+                            for afile_in_directory in os.listdir(filename):
+                                new_file = os.path.join(filename,
+                                                        afile_in_directory)
+                                if os.path.isfile(new_file):
+                                    mime = mimetypes.guess_type(new_file)[0]
+                                    if mime in ALLOWED_MIMETYPES:
+                                        tracks_to_add.append(new_file)
+                        else:
+                            mime = mimetypes.guess_type(filename)[0]
+                            if mime in ALLOWED_MIMETYPES:
+                                tracks_to_add.append(filename)
             if len(tracks_to_add) > 0:
                 print(tracks_to_add)
-                # self.add_tracks(tracks_to_add)
                 self.add_tracks_in_background(tracks_to_add)
-                # self.add_tracks_sync(tracks_to_add)
                 return True
         return False
 
@@ -469,12 +478,16 @@ class MainWindow(Gtk.ApplicationWindow):
                                                  album_art)
                     self.sound_menu.signal_playing()
 
+                    print(type(album), type(title), type(album_art))
                     self.notification.update('{0} - {1}'.format(
                         'lplayer',
                         album),
                         title,
                         album_art)
-                    self.notification.show()
+                    try:
+                        self.notification.show()
+                    except Exception as e:
+                        print(e)
 
                     if self.active_row.audio['position'] > 0 and\
                             self.active_row.audio['position'] <= 1:
@@ -532,7 +545,10 @@ class MainWindow(Gtk.ApplicationWindow):
                     album),
                     title,
                     album_art)
-                self.notification.show()
+                try:
+                    self.notification.show()
+                except Exception as e:
+                    print(e)
 
                 if self.active_row.audio['position'] > 0 and\
                         self.active_row.audio['position'] <= 1:
@@ -651,7 +667,7 @@ class MainWindow(Gtk.ApplicationWindow):
                     _('Position') + ': {0}%'.format(int(position * 100)))
                 self.control['position'].handler_unblock_by_func(
                     self.on_position_button_changed)
-                if position >= 0.99:
+                if position >= 0.999:
                     self.active_row.set_listened(True)
                     self.active_row.set_position(0)
                     if self.is_playing is True:
@@ -1120,7 +1136,11 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def add_track(self, filename):
         audios = self.configuration.get('audios')
-        anaudio = Audio(filename)
+        try:
+            anaudio = Audio(filename)
+        except Exception as e:
+            print(e)
+            return
         exists = False
         for audio in audios:
             if audio == anaudio:
@@ -1129,16 +1149,37 @@ class MainWindow(Gtk.ApplicationWindow):
         if exists is False:
             audios.append(anaudio)
             row = ListBoxRowWithData(anaudio, len(audios) - 1)
+            row.set_active(False)
             row.connect('button_info_clicked',
                         self.on_row_info, row)
             row.connect('button_listened_clicked',
                         self.on_row_listened,
+                        row)
+            row.connect('position-changed',
+                        self.on_row_position_changed,
                         row)
             GLib.idle_add(row.show)
             GLib.idle_add(self.trackview.add, row)
         GLib.idle_add(self.trackview.show_all)
         self.configuration.set('audios', audios)
         self.configuration.save()
+
+    def on_row_position_changed(self, widget, position, row):
+        print(widget, position, row)
+        if self.active_row is not None:
+            self.control['position'].handler_block_by_func(
+                self.on_position_button_changed)
+
+            self.control['label-position'].set_label(
+                _('Position' + ': {0}%'.format(int(position))))
+            value = float(position) / 100.0
+            if value >= 0.0 and value <= 1.0:
+                self.active_row.set_position(value)
+                self.update_audio_in_configuration(self.active_row.audio)
+                self.player.set_position(
+                    value * float(self.active_row.audio['length']))
+            self.control['position'].handler_unblock_by_func(
+                self.on_position_button_changed)
 
     def add_tracks_in_background(self, filenames, play=True):
         number_of_audios = len(self.configuration.get('audios'))
@@ -1176,7 +1217,11 @@ class MainWindow(Gtk.ApplicationWindow):
                 row.connect('button_listened_clicked',
                             self.on_row_listened,
                             row)
+                row.connect('position-changed',
+                            self.on_row_position_changed,
+                            row)
                 row.show()
+                row.set_active(False)
                 if play_audio is None:
                     play_audio = row.audio
                 self.trackview.add(row)
