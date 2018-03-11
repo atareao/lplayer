@@ -1274,19 +1274,26 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.on_position_button_changed)
 
     def add_tracks_in_background(self, filenames, play=True):
-        number_of_audios = len(self.configuration.get('audios'))
-        diib = DoItInBackground(self.add_track, filenames)
-        progreso = ProgressDialog(_('Adding new tracks'), self)
-        progreso.set_number_of_elements(len(filenames))
-        diib.connect('started_one', progreso.set_element)
-        # diib.connect('done_one', progreso.increase)
-        diib.connect('ended', progreso.close)
-        progreso.connect('i-want-stop', diib.stop)
-        diib.start()
-        progreso.run()
-        if play is True and\
-                len(self.configuration.get('audios')) > number_of_audios:
-            self.play_row_by_index(number_of_audios)
+        if len(filenames) > 0:
+            number_of_audios = len(self.configuration.get('audios'))
+            diib = DoItInBackground(self.add_track, filenames)
+            progreso = ProgressDialog(_('Adding new tracks'), self)
+            progreso.set_number_of_elements(len(filenames))
+            diib.connect('started_one', progreso.set_element)
+            # diib.connect('done_one', progreso.increase)
+            diib.connect('ended', progreso.close)
+            progreso.connect('i-want-stop', diib.stop)
+            diib.start()
+            progreso.run()
+            if play is True:
+                if len(self.configuration.get('audios')) > number_of_audios:
+                    self.play_row_by_index(number_of_audios)
+                else:
+                    try:
+                        audio = Audio(filenames[0])
+                        self.play_row_by_audio(audio)
+                    except Exception as e:
+                        print(e)
 
     def add_tracks_sync(self, filenames, play=True):
         self.get_root_window().set_cursor(WAIT_CURSOR)
