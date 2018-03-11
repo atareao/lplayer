@@ -207,7 +207,7 @@ class MainWindow(Gtk.ApplicationWindow):
             row = ListBoxRowWithData(track, index)
             row.connect('button_info_clicked', self.on_row_info, row)
             row.connect('button_listened_clicked', self.on_row_listened, row)
-            row.connect('position-changed',self.on_row_position_changed, row)
+            row.connect('position-changed', self.on_row_position_changed, row)
             row.show()
             row.set_active(False)
             self.trackview.add(row)
@@ -449,7 +449,7 @@ class MainWindow(Gtk.ApplicationWindow):
                     self.player.set_speed(self.configuration.get('speed'))
                     self.player.set_remove_silence(
                         self.configuration.get('remove_silence'))
-                    self.player.set_equalizaer(
+                    self.player.set_equalizer(
                         self.configuration.get('equalizer'))
 
                     fraction = float(self.active_row.get_position())
@@ -514,7 +514,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.player.set_speed(self.configuration.get('speed'))
                 self.player.set_remove_silence(
                     self.configuration.get('remove_silence'))
-                self.player.set_equalizaer(self.configuration.get('equalizer'))
+                self.player.set_equalizer(self.configuration.get('equalizer'))
 
                 fraction = float(self.active_row.get_position())
                 self.control['position'].handler_block_by_func(
@@ -812,36 +812,69 @@ class MainWindow(Gtk.ApplicationWindow):
 
         equalizer_grid.set_margin_top(10)
         equalizer_grid.set_margin_bottom(10)
-        equalizer_grid.set_margin_left(5)
-        equalizer_grid.set_margin_right(5)
 
         popover_grid.attach(equalizer_grid, 0, 5, 10, 1)
 
-        for index in range(0, 10):
+        for index in range(0, 18):
             band = 'band{0}'.format(index)
-            self.control[band] = Gtk.Scale.new_with_range(
-                Gtk.Orientation.VERTICAL, -24.0, 12.0, 0.1)
-            self.control[band].set_size_request(-1, 200)
+            self.control[band] = Gtk.Scale.new(
+                Gtk.Orientation.VERTICAL,
+                Gtk.Adjustment(0, -24, 24, 1, 4, 4))
+            self.control[band].set_digits(0)
+            self.control[band].set_inverted(True)
+            # self.control[band].add_mark(4, Gtk.PositionType.LEFT, None)
+            self.control[band].set_has_origin(True)
+            self.control[band].set_value_pos(Gtk.PositionType.BOTTOM)
+            self.control[band].set_size_request(5, 200)
             self.control[band].set_tooltip_text(_('Help'))
             self.control[band].set_value(
                 self.configuration.get('equalizer')[band])
             self.control[band].connect('value-changed',
                                        self.on_band_changed, band)
             equalizer_grid.pack_start(self.control[band], True, True, 0)
-        self.control['band0'].set_tooltip_text(_('0.03 kHz'))
-        self.control['band1'].set_tooltip_text(_('0.06 kHz'))
-        self.control['band2'].set_tooltip_text(_('0.12 kHz'))
-        self.control['band3'].set_tooltip_text(_('0.24 kHz'))
-        self.control['band4'].set_tooltip_text(_('0.47 kHz'))
-        self.control['band5'].set_tooltip_text(_('0.95 kHz'))
-        self.control['band6'].set_tooltip_text(_('1.89 kHz'))
-        self.control['band7'].set_tooltip_text(_('3.77 kHz'))
-        self.control['band8'].set_tooltip_text(_('7.52 kHz'))
-        self.control['band9'].set_tooltip_text(_('15.01 kHz'))
+        self.control['band0'].set_tooltip_text(_('25 Hz'))
+        self.control['band1'].set_tooltip_text(_('36 Hz'))
+        self.control['band2'].set_tooltip_text(_('53 Hz'))
+        self.control['band3'].set_tooltip_text(_('78 Hz'))
+        self.control['band4'].set_tooltip_text(_('115 Hz'))
+        self.control['band5'].set_tooltip_text(_('168 Hz'))
+        self.control['band6'].set_tooltip_text(_('247 Hz'))
+        self.control['band7'].set_tooltip_text(_('362 Hz'))
+        self.control['band8'].set_tooltip_text(_('532 Hz'))
+        self.control['band9'].set_tooltip_text(_('780 Hz'))
+        self.control['band10'].set_tooltip_text(_('1.145 Hz'))
+        self.control['band11'].set_tooltip_text(_('1.681 Hz'))
+        self.control['band12'].set_tooltip_text(_('2.468 Hz'))
+        self.control['band13'].set_tooltip_text(_('3.622 Hz'))
+        self.control['band14'].set_tooltip_text(_('5.317 Hz'))
+        self.control['band15'].set_tooltip_text(_('7.804 Hz'))
+        self.control['band16'].set_tooltip_text(_('11.454 Hz'))
+        self.control['band17'].set_tooltip_text(_('16.813 Hz'))
         equalizer_grid.show_all()
 
         presets = Gtk.ListStore(str, str)
         presets.append([_('None'), 'none'])
+        presets.append([_('1965'), '1965'])
+        presets.append([_('Air'), 'air'])
+        presets.append([_('Brittle'), 'brittle'])
+        presets.append([_('Car Stereo'), 'car stereo'])
+        presets.append([_('Classic V'), 'classic v'])
+        presets.append([_('Clear'), 'clear'])
+        presets.append([_('Dark'), 'dark'])
+        presets.append([_('DEATH'), 'death'])
+        presets.append([_('Drums'), 'drums'])
+        presets.append([_('Flat'), 'flat'])
+        presets.append([_('Home Theater'), 'home theater'])
+        presets.append([_('Loudness'), 'loudness'])
+        presets.append([_('Metal'), 'metal'])
+        presets.append([_('Pop'), 'pop'])
+        presets.append([_('Premaster'), 'premaster'])
+        presets.append([_('Presence'), 'presence'])
+        presets.append([_('Punch & Sparkle'), 'punch & sparkle'])
+        presets.append([_('Shimmer'), 'shimmer'])
+        presets.append([_('Soft Bass'), 'soft bass'])
+        presets.append([_('Strings'), 'strings'])
+        '''
         presets.append([_('Classical'), 'classical'])
         presets.append([_('Club'), 'club'])
         presets.append([_('Dance'), 'dance'])
@@ -860,6 +893,7 @@ class MainWindow(Gtk.ApplicationWindow):
         presets.append([_('Large Hall'), 'large-hall'])
         presets.append([_('Reggae'), 'reggae'])
         presets.append([_('Techno'), 'techno'])
+        '''
         self.combobox_presets = Gtk.ComboBox.new()
         self.combobox_presets.set_tooltip_text(_('Equalizer presets'))
         self.combobox_presets.set_model(presets)
@@ -968,6 +1002,63 @@ class MainWindow(Gtk.ApplicationWindow):
         preset = get_selected_value_in_combo(widget)
         self.configuration.set('preset', preset)
         values = []
+        if preset == 'none':
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        elif preset == '1965':
+            values = [-20, -16, -7, -4, -4, -4, -7, -7, 3, 3, -2, -4, 4, 1, 1,
+                      -4, -6, -12]
+        elif preset == 'air':
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2]
+        elif preset == 'brittle':
+            values = [-12, -10, -9, -8, -7, -6, -5, -3, -2, -2, -2, -2, -1, 1,
+                      4, 4, 1, 0]
+        elif preset == 'car stereo':
+            values = [-5, 0, 1, 0, 0, -4, -4, -5, -5, -5, -3, -2, -2, 0, 1, 0,
+                      -2, -5]
+        elif preset == 'classic v':
+            values = [5, 2, 0, -2, -5, -6, -8, -8, -7, -7, -4, -3, -1, 1, 3, 5,
+                      5, 4]
+        elif preset == 'clear':
+            values = [1, 1, 0, 0, 0, -3, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1]
+        elif preset == 'dark':
+            values = [-6, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -5, -8, -10,
+                      -12, -14, -18, -18]
+        elif preset == 'death':
+            values = [20, 17, 12, 8, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        elif preset == 'drums':
+            values = [2, 1, 0, 0, 0, -2, 0, -2, 0, 0, 0, 0, 2, 0, 0, 3, 0, 0]
+        elif preset == 'flat':
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        elif preset == 'home theater':
+            values = [5, 2, 0, -2, -3, -5, -6, -6, -5, -2, -1, 0, -1, -3, 3, 4,
+                      3, 0]
+        elif preset == 'loudness':
+            values = [4, 4, 4, 2, -2, -2, -2, -2, -2, -2, -2, -4, -10, -7, 0,
+                      3, 4, 4]
+        elif preset == 'metal':
+            values = [4, 5, 5, 3, 0, -1, -2, -1, 0, 1, 1, 1, 1, 0, -1, -1, -1,
+                      -1]
+        elif preset == 'pop':
+            values = [6, 5, 3, 0, -2, -4, -4, -6, -3, 1, 0, 0, 2, 1, 2, 4, 5,
+                      6]
+        elif preset == 'premaster':
+            values = [0, 1, 3, 0, -3, -3, 0, 0, 0, 2, 0, 0, 3, 0, 3, 1, 3, 2]
+        elif preset == 'presence':
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 4, 3, 2, 0, 0, 0, 0]
+        elif preset == 'punch & sparkle':
+            values = [3, 5, 3, -1, -3, -5, -5, -3, -2, 1, 1, 1, 0, 2, 1, 3, 5,
+                      3]
+        elif preset == 'shimmer':
+            values = [0, 0, 0, -2, -2, -7, -5, 0, 0, 0, 0, 0, 4, 1, 3, 3, 4, 0]
+        elif preset == 'soft bass':
+            values = [3, 5, 4, 0, -13, -7, -5, -5, -1, 2, 5, 1, -1, -1, -2, -7,
+                      -9, -14]
+        elif preset == 'strings':
+            values = [-3, -4, -4, -5, -5, -4, -4, -3, -2, -2, -2, -2, -1, 2, 3,
+                      0, -2, -2]
+        else:
+            values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        '''
         # presets https://gist.github.com/kra3/9781800
         if preset == 'none':
             values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -1020,8 +1111,9 @@ class MainWindow(Gtk.ApplicationWindow):
         elif preset == 'techno':
             values = [4.875, 3.75, 0.375, -3.375, -3, 0.375, 4.875, 6, 6,
                       5.625]
+        '''
         if len(values) > 0:
-            for index in range(0, 10):
+            for index in range(0, 18):
                 band = 'band{0}'.format(index)
                 self.control[band].set_value(values[index])
 

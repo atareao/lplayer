@@ -61,9 +61,7 @@ class Player(GObject.GObject):
         self.removesilence = False
         self.equalizer = {'band0': 0, 'band1': 0, 'band2': 0, 'band3': 0,
                           'band4': 0, 'band5': 0, 'band6': 0, 'band7': 0,
-                          'band8': 0, 'band9': 0, 'band10': 0, 'band11': 0,
-                          'band12': 0, 'band13': 0, 'band14': 0, 'band15': 0,
-                          'band16': 0, 'band17': 0}
+                          'band8': 0, 'band9': 0}
         self.lastpos = 0
 
     def get_status(self):
@@ -84,7 +82,7 @@ class Player(GObject.GObject):
  audioconvert ! audioresample ! queue ! removesilence name=removesilence !\
  audioconvert ! audioresample ! queue ! scaletempo !\
  audioconvert ! audioresample ! volume name=volume !\
- audioamplify name=amplification !equalizer-nbands name=equalizer num-bands=18 !\
+ audioamplify name=amplification !equalizer-10bands name=equalizer !\
  autoaudiosink')
         bus = player.get_bus()
         bus.add_signal_watch()
@@ -129,10 +127,26 @@ class Player(GObject.GObject):
                                                            self.volume)
             self.player.get_by_name('amplification').set_property(
                 'amplification', self.amplification)
-            equalizer = self.player.get_by_name('equalizer')
-            for i in range(0, 18):
-                equalizer.get_child_by_index(i).set_property(
-                    'gain', self.equalizer['band{0}'.format(i)])
+            self.player.get_by_name('equalizer').set_property(
+                'band0', self.equalizer['band0'])
+            self.player.get_by_name('equalizer').set_property(
+                'band1', self.equalizer['band1'])
+            self.player.get_by_name('equalizer').set_property(
+                'band2', self.equalizer['band2'])
+            self.player.get_by_name('equalizer').set_property(
+                'band3', self.equalizer['band3'])
+            self.player.get_by_name('equalizer').set_property(
+                'band4', self.equalizer['band4'])
+            self.player.get_by_name('equalizer').set_property(
+                'band5', self.equalizer['band5'])
+            self.player.get_by_name('equalizer').set_property(
+                'band6', self.equalizer['band6'])
+            self.player.get_by_name('equalizer').set_property(
+                'band7', self.equalizer['band7'])
+            self.player.get_by_name('equalizer').set_property(
+                'band8', self.equalizer['band8'])
+            self.player.get_by_name('equalizer').set_property(
+                'band9', self.equalizer['band9'])
             pos = self.player.query_position(Gst.Format.TIME)[1]
             self.player.seek(self.speed, Gst.Format.TIME, Gst.SeekFlags.FLUSH,
                              Gst.SeekType.SET, pos, Gst.SeekType.NONE, -1)
@@ -185,7 +199,7 @@ class Player(GObject.GObject):
         '''
         return self.removesilence
 
-    def set_equalizer(self, equalizer):
+    def set_equalizaer(self, equalizer):
         self.equalizer = equalizer
         if self.get_status() == Status.PLAYING:
             self.play()
@@ -274,12 +288,12 @@ if __name__ == '__main__':
     print('start')
     player = Player()
     # player.set_filename('/datos/Descargas/test.ogg')
-    player.set_filename('/home/lorenzo/Descargas/Telegram Desktop/01. Jenifer - Evidemment.mp3')
+    player.set_filename('/home/lorenzo/Descargas/sample.mp3')
     player.set_speed(1.5)
-    player.set_equalizer_by_band(1, -12)
-    player.set_equalizer_by_band(3, -24)
-    player.set_equalizer_by_band(5, -12)
-    player.set_equalizer_by_band(7, -12)
+    player.set_equalizer(1, -12)
+    player.set_equalizer(3, -12)
+    player.set_equalizer(5, -12)
+    player.set_equalizer(7, -12)
     print(player.get_status())
     player.play()
     time.sleep(5)
@@ -287,10 +301,10 @@ if __name__ == '__main__':
     # player.set_volume(1)
     # player.set_speed(2.0)
     # player.set_remove_silence(True)
-    player.set_equalizer_by_band(1, 12)
-    player.set_equalizer_by_band(3, 24)
-    player.set_equalizer_by_band(5, 12)
-    player.set_equalizer_by_band(7, 12)
+    player.set_equalizer(1, 12)
+    player.set_equalizer(3, 12)
+    player.set_equalizer(5, 12)
+    player.set_equalizer(7, 12)
     player.set_speed(2.0)
     time.sleep(5)
     player.pause()

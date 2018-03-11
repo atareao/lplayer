@@ -1,3 +1,9 @@
+lplayer (0.3.1-0extras16.04.0) xenial; urgency=medium
+
+  * Presets de Foobar2000
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 11 Mar 2018 09:46:06 +0100
+
 lplayer (0.3.0-0extras16.04.0) xenial; urgency=medium
 
   * Now can add folders
