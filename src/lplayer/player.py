@@ -131,8 +131,13 @@ class Player(GObject.GObject):
                 'amplification', self.amplification)
             equalizer = self.player.get_by_name('equalizer')
             for i in range(0, 18):
-                equalizer.get_child_by_index(i).set_property(
-                    'gain', self.equalizer['band{0}'.format(i)])
+                band = 'band{0}'.format(i)
+                if band in self.equalizer.keys():
+                    equalizer.get_child_by_index(i).set_property(
+                        'gain', self.equalizer[band])
+                else:
+                    equalizer.get_child_by_index(i).set_property(
+                        'gain', 0)
             pos = self.player.query_position(Gst.Format.TIME)[1]
             self.player.seek(self.speed, Gst.Format.TIME, Gst.SeekFlags.FLUSH,
                              Gst.SeekType.SET, pos, Gst.SeekType.NONE, -1)
@@ -273,8 +278,7 @@ if __name__ == '__main__':
 
     print('start')
     player = Player()
-    # player.set_filename('/datos/Descargas/test.ogg')
-    player.set_filename('/home/lorenzo/Descargas/Telegram Desktop/01. Jenifer - Evidemment.mp3')
+    player.set_filename('/datos/Descargas/test.ogg')
     player.set_speed(1.5)
     player.set_equalizer_by_band(1, -12)
     player.set_equalizer_by_band(3, -24)
@@ -290,6 +294,7 @@ if __name__ == '__main__':
     player.set_equalizer_by_band(1, 12)
     player.set_equalizer_by_band(3, 24)
     player.set_equalizer_by_band(5, 12)
+    player.set_equalizer_by_band(7, 12)
     player.set_equalizer_by_band(7, 12)
     player.set_speed(2.0)
     time.sleep(5)

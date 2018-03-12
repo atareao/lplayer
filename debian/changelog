@@ -1,8 +1,8 @@
-lplayer (0.3.2-0extras16.04.0) xenial; urgency=medium
+lplayer (0.3.2-0extras16.04.1) xenial; urgency=medium
 
   * Play added tracks
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 11 Mar 2018 21:14:32 +0100
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 12 Mar 2018 10:25:02 +0100
 
 lplayer (0.3.1-0extras16.04.0) xenial; urgency=medium
 
