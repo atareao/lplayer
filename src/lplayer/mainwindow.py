@@ -160,6 +160,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.player.connect('started', self.on_player_started)
         self.player.connect('paused', self.on_player_paused)
         self.player.connect('stopped', self.on_player_stopped)
+        self.player.connect('track-end', self.on_track_end)
 
         DBusGMainLoop(set_as_default=True)
         self.sound_menu = SoundMenuControls('lplayer')
@@ -668,6 +669,8 @@ class MainWindow(Gtk.ApplicationWindow):
                 self.control['position'].handler_unblock_by_func(
                     self.on_position_button_changed)
                 if position >= 0.999:
+                    pass
+                    '''
                     self.active_row.set_listened(True)
                     self.active_row.set_position(0)
                     if self.is_playing is True:
@@ -680,12 +683,28 @@ class MainWindow(Gtk.ApplicationWindow):
                         self.is_playing = False
                     if self.configuration.get('play_continuously') is True:
                         self._sound_menu_next()
+                    '''
                 self.update_audio_in_configuration(self.active_row.audio)
             if self.player.status != Status.PLAYING:
                 self.updater = 0
             return self.player.status == Status.PLAYING
         self.updater = 0
         return False
+
+    def on_track_end(self, widget):
+        self.active_row.set_listened(True)
+        self.active_row.set_position(0)
+        if self.is_playing is True:
+            self.player.pause()
+            self.control['play-pause'].get_child().set_from_gicon(
+                Gio.ThemedIcon(
+                    name='media-playback-start-symbolic'),
+                Gtk.IconSize.BUTTON)
+            self.control['play-pause'].set_tooltip_text(_('Play'))
+            self.is_playing = False
+        if self.configuration.get('play_continuously') is True:
+            self._sound_menu_next()
+        self.update_audio_in_configuration(self.active_row.audio)
 
     def on_player_started(self, player, position):
         pass

@@ -40,7 +40,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import GdkPixbuf
 import time
-from .utils import get_pixbuf_from_base64string
+import os
 from . import comun
 
 PLAY = GdkPixbuf.Pixbuf.new_from_file_at_size(comun.PLAY_ICON, 32, 32)
@@ -64,7 +64,7 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
         'button_listened_clicked': (GObject.SIGNAL_RUN_FIRST,
                                     GObject.TYPE_NONE, ()),
         'position-changed': (GObject.SIGNAL_RUN_FIRST,
-                                    GObject.TYPE_NONE, (int,)),
+                             GObject.TYPE_NONE, (int,)),
     }
 
     def __init__(self, audio, index):
@@ -154,7 +154,7 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
                                        Gdk.RGBA(1, 1, 1, 1))
 
     def on_position_changed(self, widget):
-        print(widget, self.progressbar.get_value())
+        print('=!=', widget, self.progressbar.get_value(), '=!=')
         self.emit('position-changed', self.progressbar.get_value())
 
     def on_clicked(self, widget, event):
@@ -216,9 +216,14 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
 
     def set_audio(self, audio):
         self.audio = audio
-        pixbuf = get_pixbuf_from_base64string(
-            audio['thumbnail_base64']).scale_simple(
-            64, 64, GdkPixbuf.InterpType.BILINEAR)
+        filename = os.path.join(
+            comun.THUMBNAILS_DIR, '{0}.png'.format(audio['hash']))
+        if os.path.exists(filename):
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                filename, 80, 80)
+        else:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                comun.NOIMAGE_ICON, 80, 80)
         self.image.set_from_pixbuf(pixbuf)
         if len(audio['artist']) > 35:
             artist = audio['artist'][:32] + '...'

@@ -32,6 +32,8 @@ except Exception as e:
 from gi.repository import GdkPixbuf
 import base64
 import os
+import re
+import subprocess
 import io
 from PIL import Image
 try:
@@ -45,7 +47,7 @@ except Exception as e:
     import comun
 
 
-NOIMAGE = GdkPixbuf.Pixbuf.new_from_file_at_size(comun.NOIMAGE_ICON, 128, 128)
+NOIMAGE = GdkPixbuf.Pixbuf.new_from_file_at_size(comun.NOIMAGE_ICON, 256, 256)
 
 
 def download_file(url, local_filename):
@@ -136,6 +138,18 @@ def get_thumbnail_filename_for_audio(audio):
         pixbuf = get_pixbuf_from_base64string(audio['thumbnail_base64'])
         pixbuf.savev(thumbnail_filename, 'png', [], [])
     return thumbnail_filename
+
+
+def create_thumbnail_for_audio(hash, thumbnail_base64):
+    thumbnail_filename = os.path.join(comun.THUMBNAILS_DIR,
+                                      '{0}.png'.format(hash))
+    if not os.path.exists(thumbnail_filename):
+        if thumbnail_base64 is not None:
+            pixbuf = get_pixbuf_from_base64string(thumbnail_base64)
+        else:
+            pixbuf = NOIMAGE
+        pixbuf = pixbuf.scale_simple(256, 256, GdkPixbuf.InterpType.BILINEAR)
+        pixbuf.savev(thumbnail_filename, 'png', [], [])
 
 
 def is_running(process):

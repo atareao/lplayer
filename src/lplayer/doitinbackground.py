@@ -74,7 +74,6 @@ class DoItInBackground(IdleObject, Thread):
             self.emit('started_one', arg)
             self.callback(arg)
             self.emit('done_one', arg)
-            # time.sleep(1)
         self.emit('ended', self.ok)
 
 

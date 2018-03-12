@@ -48,6 +48,7 @@ class Player(GObject.GObject):
         'started': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, (int,)),
         'stopped': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, (int,)),
         'paused': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, (int,)),
+        'track-end': (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, ()),
     }
 
     def __init__(self):
@@ -84,20 +85,32 @@ class Player(GObject.GObject):
  audioconvert ! audioresample ! queue ! removesilence name=removesilence !\
  audioconvert ! audioresample ! queue ! scaletempo !\
  audioconvert ! audioresample ! volume name=volume !\
- audioamplify name=amplification !equalizer-nbands name=equalizer num-bands=18 !\
+ audioamplify name=amplification !\
+ equalizer-nbands name=equalizer num-bands=18 !\
  autoaudiosink')
         bus = player.get_bus()
         bus.add_signal_watch()
+        bus.connect("message::eos", self.on_eos)
         bus.connect('message::state-changed', self.on_state_changed)
         bus.connect('message', self.on_player_message)
+        bus.connect("message::error", self.test)
+        bus.connect("message::application", self.test)
+        bus.connect('sync-message', self.test)
         return player
+
+    def test(self, widget, message):
+        print(widget, message)
 
     def emit(self, *args):
         GLib.idle_add(GObject.GObject.emit, self, *args)
 
+    def on_eos(self, bus, msg):
+        self.emit('track-end')
+        print("End-Of-Stream reached")
+
     def on_player_message(self, bus, message):
         t = message.type
-        # print('---', t, '---')
+        print('---', t, '---')
         if t == Gst.MessageType.EOS:
             self.player.set_state(Gst.State.NULL)
         elif t == Gst.MessageType.ERROR:
@@ -107,7 +120,7 @@ class Player(GObject.GObject):
 
     def on_state_changed(self, bus, msg):
         old, new, pending = msg.parse_state_changed()
-        # print('---', old, new, pending, '---')
+        print('---', old, new, pending, '---')
 
     def set_filename(self, filename):
         if self.player is not None:
@@ -278,8 +291,13 @@ if __name__ == '__main__':
 
     print('start')
     player = Player()
-    player.set_filename('/datos/Descargas/test.ogg')
-    player.set_speed(1.5)
+    player.set_filename('/home/lorenzo/Descargas/Telegram Desktop/01. Jenifer - Evidemment.mp3')
+    player.play()
+    player.set_position(0.95)
+    player.play()
+    player.set_speed(5)
+    time.sleep(50)
+    '''
     player.set_equalizer_by_band(1, -12)
     player.set_equalizer_by_band(3, -24)
     player.set_equalizer_by_band(5, -12)
@@ -302,6 +320,7 @@ if __name__ == '__main__':
     print(player.get_status())
     time.sleep(1)
     print(player.get_position())
+    '''
     '''
     player.set_filename('/home/lorenzo/Descargas/sample.mp3')
     player.connect('started', fin, 'started')

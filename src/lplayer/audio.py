@@ -26,6 +26,7 @@ import mutagen
 import hashlib
 import base64
 import os
+from .utils import create_thumbnail_for_audio
 
 
 def md5(fname):
@@ -65,6 +66,11 @@ class Audio(dict):
         self['filepath'] = filepath
         audio = mutagen.File(filepath)
         self['hash'] = md5(filepath)
+        self['title'] = os.path.splitext(os.path.basename(filepath))[0]
+        self['artist'] = ''
+        self['album'] = ''
+        self['year'] = ''
+        self['length'] = 0
         if type(audio.info) == mutagen.mp3.MPEGInfo:
             self['type'] = Audio.FORMAT_MP3
             if audio.tags is not None:
@@ -80,16 +86,11 @@ class Audio(dict):
                 else:
                     self['year'] = ''
                 if 'APIC:' in audio.tags.keys():
-                    self['thumbnail_base64'] = base64.b64encode(
+                    thumbnail_base64 = base64.b64encode(
                         audio.tags['APIC:'].data).decode()
                 else:
-                    self['thumbnail_base64'] = None
-            else:
-                self['title'] = os.path.splitext(os.path.basename(filepath))[0]
-                self['artist'] = ''
-                self['album'] = ''
-                self['year'] = ''
-                self['thumbnail_base64'] = None
+                    thumbnail_base64 = None
+                create_thumbnail_for_audio(self['hash'], thumbnail_base64)
             if audio.info is not None:
                 self['length'] = audio.info.length
                 self['channels'] = audio.info.channels
@@ -104,8 +105,9 @@ class Audio(dict):
             self['artist'] = get_data_from_metadata(audio.tags, 'artist')
             self['album'] = get_data_from_metadata(audio.tags, 'album')
             self['year'] = get_data_from_metadata(audio.tags, 'year')
-            self['thumbnail_base64'] = get_data_from_metadata(
-                audio.tags, 'metada_block_picture')
+            thumbnail_base64 = get_data_from_metadata(audio.tags,
+                                                      'metada_block_picture')
+            create_thumbnail_for_audio(self['hash'], thumbnail_base64)
             self['length'] = audio.info.length
             self['channels'] = audio.info.channels
             self['sample rate'] = audio.info.sample_rate
@@ -122,7 +124,8 @@ class Audio(dict):
                 self['album'] = get_data_from_metadata(audio.tags,
                                                        'albumtitle')
             self['year'] = get_data_from_metadata(audio.tags, 'year')
-            self['thumbnail_base64'] = get_image_from_flac(audio)
+            thumbnail_base64 = get_image_from_flac(audio)
+            create_thumbnail_for_audio(self['hash'], thumbnail_base64)
             self['length'] = audio.info.length
             self['channels'] = audio.info.channels
             self['sample rate'] = audio.info.sample_rate
@@ -152,14 +155,16 @@ class Audio(dict):
             self['bitrate'] = int(audio.info.bitrate / 1000.0)
             self['ext'] = 'm4a'
             if len(audio.tags['covr']) > 0:
-                self['thumbnail_base64'] = base64.b64encode(
+                thumbnail_base64 = base64.b64encode(
                     audio.tags['covr'][0]).decode()
             else:
-                self['thumbnail_base64'] = None
-
+                thumbnail_base64 = None
+            create_thumbnail_for_audio(self['hash'], thumbnail_base64)
         self['genre'] = Audio.GENRE_UNKNOWN
         self['listened'] = False
         self['position'] = 0
+        if self['length'] == 0:
+            raise Exception
 
     def __eq__(self, other):
         return self['hash'] == other['hash']
