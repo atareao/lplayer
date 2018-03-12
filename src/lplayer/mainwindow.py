@@ -146,6 +146,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.is_playing = False
         self.updater = None
         self.configuration = Configuration()
+        if self.configuration.get('version') is None or\
+                self.configuration.get('version') != comun.VERSION:
+            self.configuration.set_defaults()
+            self.configuration.set('version', comun.VERSION)
+            self.configuration.set('first-time', False)
         self.row = self.configuration.get('row')
 
         max_action = Gio.SimpleAction.new_stateful(

@@ -37,7 +37,9 @@ def is_package():
     return (__file__.startswith(USRDIR) or os.getcwd().startswith(USRDIR))
 
 
-PARAMS = {'speed': 1.0,
+PARAMS = {'first-time': True,
+          'version': None,
+          'speed': 1.0,
           'remove_silence': False,
           'equalizer': {'band0': 0, 'band1': 0, 'band2': 0, 'band3': 0,
                         'band4': 0, 'band5': 0, 'band6': 0, 'band7': 0,
