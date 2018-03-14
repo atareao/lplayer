@@ -99,7 +99,7 @@ class Player(GObject.GObject):
         return player
 
     def test(self, widget, message):
-        print(widget, message)
+        print('test', widget, message)
 
     def emit(self, *args):
         GLib.idle_add(GObject.GObject.emit, self, *args)
@@ -110,17 +110,18 @@ class Player(GObject.GObject):
 
     def on_player_message(self, bus, message):
         t = message.type
-        print('---', t, '---')
         if t == Gst.MessageType.EOS:
             self.player.set_state(Gst.State.NULL)
+            self.emit('track-end')
         elif t == Gst.MessageType.ERROR:
             self.player.set_state(Gst.State.NULL)
             err, debug = message.parse_error()
-            print('Error: %s' % err, debug)
+            print('--------@@@ Error: %s' % err, debug)
+            self.emit('track-end')
 
     def on_state_changed(self, bus, msg):
         old, new, pending = msg.parse_state_changed()
-        print('---', old, new, pending, '---')
+        # print('-ee--', old, new, pending, '---')
 
     def set_filename(self, filename):
         if self.player is not None:

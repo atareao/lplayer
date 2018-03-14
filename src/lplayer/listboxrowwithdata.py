@@ -129,13 +129,14 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
         grid.attach(self.button_info, 6, 2, 1, 1)
 
         self.progressbar = Gtk.Scale()
+        self.progressbar.set_digits(0)
         self.progressbar.set_margin_bottom(5)
         self.progressbar.set_valign(Gtk.Align.CENTER)
         self.progressbar.set_hexpand(True)
         self.progressbar.set_margin_right(5)
         self.progressbar.set_name('progressbar')
         self.progressbar.set_adjustment(
-            Gtk.Adjustment(0, 0, 100, 1, 1, 5))
+            Gtk.Adjustment(0, 0, 100, 1, 1, 0))
         self.progressbar.connect('value-changed', self.on_position_changed)
         self.progressbar.set_sensitive(False)
         grid.attach(self.progressbar, 4, 3, 2, 1)
@@ -154,7 +155,6 @@ class ListBoxRowWithData(Gtk.ListBoxRow):
                                        Gdk.RGBA(1, 1, 1, 1))
 
     def on_position_changed(self, widget):
-        print('=!=', widget, self.progressbar.get_value(), '=!=')
         self.emit('position-changed', self.progressbar.get_value())
 
     def on_clicked(self, widget, event):

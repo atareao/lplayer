@@ -1,9 +1,15 @@
-lplayer (0.3.3-0extras16.04.2) xenial; urgency=medium
+lplayer (0.3.4-0extras16.04.0) bionic; urgency=medium
+
+  * Added shorcuts
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 14 Mar 2018 19:25:55 +0100
+
+lplayer (0.3.3-0extras16.04.3) bionic; urgency=medium
 
   * Track end detection
   * Clear configuration on new version
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 12 Mar 2018 16:42:10 +0100
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 13 Mar 2018 11:58:20 +0100
 
 lplayer (0.3.2-0extras16.04.1) xenial; urgency=medium
 

@@ -131,7 +131,7 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def __init__(self, app, files=[]):
         Gtk.ApplicationWindow.__init__(self, application=app)
-
+        self.app = app
         self.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
         self.set_icon_from_file(comun.ICON)
         self.set_default_size(500, 600)
@@ -250,6 +250,7 @@ class MainWindow(Gtk.ApplicationWindow):
                                      dnd_list,
                                      Gdk.DragAction.MOVE)
 
+        self.shorcuts()
         self.load_css()
         self.show_all()
         self.play_controls.set_visible(True)
@@ -269,6 +270,28 @@ class MainWindow(Gtk.ApplicationWindow):
         self.control['play-pause'].grab_focus()
         if len(files) > 0:
             self.add_tracks_in_background(files)
+
+    def shorcuts(self):
+        self.create_shorcut_for_action('play-pause', '<Control>n')
+        self.create_shorcut_for_action('next', '<Control>m')
+        self.create_shorcut_for_action('previous', '<Control>b')
+
+    def create_shorcut_for_action(self, name, shorcut):
+        action = Gio.SimpleAction.new(name, None)
+        action.connect('activate', self.on_action)
+        self.add_action(action)
+        self.app.add_accelerator(shorcut, 'win.{0}'.format(name), None)
+
+    def on_action(self, widget, option):
+        if type(widget) == Gio.SimpleAction:
+            option = widget.get_name()
+        print(widget, option)
+        if option == 'play-pause':
+            self._sound_menu_play()
+        elif option == 'next':
+            self._sound_menu_next()
+        elif option == 'previous':
+            self._sound_menu_previous()
 
     def drag_drop(self, widget, context, selection, info, time):
         print('==== Drag drop ====')
@@ -434,7 +457,9 @@ class MainWindow(Gtk.ApplicationWindow):
         return -1
 
     def play_row(self, row):
-        if not os.path.exists(row.audio['filepath']):
+        if row is None:
+            return
+        if row.audio is None or not os.path.exists(row.audio['filepath']):
             self.remove_rows([row])
             return
         if len(self.trackview.get_children()) > 0:
@@ -620,36 +645,28 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def _sound_menu_next(self, *args):
         """Next"""
-        self.play_row(self.trackview.get_row_at_index(
-            self.get_next_playable_track()))
-
-    def _sound_menu_previous(self, *args):
-        """Previous"""
-        self.play_row(self.trackview.get_row_at_index(
-            self.get_previous_playable_track()))
-
-    def on_row_selected(self, widget, row):
-        if row is not None:
-            print('row selected', row.audio['title'])
-        self.selected_row = row
-
-    def get_next_playable_track(self):
         if self.active_row is not None:
             next = self.active_row.index + 1
             if next >= len(self.trackview.get_children()):
                 next = 0
         else:
             next = 0
-        return next
+        self.play_row(self.trackview.get_row_at_index(next))
 
-    def get_previous_playable_track(self):
+    def _sound_menu_previous(self, *args):
+        """Previous"""
         if self.active_row is not None:
             previous = self.active_row.index - 1
             if previous < 0:
                 previous = len(self.trackview.get_children()) - 1
         else:
             previous = len(self.trackview.get_children()) - 1
-        return previous
+        self.play_row(self.trackview.get_row_at_index(previous))
+
+    def on_row_selected(self, widget, row):
+        if row is not None:
+            print('row selected', row.audio['title'])
+        self.selected_row = row
 
     def update_audio_in_configuration(self, audio):
         audios = self.configuration.get('audios')
