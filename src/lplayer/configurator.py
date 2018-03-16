@@ -32,7 +32,12 @@ from . import comun
 class Configuration(object):
     def __init__(self):
         self.params = comun.PARAMS
+        self.check()
         self.read()
+
+    def check(self):
+        if not os.path.exists(comun.CONFIG_APP_DIR):
+            os.makedirs(comun.CONFIG_APP_DIR)
 
     def get(self, key):
         try:
@@ -56,6 +61,7 @@ class Configuration(object):
         self.save()
 
     def read(self):
+        self.check()
         try:
             f = codecs.open(comun.CONFIG_FILE, 'r', 'utf-8')
         except IOError as e:
@@ -70,8 +76,7 @@ class Configuration(object):
         f.close()
 
     def save(self):
-        if not os.path.exists(comun.CONFIG_APP_DIR):
-            os.makedirs(comun.CONFIG_APP_DIR)
+        self.check()
         f = codecs.open(comun.CONFIG_FILE, 'w', 'utf-8')
         f.write(json.dumps(self.params, indent=4, sort_keys=True))
         f.close()
