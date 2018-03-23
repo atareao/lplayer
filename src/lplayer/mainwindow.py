@@ -1220,6 +1220,8 @@ class MainWindow(Gtk.ApplicationWindow):
             GLib.idle_add(dialog.destroy)
             # self.add_tracks_sync(filenames)
             self.add_tracks_in_background(filenames)
+        else:
+            dialog.destroy()
 
     def on_remove_track(self, widget):
         if self.active_row is not None:

@@ -1,8 +1,8 @@
-lplayer (0.3.4-0extras16.04.0) bionic; urgency=medium
+lplayer (0.3.4-0extras16.04.1) bionic; urgency=medium
 
   * Added shorcuts
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Wed, 14 Mar 2018 19:25:55 +0100
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Fri, 23 Mar 2018 17:33:07 +0100
 
 lplayer (0.3.3-0extras16.04.3) bionic; urgency=medium
 
