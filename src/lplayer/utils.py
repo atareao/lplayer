@@ -24,7 +24,6 @@
 # SOFTWARE.
 
 
-import requests
 import gi
 try:
     gi.require_version('GdkPixbuf', '2.0')
@@ -50,30 +49,6 @@ except Exception as e:
 
 
 NOIMAGE = GdkPixbuf.Pixbuf.new_from_file_at_size(comun.NOIMAGE_ICON, 256, 256)
-
-
-def download_file(url, local_filename):
-    # NOTE the stream=True parameter
-    try:
-        r = requests.get(url, stream=True)
-        with open(local_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                if chunk:
-                    f.write(chunk)
-        return True
-    except Exception as e:
-        print(e)
-    return False
-
-
-def read_remote_file(url):
-    try:
-        r = requests.get(url, stream=True)
-        if r.status_code == 200:
-            return r.text
-    except Exception as e:
-        print(e)
-    return None
 
 
 def select_value_in_combo(combo, value):
@@ -111,27 +86,6 @@ def get_pixbuf_from_base64string(base64string):
     except Exception as e:
         print(e)
     return NOIMAGE
-
-
-def from_remote_image_to_base64(image_url):
-    base64string = None
-    try:
-        r = requests.get(image_url, timeout=5, verify=False)
-        if r.status_code == 200:
-            writer_file = io.BytesIO()
-            for chunk in r.iter_content(1024):
-                writer_file.write(chunk)
-            old_image = Image.open(writer_file)
-            old_image.thumbnail((128, 128), Image.ANTIALIAS)
-            new_image = io.BytesIO()
-            old_image.save(new_image, "png")
-            base64string = base64.b64encode(new_image.getvalue())
-    except Exception as e:
-        print(e)
-    if base64string is not None:
-        return base64string.decode()
-    return None
-
 
 def get_thumbnail_filename_for_audio(audio):
     thumbnail_filename = os.path.join(comun.THUMBNAILS_DIR,
