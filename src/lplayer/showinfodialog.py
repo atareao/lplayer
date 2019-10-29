@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# showinfodialog.py
+# This file is part of lplayer
 #
-# This file is part of yoaup (YouTube Audio Player)
+# Copyright (c) 2017-2019 Lorenzo Carbonell Cerezo <a.k.a. atareao>
 #
-# Copyright (C) 2017
-# Lorenzo Carbonell Cerezo <lorenzo.carbonell.cerezo@gmail.com>
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 import gi
 try:
@@ -31,20 +32,17 @@ except Exception as e:
     exit(1)
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
-
+import os
 try:
     from . import comun
     from .comun import _
-    from .utils import get_pixbuf_from_base64string
 except Exception as e:
-    import os
     import sys
     PACKAGE_PARENT = '..'
     SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(),
                                  os.path.expanduser(__file__))))
     sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
     import comun
-    from utils import get_pixbuf_from_base64string
     from audio import Audio
     from comun import _
 
@@ -80,9 +78,15 @@ class ShowInfoDialog(Gtk.Dialog):
 
         image = Gtk.Image()
         grid.attach(image, 0, 0, 4, 4)
-        pixbuf = get_pixbuf_from_base64string(
-            audio['thumbnail_base64']).scale_simple(
-            256, 256, GdkPixbuf.InterpType.BILINEAR)
+
+        filename = os.path.join(
+            comun.THUMBNAILS_DIR, '{0}.png'.format(audio['hash']))
+        if os.path.exists(filename):
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                filename, 256, 256)
+        else:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                comun.NOIMAGE_ICON, 256, 256)
         image.set_from_pixbuf(pixbuf)
 
         label = Gtk.Label(_('Artist') + ': ')

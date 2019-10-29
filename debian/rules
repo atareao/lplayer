@@ -38,10 +38,9 @@ install: build
 	mkdir -p ${CURDIR}/debian/lplayer/usr/share/locale-langpack/fr/LC_MESSAGES
 	# End create languages directories
 	# Compile languages
-	msgfmt template1/es.po -o ${CURDIR}/debian/lplayer/usr/share/locale-langpack/es/LC_MESSAGES/lplayer.mo
-	msgfmt template1/fr.po -o ${CURDIR}/debian/lplayer/usr/share/locale-langpack/fr/LC_MESSAGES/lplayer.mo
+	msgfmt po/es.po -o ${CURDIR}/debian/lplayer/usr/share/locale-langpack/es/LC_MESSAGES/lplayer.mo
+	msgfmt po/fr.po -o ${CURDIR}/debian/lplayer/usr/share/locale-langpack/fr/LC_MESSAGES/lplayer.mo
 	# End comile languages
-
 	# Add here commands to install the package into debian/<packagename>.
 	#$(MAKE) prefix=`pwd`/debian/`dh_listpackages`/usr install
 

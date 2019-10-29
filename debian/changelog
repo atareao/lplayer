@@ -1,8 +1,9 @@
-lplayer (0.3.4-0extras16.04.2) xenial; urgency=medium
+lplayer (0.3.4-0extras16.04.3) xenial; urgency=medium
 
   * Added french translation 
+  * Fixed a bug with info dialog
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 25 Mar 2018 20:34:35 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 26 Mar 2018 19:01:21 +0200
 
 lplayer (0.3.4-0extras16.04.1) bionic; urgency=medium
 
