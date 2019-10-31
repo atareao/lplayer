@@ -1,8 +1,8 @@
-lplayer (0.4.0-0extras19.10.01) eoan; urgency=medium
+lplayer (0.4.0-0extras19.10.02) eoan; urgency=medium
 
   * Added an indicator play
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 29 Oct 2019 21:13:11 +0100
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Thu, 31 Oct 2019 19:43:54 +0100
 
 lplayer (0.3.4-0extras16.04.3) xenial; urgency=medium
 
