@@ -46,7 +46,7 @@ from gi.repository import Notify
 import os
 import json
 import mimetypes
-import urllib
+import urllib.request
 from dbus.mainloop.glib import DBusGMainLoop
 from . import comun
 from .comun import _
