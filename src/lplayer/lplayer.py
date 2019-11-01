@@ -99,6 +99,11 @@ class MainApplication(Gtk.Application):
         self.set_accels_for_action('app.quit', ['<Ctrl>Q'])
         self.set_accels_for_action('app.about', ['<Ctrl>F'])
 
+        self.set_accels_for_action('app.play', ['Up'])
+        self.set_accels_for_action('app.pause', ['Down'])
+        self.set_accels_for_action('app.previous', ['Left'])
+        self.set_accels_for_action('app.next', ['Right'])
+
         self.add_action(create_action(
             'new',
             callback=self.on_headbar_clicked))
@@ -172,6 +177,19 @@ class MainApplication(Gtk.Application):
         self.add_action(create_action(
             'none',
             callback=self.do_none))
+        self.add_action(create_action(
+            'play',
+            callback=self.on_play_activate))
+        self.add_action(create_action(
+            'pause',
+            callback=self.on_pause_activate))
+        self.add_action(create_action(
+            'previous',
+            callback=self.on_previous_activate))
+        self.add_action(create_action(
+            'next',
+            callback=self.on_next_activate))
+
         action_toggle = Gio.SimpleAction.new_stateful(
             "toggle", None, GLib.Variant.new_boolean(False))
         action_toggle.connect("change-state", self.toggle_toggled)
@@ -234,24 +252,47 @@ class MainApplication(Gtk.Application):
     def on_quit_activate(self, widget, optional):
         self.win._sound_menu_quit()
 
+    def on_play_activate(self, widget, optional):
+        self.win._sound_menu_play()
+
+    def on_pause_activate(self, widget, optional):
+        self.win._sound_menu_pause()
+
+    def on_previous_activate(self, widget, optional):
+        self.win._sound_menu_previous()
+
+    def on_next_activate(self, widget, optional):
+        self.win._sound_menu_next()
+
+
     def on_about_activate(self, widget, optional):
         ad = Gtk.AboutDialog(comun.APPNAME, self.win)
         ad.set_name(comun.APPNAME)
         ad.set_version(comun.VERSION)
-        ad.set_copyright('Copyrignt (c) 2018\nLorenzo Carbonell')
+        ad.set_copyright('Copyrignt (c) 2018-2019\nLorenzo Carbonell')
         ad.set_comments(_('A minimal audio player for Linux'))
         ad.set_license('''
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
+MIT License
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+Copyright (c) 2012-2018 Lorenzo Carbonell Cerezo <a.k.a. atareao>
 
-You should have received a copy of the GNU General Public License along with
-this program. If not, see <http://www.gnu.org/licenses/>.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ''')
         ad.set_website('http://www.atareao.es')
         ad.set_website_label('http://www.atareao.es')
