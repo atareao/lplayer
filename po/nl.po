@@ -1,0 +1,346 @@
+# French translations for lplayer package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the lplayer package.
+# NHiX <nicolasnhix@gmail.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lplayer 0.3.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-29 21:12+0100\n"
+"PO-Revision-Date: 2020-02-10 22:08+0100\n"
+"Last-Translator: NHiX <nicolasnhix@gmail.com>\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: src/lplayer/lplayer.py:242
+msgid "A minimal audio player for Linux"
+msgstr "Een minimale audiospeler voor Linux"
+
+#: src/lplayer/indicator.py:66 src/lplayer/indicator.py:144
+#: src/lplayer/mainwindow.py:486 src/lplayer/mainwindow.py:549
+#: src/lplayer/mainwindow.py:737 src/lplayer/mainwindow.py:954
+msgid "Play"
+msgstr "Afspelen"
+
+#: src/lplayer/indicator.py:73
+msgid "Paused"
+msgstr "Gepauzeerd"
+
+#: src/lplayer/indicator.py:83 src/lplayer/mainwindow.py:945
+msgid "Previous"
+msgstr "Vorige"
+
+#: src/lplayer/indicator.py:88 src/lplayer/mainwindow.py:963
+msgid "Next"
+msgstr "Volgende"
+
+#: src/lplayer/indicator.py:98 src/lplayer/indicator.py:135
+msgid "Hide main window"
+msgstr "Hoofdvenster verbergen"
+
+#: src/lplayer/indicator.py:103 src/lplayer/mainwindow.py:883
+#: src/lplayer/mainwindow.py:1006
+msgid "Help"
+msgstr "Hulp"
+
+#: src/lplayer/indicator.py:112 src/lplayer/mainwindow.py:1001
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: src/lplayer/indicator.py:132 src/lplayer/indicator.py:138
+msgid "Show main window"
+msgstr "Hoofdvenster tonen"
+
+#: src/lplayer/indicator.py:141 src/lplayer/mainwindow.py:508
+#: src/lplayer/mainwindow.py:572
+msgid "Pause"
+msgstr "Pauzeren"
+
+#: src/lplayer/indicator.py:170 src/lplayer/mainwindow.py:973
+msgid "Homepage"
+msgstr "Website"
+
+#: src/lplayer/indicator.py:178
+msgid "Get help online..."
+msgstr "Online-hulp..."
+
+#: src/lplayer/indicator.py:186
+msgid "Translate this application..."
+msgstr "Vertaal deze toepassing..."
+
+#: src/lplayer/indicator.py:194
+msgid "Report a bug..."
+msgstr "Meld een bug..."
+
+#: src/lplayer/indicator.py:206
+msgid "Follow me in Twitter"
+msgstr "Volg me op Twitter"
+
+#: src/lplayer/indicator.py:214
+msgid "Follow me in Google+"
+msgstr "Volg me op Google+"
+
+#: src/lplayer/indicator.py:223
+msgid "Follow me in Facebook"
+msgstr "Volg me op Facebook"
+
+#: src/lplayer/indicator.py:230 src/lplayer/mainwindow.py:996
+msgid "About"
+msgstr "Over"
+
+#: src/lplayer/indicator.py:248
+msgid "A weather indicator"
+msgstr "Een muziekspeler"
+
+#: src/lplayer/preferencesdialog.py:44
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: src/lplayer/showinfodialog.py:55
+msgid "Show info about audio"
+msgstr "Audio-informatie tonen"
+
+#: src/lplayer/showinfodialog.py:92
+msgid "Artist"
+msgstr "Artiest"
+
+#: src/lplayer/showinfodialog.py:100
+msgid "Album"
+msgstr "Album"
+
+#: src/lplayer/showinfodialog.py:108
+msgid "Title"
+msgstr "Titel"
+
+#: src/lplayer/showinfodialog.py:116
+msgid "Year"
+msgstr "Jaar"
+
+#: src/lplayer/mainwindow.py:502 src/lplayer/mainwindow.py:566
+#: src/lplayer/mainwindow.py:702 src/lplayer/mainwindow.py:808
+msgid "Position"
+msgstr "Positie"
+
+#: src/lplayer/mainwindow.py:769 src/lplayer/mainwindow.py:821
+#: src/lplayer/mainwindow.py:825
+msgid "Speed"
+msgstr "Snelheid"
+
+#: src/lplayer/mainwindow.py:777 src/lplayer/mainwindow.py:1236
+#, python-brace-format
+msgid "Position: {0}%"
+msgstr "Positie: {0}%"
+
+#: src/lplayer/mainwindow.py:813
+msgid "Relative position"
+msgstr "Relatieve positie"
+
+#: src/lplayer/mainwindow.py:834 src/lplayer/mainwindow.py:839
+msgid "Remove silence"
+msgstr "Stilte v"
+
+#: src/lplayer/mainwindow.py:848 src/lplayer/mainwindow.py:854
+msgid "Play continuously"
+msgstr "Aaneengeschakeld afspelen"
+
+#: src/lplayer/mainwindow.py:863
+msgid "Equalizer"
+msgstr "Equalizer"
+
+#: src/lplayer/mainwindow.py:890
+msgid "29 Hz"
+msgstr "29 Hz"
+
+#: src/lplayer/mainwindow.py:891
+msgid "59 Hz"
+msgstr "59 Hz"
+
+#: src/lplayer/mainwindow.py:892
+msgid "119 Hz"
+msgstr "119 Hz"
+
+#: src/lplayer/mainwindow.py:893
+msgid "237 Hz"
+msgstr "237 Hz"
+
+#: src/lplayer/mainwindow.py:894
+msgid "474 Hz"
+msgstr "474 Hz"
+
+#: src/lplayer/mainwindow.py:895
+msgid "947 Hz"
+msgstr "947 Hz"
+
+#: src/lplayer/mainwindow.py:896
+msgid "1889 Hz"
+msgstr "1889 Hz"
+
+#: src/lplayer/mainwindow.py:897
+msgid "3770 Hz"
+msgstr "3770 Hz"
+
+#: src/lplayer/mainwindow.py:898
+msgid "7523 Hz"
+msgstr "7523 Hz"
+
+#: src/lplayer/mainwindow.py:899
+msgid "15011 Hz"
+msgstr "15011 Hz"
+
+#: src/lplayer/mainwindow.py:903
+msgid "None"
+msgstr "Geen"
+
+#: src/lplayer/mainwindow.py:904
+msgid "Classical"
+msgstr "Klassiek"
+
+#: src/lplayer/mainwindow.py:905
+msgid "Club"
+msgstr "Club"
+
+#: src/lplayer/mainwindow.py:906
+msgid "Dance"
+msgstr "Dance"
+
+#: src/lplayer/mainwindow.py:907
+msgid "Flat"
+msgstr "Plat"
+
+#: src/lplayer/mainwindow.py:908
+msgid "Live"
+msgstr "Live"
+
+#: src/lplayer/mainwindow.py:909
+msgid "Headphone"
+msgstr "Koptelefoon"
+
+#: src/lplayer/mainwindow.py:910
+msgid "Rock"
+msgstr "Rock"
+
+#: src/lplayer/mainwindow.py:911
+msgid "Pop"
+msgstr "Pop"
+
+#: src/lplayer/mainwindow.py:912
+msgid "Full Bass and Treble"
+msgstr "Volledige bas en hoge tonen"
+
+#: src/lplayer/mainwindow.py:913
+msgid "Full Bass"
+msgstr "Volledige bas"
+
+#: src/lplayer/mainwindow.py:914
+msgid "Full Treble"
+msgstr "Volledige hoge tonen"
+
+#: src/lplayer/mainwindow.py:915
+msgid "Soft"
+msgstr "Soft"
+
+#: src/lplayer/mainwindow.py:916
+msgid "Party"
+msgstr "Feest"
+
+#: src/lplayer/mainwindow.py:917
+msgid "Ska"
+msgstr "Ska"
+
+#: src/lplayer/mainwindow.py:918
+msgid "Soft Rock"
+msgstr "Softrock"
+
+#: src/lplayer/mainwindow.py:919
+msgid "Large Hall"
+msgstr "Grote zaal"
+
+#: src/lplayer/mainwindow.py:920
+msgid "Reggae"
+msgstr "Reggae"
+
+#: src/lplayer/mainwindow.py:921
+msgid "Techno"
+msgstr "Techno"
+
+#: src/lplayer/mainwindow.py:924
+msgid "Equalizer presets"
+msgstr "Equalizer-voorinstellingen"
+
+#: src/lplayer/mainwindow.py:936
+msgid "Configuration"
+msgstr "Instellingen"
+
+#: src/lplayer/mainwindow.py:978
+msgid "Code"
+msgstr "Code"
+
+#: src/lplayer/mainwindow.py:979
+msgid "Issues"
+msgstr "Problemen"
+
+#: src/lplayer/mainwindow.py:984
+msgid "Twitter"
+msgstr "Twitter"
+
+#: src/lplayer/mainwindow.py:985
+msgid "Facebook"
+msgstr "Facebook"
+
+#: src/lplayer/mainwindow.py:986
+msgid "Google+"
+msgstr "Google+"
+
+#: src/lplayer/mainwindow.py:991
+msgid "Donations"
+msgstr "Donaties"
+
+#: src/lplayer/mainwindow.py:1013
+msgid "Remove tracks"
+msgstr "Nummers verwijderen"
+
+#: src/lplayer/mainwindow.py:1020
+msgid "Add tracks"
+msgstr "Nummers toevoegen"
+
+#: src/lplayer/mainwindow.py:1095
+msgid "Please choose music files"
+msgstr "Kies muziekbestanden"
+
+#: src/lplayer/mainwindow.py:1105
+msgid "audio files"
+msgstr "audiobestanden"
+
+#: src/lplayer/mainwindow.py:1119
+msgid "mp3 files"
+msgstr "mp3-bestanden"
+
+#: src/lplayer/mainwindow.py:1128
+msgid "ogg files"
+msgstr "ogg-bestanden"
+
+#: src/lplayer/mainwindow.py:1133
+msgid "flac files"
+msgstr "flac-bestanden"
+
+#: src/lplayer/mainwindow.py:1138
+msgid "mp4 files"
+msgstr "mp4-bestanden"
+
+#: src/lplayer/mainwindow.py:1156
+msgid "Are you sure to delete the tracks?"
+msgstr "Weet je zeker dat je de nummers wilt verwijderen?"
+
+#: src/lplayer/mainwindow.py:1158
+msgid "Are you sure to delete the track?"
+msgstr "Weet je zeker dat je het nummer wilt verwijderen?"
+
+#: src/lplayer/mainwindow.py:1250
+msgid "Adding new tracks"
+msgstr "Nummers toevoegen"
