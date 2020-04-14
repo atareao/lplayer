@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lplayer 0.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 21:12+0100\n"
+"POT-Creation-Date: 2020-04-14 20:16+0200\n"
 "PO-Revision-Date: 2017-08-08 11:51+0200\n"
 "Last-Translator: NHiX <nicolasnhix@gmail.com>\n"
 "Language-Team: Français\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/lplayer/lplayer.py:242
+#: src/lplayer/lplayer.py:273
 msgid "A minimal audio player for Linux"
 msgstr "Un lecteur audio pour YouTube"
 
 #: src/lplayer/indicator.py:66 src/lplayer/indicator.py:144
-#: src/lplayer/mainwindow.py:486 src/lplayer/mainwindow.py:549
-#: src/lplayer/mainwindow.py:737 src/lplayer/mainwindow.py:954
+#: src/lplayer/mainwindow.py:490 src/lplayer/mainwindow.py:553
+#: src/lplayer/mainwindow.py:741 src/lplayer/mainwindow.py:958
 msgid "Play"
 msgstr "Lecture"
 
@@ -32,11 +32,11 @@ msgstr "Lecture"
 msgid "Paused"
 msgstr "Pause"
 
-#: src/lplayer/indicator.py:83 src/lplayer/mainwindow.py:945
+#: src/lplayer/indicator.py:83 src/lplayer/mainwindow.py:949
 msgid "Previous"
 msgstr "Précédente"
 
-#: src/lplayer/indicator.py:88 src/lplayer/mainwindow.py:963
+#: src/lplayer/indicator.py:88 src/lplayer/mainwindow.py:967
 msgid "Next"
 msgstr "Suivante"
 
@@ -44,12 +44,12 @@ msgstr "Suivante"
 msgid "Hide main window"
 msgstr ""
 
-#: src/lplayer/indicator.py:103 src/lplayer/mainwindow.py:883
-#: src/lplayer/mainwindow.py:1006
+#: src/lplayer/indicator.py:103 src/lplayer/mainwindow.py:887
+#: src/lplayer/mainwindow.py:1010
 msgid "Help"
 msgstr "Aide"
 
-#: src/lplayer/indicator.py:112 src/lplayer/mainwindow.py:1001
+#: src/lplayer/indicator.py:112 src/lplayer/mainwindow.py:1005
 msgid "Quit"
 msgstr "Quitter"
 
@@ -57,44 +57,44 @@ msgstr "Quitter"
 msgid "Show main window"
 msgstr ""
 
-#: src/lplayer/indicator.py:141 src/lplayer/mainwindow.py:508
-#: src/lplayer/mainwindow.py:572
+#: src/lplayer/indicator.py:141 src/lplayer/mainwindow.py:512
+#: src/lplayer/mainwindow.py:576
 msgid "Pause"
 msgstr "Pause"
 
-#: src/lplayer/indicator.py:170 src/lplayer/mainwindow.py:973
+#: src/lplayer/indicator.py:171 src/lplayer/mainwindow.py:977
 msgid "Homepage"
 msgstr "Site web"
 
-#: src/lplayer/indicator.py:178
+#: src/lplayer/indicator.py:179
 msgid "Get help online..."
 msgstr ""
 
-#: src/lplayer/indicator.py:186
+#: src/lplayer/indicator.py:187
 msgid "Translate this application..."
 msgstr ""
 
-#: src/lplayer/indicator.py:194
+#: src/lplayer/indicator.py:195
 msgid "Report a bug..."
 msgstr ""
 
-#: src/lplayer/indicator.py:206
+#: src/lplayer/indicator.py:207
 msgid "Follow me in Twitter"
 msgstr ""
 
-#: src/lplayer/indicator.py:214
+#: src/lplayer/indicator.py:215
 msgid "Follow me in Google+"
 msgstr ""
 
-#: src/lplayer/indicator.py:223
+#: src/lplayer/indicator.py:224
 msgid "Follow me in Facebook"
 msgstr ""
 
-#: src/lplayer/indicator.py:230 src/lplayer/mainwindow.py:996
+#: src/lplayer/indicator.py:231 src/lplayer/mainwindow.py:1000
 msgid "About"
 msgstr "A propos de..."
 
-#: src/lplayer/indicator.py:248
+#: src/lplayer/indicator.py:249
 msgid "A weather indicator"
 msgstr ""
 
@@ -122,227 +122,232 @@ msgstr "Titre"
 msgid "Year"
 msgstr "Année"
 
-#: src/lplayer/mainwindow.py:502 src/lplayer/mainwindow.py:566
-#: src/lplayer/mainwindow.py:702 src/lplayer/mainwindow.py:808
+#: src/lplayer/mainwindow.py:506 src/lplayer/mainwindow.py:570
+#: src/lplayer/mainwindow.py:706 src/lplayer/mainwindow.py:812
 msgid "Position"
 msgstr "Position"
 
-#: src/lplayer/mainwindow.py:769 src/lplayer/mainwindow.py:821
-#: src/lplayer/mainwindow.py:825
+#: src/lplayer/mainwindow.py:773 src/lplayer/mainwindow.py:825
+#: src/lplayer/mainwindow.py:829
 msgid "Speed"
 msgstr "Vitesse"
 
-#: src/lplayer/mainwindow.py:777 src/lplayer/mainwindow.py:1236
+#: src/lplayer/mainwindow.py:781 src/lplayer/mainwindow.py:1246
 #, python-brace-format
 msgid "Position: {0}%"
 msgstr "Position: {0}%"
 
-#: src/lplayer/mainwindow.py:813
+#: src/lplayer/mainwindow.py:817
 msgid "Relative position"
 msgstr "Position relative"
 
-#: src/lplayer/mainwindow.py:834 src/lplayer/mainwindow.py:839
+#: src/lplayer/mainwindow.py:838 src/lplayer/mainwindow.py:843
 msgid "Remove silence"
 msgstr "Enlever les silences"
 
-#: src/lplayer/mainwindow.py:848 src/lplayer/mainwindow.py:854
+#: src/lplayer/mainwindow.py:852 src/lplayer/mainwindow.py:858
 msgid "Play continuously"
 msgstr "Lecture continue"
 
-#: src/lplayer/mainwindow.py:863
+#: src/lplayer/mainwindow.py:867
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: src/lplayer/mainwindow.py:890
+#: src/lplayer/mainwindow.py:894
 msgid "29 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:891
+#: src/lplayer/mainwindow.py:895
 msgid "59 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:892
+#: src/lplayer/mainwindow.py:896
 msgid "119 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:893
+#: src/lplayer/mainwindow.py:897
 msgid "237 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:894
+#: src/lplayer/mainwindow.py:898
 msgid "474 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:895
+#: src/lplayer/mainwindow.py:899
 msgid "947 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:896
+#: src/lplayer/mainwindow.py:900
 msgid "1889 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:897
+#: src/lplayer/mainwindow.py:901
 msgid "3770 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:898
+#: src/lplayer/mainwindow.py:902
 msgid "7523 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:899
+#: src/lplayer/mainwindow.py:903
 msgid "15011 Hz"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:903
+#: src/lplayer/mainwindow.py:907
 msgid "None"
 msgstr "Rien"
 
-#: src/lplayer/mainwindow.py:904
+#: src/lplayer/mainwindow.py:908
 #, fuzzy
 msgid "Classical"
 msgstr "Classique"
 
-#: src/lplayer/mainwindow.py:905
+#: src/lplayer/mainwindow.py:909
 msgid "Club"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:906
+#: src/lplayer/mainwindow.py:910
 msgid "Dance"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:907
+#: src/lplayer/mainwindow.py:911
 msgid "Flat"
 msgstr "Plat"
 
-#: src/lplayer/mainwindow.py:908
+#: src/lplayer/mainwindow.py:912
 msgid "Live"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:909
+#: src/lplayer/mainwindow.py:913
 msgid "Headphone"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:910
+#: src/lplayer/mainwindow.py:914
 msgid "Rock"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:911
+#: src/lplayer/mainwindow.py:915
 msgid "Pop"
 msgstr "Pop"
 
-#: src/lplayer/mainwindow.py:912
+#: src/lplayer/mainwindow.py:916
 msgid "Full Bass and Treble"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:913
+#: src/lplayer/mainwindow.py:917
 msgid "Full Bass"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:914
+#: src/lplayer/mainwindow.py:918
 msgid "Full Treble"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:915
+#: src/lplayer/mainwindow.py:919
 #, fuzzy
 msgid "Soft"
 msgstr "Soft"
 
-#: src/lplayer/mainwindow.py:916
+#: src/lplayer/mainwindow.py:920
 msgid "Party"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:917
+#: src/lplayer/mainwindow.py:921
 msgid "Ska"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:918
+#: src/lplayer/mainwindow.py:922
 msgid "Soft Rock"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:919
+#: src/lplayer/mainwindow.py:923
 msgid "Large Hall"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:920
+#: src/lplayer/mainwindow.py:924
 msgid "Reggae"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:921
+#: src/lplayer/mainwindow.py:925
 msgid "Techno"
 msgstr ""
 
-#: src/lplayer/mainwindow.py:924
+#: src/lplayer/mainwindow.py:928
 msgid "Equalizer presets"
 msgstr "Preconfigurations de l'equalizer"
 
-#: src/lplayer/mainwindow.py:936
+#: src/lplayer/mainwindow.py:940
 msgid "Configuration"
 msgstr "Configuration"
 
-#: src/lplayer/mainwindow.py:978
+#: src/lplayer/mainwindow.py:982
 msgid "Code"
 msgstr "Code"
 
-#: src/lplayer/mainwindow.py:979
+#: src/lplayer/mainwindow.py:983
 msgid "Issues"
 msgstr "Problèmes"
 
-#: src/lplayer/mainwindow.py:984
+#: src/lplayer/mainwindow.py:988
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/lplayer/mainwindow.py:985
+#: src/lplayer/mainwindow.py:989
 msgid "Facebook"
 msgstr "Facebook"
 
-#: src/lplayer/mainwindow.py:986
+#: src/lplayer/mainwindow.py:990
 msgid "Google+"
 msgstr "Google+"
 
-#: src/lplayer/mainwindow.py:991
+#: src/lplayer/mainwindow.py:995
 msgid "Donations"
 msgstr "Donations"
 
-#: src/lplayer/mainwindow.py:1013
+#: src/lplayer/mainwindow.py:1017
 msgid "Remove tracks"
 msgstr "Enlever piste"
 
-#: src/lplayer/mainwindow.py:1020
+#: src/lplayer/mainwindow.py:1024
 msgid "Add tracks"
 msgstr "Ajouter piste"
 
-#: src/lplayer/mainwindow.py:1095
+#: src/lplayer/mainwindow.py:1099
 msgid "Please choose music files"
 msgstr "Veuillez choisir un fichier de musique"
 
-#: src/lplayer/mainwindow.py:1105
+#: src/lplayer/mainwindow.py:1109
 msgid "audio files"
 msgstr "fichiers audio"
 
-#: src/lplayer/mainwindow.py:1119
+#: src/lplayer/mainwindow.py:1124
 msgid "mp3 files"
 msgstr "fichier mp3"
 
-#: src/lplayer/mainwindow.py:1128
+#: src/lplayer/mainwindow.py:1133
 msgid "ogg files"
 msgstr "fichiers ogg"
 
-#: src/lplayer/mainwindow.py:1133
+#: src/lplayer/mainwindow.py:1138
 msgid "flac files"
 msgstr "fichiers flac"
 
-#: src/lplayer/mainwindow.py:1138
+#: src/lplayer/mainwindow.py:1143
 msgid "mp4 files"
 msgstr "fichier mp4"
 
-#: src/lplayer/mainwindow.py:1156
+#: src/lplayer/mainwindow.py:1150
+#, fuzzy
+msgid "aac files"
+msgstr "fichiers flac"
+
+#: src/lplayer/mainwindow.py:1166
 msgid "Are you sure to delete the tracks?"
 msgstr "Etes vous sûr de vouloir effacer les pistes?"
 
-#: src/lplayer/mainwindow.py:1158
+#: src/lplayer/mainwindow.py:1168
 msgid "Are you sure to delete the track?"
 msgstr "Etes vous sûr de vouloir effacer la piste?"
 
-#: src/lplayer/mainwindow.py:1250
+#: src/lplayer/mainwindow.py:1260
 msgid "Adding new tracks"
 msgstr "Ajouter piste"

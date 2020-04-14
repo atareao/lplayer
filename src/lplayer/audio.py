@@ -58,6 +58,7 @@ class Audio(dict):
     FORMAT_OGG = 1
     FORMAT_FLAC = 2
     FORMAT_M4A = 3
+    FORMAT_AAC = 4
 
     GENRE_UNKNOWN = 0
 
@@ -73,6 +74,7 @@ class Audio(dict):
         self['album'] = ''
         self['year'] = ''
         self['length'] = 0
+        print(type(audio.info))
         if type(audio.info) == mutagen.mp3.MPEGInfo:
             self['type'] = Audio.FORMAT_MP3
             if audio.tags is not None:
@@ -133,21 +135,30 @@ class Audio(dict):
             self['sample rate'] = audio.info.sample_rate
             self['bitrate'] = 0  # int(audio.info.bitrate / 1000.0)
             self['ext'] = 'flac'
+        elif type(audio.info) == mutagen.aac.AACInfo:
+            self['type'] = Audio.FORMAT_AAC
+            print(audio.tags)
+            print(audio)
+            print(audio.info.pprint())
+            print('aqui')
+
         elif type(audio.info) == mutagen.mp4.MP4Info:
+            print('1')
+            print(audio.info.pprint())
             self['type'] = Audio.FORMAT_M4A
-            if len(audio.tags['\xa9nam']) > 0:
+            if '\xa9nam' in audio.tags.keys() and len(audio.tags['\xa9nam']) > 0:
                 self['title'] = audio.tags['\xa9nam'][0]
             else:
-                self['title'] = ''
-            if len(audio.tags['\xa9ART']) > 0:
+                self['title'] = os.path.splitext(os.path.basename(filepath))[0]
+            if '\xa9ART' in audio.tags.keys() and len(audio.tags['\xa9ART']) > 0:
                 self['artist'] = audio.tags['\xa9ART'][0]
             else:
                 self['artist'] = ''
-            if len(audio.tags['\xa9alb']) > 0:
+            if '\xa9alb' in audio.tags.keys() and len(audio.tags['\xa9alb']) > 0:
                 self['album'] = audio.tags['\xa9alb'][0]
             else:
                 self['album'] = ''
-            if len(audio.tags['\xa9day']) > 0:
+            if '\xa9day' in audio.tags.keys() and len(audio.tags['\xa9day']) > 0:
                 self['year'] = audio.tags['\xa9day'][0]
             else:
                 self['year'] = ''
@@ -156,7 +167,7 @@ class Audio(dict):
             self['sample rate'] = audio.info.sample_rate
             self['bitrate'] = int(audio.info.bitrate / 1000.0)
             self['ext'] = 'm4a'
-            if len(audio.tags['covr']) > 0:
+            if 'covr' in audio.tags.keys() and len(audio.tags['covr']) > 0:
                 thumbnail_base64 = base64.b64encode(
                     audio.tags['covr'][0]).decode()
             else:
@@ -203,8 +214,8 @@ class Audio(dict):
 
 if __name__ == '__main__':
     import glob
-    for afile in glob.glob('/home/lorenzo/Descargas/Telegram Desktop/*.m4a'):
+    for afile in glob.glob('/home/lorenzo/Escritorio/*.m4a'):
         print('====', afile, '====')
         print(Audio(afile))
         print(type(Audio(afile)['thumbnail_base64']))
-    print(Audio('/home/lorenzo/Descargas/AMemoryAway.ogg'))
+    #print(Audio('/home/lorenzo/Descargas/AMemoryAway.ogg'))

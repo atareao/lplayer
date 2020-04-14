@@ -68,8 +68,9 @@ from .indicator import Indicator
 ALLOWED_MIMETYPES = ['application/x-ogg', 'application/ogg',
                      'audio/x-vorbis+ogg', 'audio/x-scpls', 'audio/x-mp3',
                      'audio/x-mpeg', 'audio/mpeg', 'audio/x-mpegurl',
-                     'audio/flac', 'audio/m4a', 'audio/x-m4a', 'audio/mp4']
-
+                     'audio/flac', 'audio/m4a', 'audio/x-m4a', 'audio/mp4',
+                     'audio/aac']
+mimetypes.add_type('audio/aac', '.aac')
 DEFAULT_CURSOR = Gdk.Cursor(Gdk.CursorType.ARROW)
 WAIT_CURSOR = Gdk.Cursor(Gdk.CursorType.WATCH)
 
@@ -388,6 +389,9 @@ class MainWindow(Gtk.ApplicationWindow):
                                         tracks_to_add.append(new_file)
                         else:
                             mime = mimetypes.guess_type(filename)[0]
+                            print('===============')
+                            print(mime)
+                            print('===============')
                             if mime in ALLOWED_MIMETYPES:
                                 tracks_to_add.append(filename)
             if len(tracks_to_add) > 0:
@@ -1113,6 +1117,7 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_audio.add_mime_type('audio/m4a')
         filter_audio.add_mime_type('audio/mp4')
         filter_audio.add_mime_type('audio/x-m4a')
+        filter_audio.add_mime_type('audio/aac')
         dialog.add_filter(filter_audio)
 
         filter_mp3 = Gtk.FileFilter()
@@ -1140,6 +1145,11 @@ class MainWindow(Gtk.ApplicationWindow):
         filter_m4a.add_mime_type('audio/mp4')
         filter_m4a.add_mime_type('audio/x-m4a')
         dialog.add_filter(filter_m4a)
+
+        filter_aac = Gtk.FileFilter()
+        filter_aac.set_name(_('aac files'))
+        filter_aac.add_mime_type('audio/aac')
+        dialog.add_filter(filter_aac)
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:

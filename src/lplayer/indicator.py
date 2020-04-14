@@ -151,15 +151,16 @@ class Indicator(GObject.Object):
 
     def set_current(self, label, hash=None):
         self.current.set_label(label)
+        pixbuf = None
         if hash is not None:
             filename = os.path.join(
                 comun.THUMBNAILS_DIR, '{0}.png'.format(hash))
             if os.path.exists(filename):
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
                     filename, 24, 24)
-        if hash is None or pixbuf is None:
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
-                    comun.NOIMAGE_ICON, 24, 24)
+        if pixbuf is None:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+                comun.NOIMAGE_ICON, 24, 24)
         self.current.set_image(Gtk.Image.new_from_pixbuf(pixbuf))
 
 

@@ -91,7 +91,10 @@ def get_thumbnail_filename_for_audio(audio):
     thumbnail_filename = os.path.join(comun.THUMBNAILS_DIR,
                                       '{0}.png'.format(audio['hash']))
     if not os.path.exists(thumbnail_filename):
-        pixbuf = get_pixbuf_from_base64string(audio['thumbnail_base64'])
+        if 'thumbnail_base64' in audio.keys():
+            pixbuf = get_pixbuf_from_base64string(audio['thumbnail_base64'])
+        else:
+            pixbuf = NOIMAGE
         pixbuf.savev(thumbnail_filename, 'png', [], [])
     return thumbnail_filename
 
