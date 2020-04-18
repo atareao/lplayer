@@ -1,11 +1,11 @@
-lplayer (0.4.1-0extras20.04.1) focal; urgency=medium
+lplayer (0.4.1-0extras20.04.2) focal; urgency=medium
 
   * Added an indicator play
   * Added shortcuts for player
   * Fixed dependencies
   * Update translations
 
- -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 14 Apr 2020 21:20:42 +0200
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 18 Apr 2020 21:15:47 +0200
 
 lplayer (0.3.4-0extras16.04.3) xenial; urgency=medium
 
